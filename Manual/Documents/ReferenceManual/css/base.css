@@ -1,0 +1,171 @@
+/*
+ * basic.css
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+#  background-color: LemonChiffon;
+  background-color: #808080;
+ 
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  font-family: sans-serif;
+  color: #333333;
+  font-size: 10pt;
+}
+
+div#container {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 0;
+  margin-bottom: 0;
+  height: 100%;
+  padding: 0px;
+  min-height: 100%;
+}
+
+
+body > #container {
+  height: auto;
+}
+
+div#header {
+  margin: 0;
+  padding: 30px;
+#  background-color: #FFF440;
+  background-color: #E00000;
+  color: white;
+}
+
+div#contents {
+  background-color: white;
+  padding: 30px;
+  top: 0;
+  bottom: 0;
+}
+
+div#footer {
+#  background-color: #FFF440;
+  background-color: #E00000;
+  padding: 30px;
+  color: white;
+}
+
+a {
+  text-decoration: none;
+}
+
+#contents h1 {
+  margin-bottom: 3ex;
+  border-bottom: solid 1px #cccccc;
+}
+
+#contents h2 {
+  margin-top: 3ex;
+}
+
+#contents p {
+
+}
+
+#contents div.inner {
+  margin: 30px;
+}
+
+#contents ul {
+  margin-left: 3ex;
+}
+
+img {
+	margin: 15x;
+	padding: 0px;
+    border: solid 1px gray;
+}
+
+h2 {
+	margin: 10px 0px 10px 0px;
+	color: black; /* •¶š‚ÌF */
+#	border-left-color: #FFF440; /* ¶˜g‚ÌF */
+	border-left-color: #E00000; /* ¶˜g‚ÌF */
+	padding: 4px 10px 10px 6px; /* —]”’‚Ì• */
+	border-style: solid; /* ˜g‚Ìí—Ş */
+#	border-top-color: #FFF440; /* ã˜g‚ÌF */
+	border-top-color: #E00000; /* ã˜g‚ÌF */  
+	border-width: 1px 0px 0px 10px; /* ˜g‚Ì• */
+}
+
+h3 {
+	margin: 10px 0px 10px 0px;
+	color: black; /* •¶š‚ÌF */
+#	border-left-color: #FFF440; /* ¶˜g‚ÌF */
+	border-left-color: #E00000; /* ¶˜g‚ÌF */
+	padding: 1px 4px 1px 16px; /* —]”’‚Ì• */
+	border-style: double; /* ˜g‚Ìí—Ş */
+#	border-top-color: #FFF440; /* ã˜g‚ÌF */
+	border-top-color: #E00000; /* ã˜g‚ÌF */  
+	border-width: 0px 0px 0px 10px; /* ˜g‚Ì• */
+}
+
+h4 {
+#	border-left-color: #FFF440; /* ¶˜g‚ÌF */
+	border-left-color: #E00000; /* ¶˜g‚ÌF */
+	padding: 1px 4px 1px 16px; /* —]”’‚Ì• */
+	border-style: solid; /* ˜g‚Ìí—Ş */
+#	border-top-color: #FFF440; /* ã˜g‚ÌF */
+	border-top-color: #E00000; /* ã˜g‚ÌF */  
+	border-width: 0px 0px 0px 2px; /* ˜g‚Ì• */
+
+	margin: 10px 0px 5px 0px;
+	padding: 1px 4px 1px 10px; /* —]”’‚Ì• */
+	color: black; /* •¶š‚ÌF */
+}
+
+h5 {
+	margin: 10px 0px 10px 2px;
+	padding: 1px 4px 1px 10px; /* —]”’‚Ì• */
+	color: black; /* •¶š‚ÌF */
+}
+
+pre {
+	margin: 10px 10px 10px 10px;
+	padding: 10px 10px 10px 10px; /* —]”’‚Ì• */
+	border-style: dotted;
+	border-width: 1px 1px 1px 1px;
+	background-color: ivory;
+}
+
+blockquote {
+	margin: 20px 20px 20px 20px;
+	padding: 10px 10px 10px 10px; /* —]”’‚Ì• */
+	border-style: dotted;
+	border-width: 0px 0px 0px 0px;
+	background-color: whitesmoke;
+}
+
+ul {
+	margin: 10px 0px 20px 0px;
+}
+
+ol {
+	margin: 10px 10px 20px 30px;
+}
+
+li {
+	margin: 0px 10px 1px 12px;
+	line-height: 150%
+}
+
+p {
+	padding: 2px 0px 2px 10px;
+	line-height: 150%
+}
+

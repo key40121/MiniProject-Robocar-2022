@@ -1,0 +1,746 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="ja" />
+    <title>8. Linuxの使い方 : ZMP RoboCar 1/10 2016 Reference Manual</title>
+	<link type="text/css" rel="stylesheet" href="./css/base.css"/>
+  </head>
+  <body>
+	<div id="container">
+	  <div id="header">
+		<h1>ZMP RoboCar 1/10 2016 Reference Manual</h1>
+	  </div>
+	  <div id="contents">
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+		<div class="inner">
+		<h1>8. Linuxの使い方</h1>
+
+<h2>概要</h2>
+
+<p>RoboCarを利用する上で知っていたほうがよいLinuxの
+コマンドについて説明します。</p>
+
+<p>汎用のLinuxを採用していますので
+Linuxについて知っている方は読み飛ばしてかまいません。</p>
+
+<p>また、書籍、インターネットなどには、このページより
+詳しい情報があります。そちらも参考にしてください。</p>
+
+<h2>コマンドの入力</h2>
+
+<p>SSHやシリアルコンソールからログインすると、
+テキスト入力を受け付け、結果もテキストで表示する、対話型の「シェル」
+と呼ばれるプログラムが実行されている状態になります。</p>
+
+<p>ユーザはシェルに対してコマンドを入力して、さまざまな作業を
+行うことになります。RoboCarで使用しているシェルは"bash"と呼ばれるシェルです。</p>
+
+<p>以下がコマンドの入力を受け付けることのできる状態で、表示されているものを
+プロンプトと呼びます。</p>
+
+<pre><code>[root@localhost ~]#
+</code></pre>
+
+<p>ここでディレクトリの内容を表示するコマンド"ls -l"を入力すると以下のように
+結果が表示され、また、コマンドプロンプトが表示され、入力待ちになります。</p>
+
+<pre><code>[root@localhost ~]# ls -l
+合計 28
+-rw------- 1 root root  971 2009-06-20 23:39 anaconda-ks.cfg
+drwxr-xr-x 2 root root 4096 2009-06-26 18:27 config
+-rw-r--r-- 1 root root 8724 2009-06-20 23:39 install.log
+-rw-r--r-- 1 root root  463 2009-06-20 23:28 install.log.syslog
+drwxr-xr-x 5 root root 4096 2009-08-06 21:24 zmp
+[root@localhost ~]#
+</code></pre>
+
+<p>以下、このページの表記ではプロンプトを'#'と省略して記載します。</p>
+
+<p>コマンドの入力を便利にするためにbashには以下の機能があります。</p>
+
+<h3>履歴</h3>
+
+<p>カーソルキーの上(または下)で、以前に入力して実行したコマンドが表示されます。</p>
+
+<p>同じコマンドを再度実行したい場合や、打ち間違えたコマンドを再表示させて、正しく編集
+しなおして実行するなどに便利です。</p>
+
+<h3>補完</h3>
+
+<p>入力中にTabキーを押すと、コマンドやファイル名が補完されます。</p>
+
+<p>最初の何文字かを入力し続けてTABを押すと、その文字で始まるコマンドや
+ファイル名がある場合、それを補って自動で入力してくれる機能です。</p>
+
+<p>たとえば以下のコマンドを入力する場合、</p>
+
+<pre><code># ls -l zmp/samples/SampleSocketCommunication/Debug/
+</code></pre>
+
+<p>キーの入力は、</p>
+
+<pre><code>ls -l z(Ta)s(Tab)S(Tab)S(Tab)D(Tab)
+</code></pre>
+
+<p>でよいことになります。</p>
+
+<p>さらに、たとえば以下のように候補がいくつかある場合にTabキーを押すと、
+その候補を表示してくれます。</p>
+
+<pre><code>ls -l zmp/samples/Sample(Tab)
+SampleDriveControl/        SampleObstacleAvoidance/
+SampleGetSensor/           SampleSocketCommunication/
+SampleLRS/
+</code></pre>
+
+<h3>その他</h3>
+
+<p>意図しないプログラムを実行してしまったり、
+通常のプロンプトではない状態になってしまったりして、
+元の状態に戻りたい場合、たいていの場合、'Ctrl+C'の入力で復帰します。</p>
+
+<p>画面表示が崩れてしまったりした場合、'Ctrl+L'で画面がクリアされます。</p>
+
+<h2>ディレクトリとファイルに関するコマンド</h2>
+
+<h4>ディレクトリ</h4>
+
+<p>ディレクトリとは、Windowsのフォルダとほぼ同等なもので、階層的な構造と
+なっています。ファイルの置かれる'場所'や自分のいる'場所'をあらわします。
+コマンド内や結果の表示で、スラッシュ'/'で区切ってあらわします。</p>
+
+<p>'zmp/config/'これは、'zmp'の下の'config'というディレクトリです。</p>
+
+<h4>ファイル</h4>
+
+<p>C言語のソースファイル、設定ファイル、実行可能なファイル、
+これらがすべて'ファイル'です。RoboCarのプログラムやドキュメント、
+Linuxシステムを動かすためのすべてのものが、'ファイル'としてコンパクトフラッシュ内に
+保存されています。</p>
+
+<p>ファイルには名前があり、どこかのディレクトリに置かれます。</p>
+
+<h3>pwd</h3>
+
+<p>自分のいるディレクトリを表示します。自分のいるディレクトリを'カレントディレクトリ'
+と呼びます。</p>
+
+<pre><code># pwd
+/root/zmp/
+</code></pre>
+
+<p>カレントディレクトリは'/root/zmp/'です。</p>
+
+<h3>cd</h3>
+
+<p>ディレクトリを移動します。カレントディレクトリが変わります。
+引数にディレクトリ名を指定します。ディレクトリ'..'は、
+ひとつ上のディレクトリの意味です。</p>
+
+<pre><code># pwd
+/root/zmp/
+# cd samples
+# pwd
+/root/zmp/samples
+# cd ..
+# pwd
+/root/zmp/
+</code></pre>
+
+<p>ディレクトリの指定には、カレントディレクトリを基準に指定(相対パス)することも
+、一番上からすべてを指定(絶対パス)することもできます。</p>
+
+<pre><code># pwd
+/root/zmp/samples/
+# cd SampleDriveControl/Debug
+# pwd
+/root/zmp/samples/SampleDriveControl/Debug
+
+
+# pwd
+/root/zmp/samples/
+# cd /root/zmp/samples/SampleDriveControl/Debug
+# pwd
+/root/zmp/samples/SampleDriveControl/Debug
+</code></pre>
+
+<p>引数に何も指定せずに実行すると、ログインするときに最初にいる場所(ホームディレクトリ)に
+移動します。</p>
+
+<h3>ls</h3>
+
+<p>ファイルやディレクトリの一覧を表示します。</p>
+
+<p>引数を何もつけないときには、カレントディレクトリの一覧を表示します。
+引数で、表示したいディレクトリを指定できます。</p>
+
+<pre><code># ls
+anaconda-ks.cfg  config  install.log  install.log.syslog  zmp
+
+# ls zmp
+config  demos  samples
+</code></pre>
+
+<p>コマンドにはたくさんのオプションがあります。lsにも表示の方法や
+表示する対象を指定するためのオプションが多数あります。以下は例です。</p>
+
+<p>以下は詳細を表示します。</p>
+
+<pre><code># ls -l zmp
+drwxr-xr-x  3 root root 4096 2009-08-06 19:09 config
+drwxr-xr-x 11 root root 4096 2009-08-06 18:31 demos
+drwxr-xr-x  8 root root 4096 2009-08-06 19:05 samples
+</code></pre>
+
+<p>以下は通常は表示されない隠しファイルを表示します</p>
+
+<pre><code># ls -a
+</code></pre>
+
+<h3>cat</h3>
+
+<p>ファイルの中身を表示します。ソースファイルなど
+テキスト形式のファイルは正しく表示されます。</p>
+
+<pre><code># cat main.cpp
+</code></pre>
+
+<h3>cp</h3>
+
+<p>ファイルやディレクトリをコピーします。
+引数にコピー元のディレクトリやファイル、そして最後の引数に、コピー先の場所や、新しい名前を指定します。</p>
+
+<p>これは、ファイルを他の名前をつけてコピーします。</p>
+
+<pre><code># cp Makefile Makefile.bak
+</code></pre>
+
+<p>これは、1つのファイルをカレントディレクトリにコピーしてきます。</p>
+
+<pre><code># cp ../IpmServer/main.cpp .
+</code></pre>
+
+<p>これは、IpmServerディレクトリ以下を丸ごと、MyTest以下にコピーします。</p>
+
+<pre><code># cp -a IpmServer MyTest
+</code></pre>
+
+<h3>mv</h3>
+
+<p>ファイルやディレクトリを移動するコマンドです。
+引数にコピー元のディレクトリやファイル、そして最後の引数に、コピー先の場所や、新しい名前を指定します。</p>
+
+<p>ファイルの名前を付けかえます。</p>
+
+<pre><code># mv test.cpp main.cpp
+</code></pre>
+
+<p>拡張子.cppのファイルをbakディレクトリに移動します。</p>
+
+<pre><code># mv *.cpp bak
+</code></pre>
+
+<h3>rm</h3>
+
+<p>ファイルやディレクトリを削除します。</p>
+
+<p>ファイルを削除します。</p>
+
+<pre><code># rm memo.txt
+</code></pre>
+
+<p>指定したディレクトリ以下すべてを削除します。</p>
+
+<pre><code># rm -rf old
+</code></pre>
+
+<p>削除、とくに -rオプションは、慎重に使用してください。必要なファイルまで
+消してしまわないように。</p>
+
+<h2>ネットワークに関するコマンド</h2>
+
+<h3>ifconfig</h3>
+
+<p>ネットワークインターフェイスの状態の確認や設定のコマンドです。</p>
+
+<pre><code># ifconfig
+</code></pre>
+
+<p>eth0が有線のインターフェイス。wlan0が無線LANのインターフェイスに関する情報です。
+IPアドレスがこのコマンドで確認できます。</p>
+
+<h3>ifup</h3>
+
+<p>ネットワークのインターフェイスを有効にします。</p>
+
+<p>これは、有線のLANを有効にします。</p>
+
+<pre><code># ifup eth0
+</code></pre>
+
+<p>これは、無線LANを有効にします。</p>
+
+<pre><code># ifup wlan0
+</code></pre>
+
+<p>RoboCarでは、どちらか一方のみ有効にして使用してください。
+このとき、設定として、それぞれ、以下のファイルを読み込んで使用します。
+設定が正しくないとコマンドが成功しても、正しく接続されません。</p>
+
+<blockquote>
+  <p>/etc/sysconfig/network-scripts/ifcfg-eth0 <br/>
+  /etc/sysconfig/network-scripts/ifcfg-wlan0 <br/></p>
+</blockquote>
+
+<h3>ifdown</h3>
+
+<p>ネットワークのインターフェイスを無効にします。</p>
+
+<p>これは、有線のLANを無効にします。</p>
+
+<pre><code># ifdown eth0
+</code></pre>
+
+<p>これは、無線LANを無効にします。</p>
+
+<pre><code># ifdown wlan0
+</code></pre>
+
+<h3>ping</h3>
+
+<p>ネットワークが通じているかどうかを確認するコマンド。
+IPアドレスをわかっているPCやルータに向けてpingコマンドで実際にパケットを
+送信することで、ネットワークが正しいかどうかを確認できます。</p>
+
+<pre><code># ping 192.168.1.1
+64 bytes from 192.168.1.1: icmp_seq=4 ttl=64 time=2.69 ms
+64 bytes from 192.168.1.1: icmp_seq=5 ttl=64 time=2.52 ms
+ ：
+</code></pre>
+
+<p>正しく通信が出来ていない場合、ネットワークの経路か、
+設定ファイルを確認してください。</p>
+
+<h3>iwlist</h3>
+
+<p>無線LANのに関する確認と設定のためのコマンドです。
+引数に'scan'とつけることで、アクセスポイントのリストを表示することが
+できます。ifupする前でも表示が可能です。</p>
+
+<pre><code># iwlist wlan0 scan
+</code></pre>
+
+<h3>ftp</h3>
+
+<p>ファイルを転送します。</p>
+
+<p>RoboCarは、ftpのサーバと、クライアントの両方のプログラムがインストール
+されています。クライアントとして、他のPCなどとファイルの受け渡しを
+したい場合、ftpコマンドを使用します。</p>
+
+<p>以下は、sensorlog.txtを送信、config_dataを受信して、終了します。</p>
+
+<pre><code># ftp 192.168.1.100
+# (***)
+# (***)
+ftp&gt; bin
+ftp&gt; put sensorlog.txt
+ftp&gt; get config_data
+ftp&gt; by
+</code></pre>
+
+<h2>プログラミングに関するコマンド</h2>
+
+<p>RoboCarには、エディタ、viと、GNUのコンパイラツールがインストールされています。</p>
+
+<h3>vi</h3>
+
+<p>下の項で別途、記述します。</p>
+
+<h3>gcc / g++</h3>
+
+<p>C/C++のコンパイラ。ソースファイルを入力して、実行可能なオブジェクトを
+出力します。</p>
+
+<pre><code># g++ -o my_program my_program.cpp
+</code></pre>
+
+<p>多数のオプションがあります。少しでも複雑なプログラムにったときには、
+Makefileを作成し、ビルド工程はmakeにまかせたほうが作業効率がよいです。</p>
+
+<h3>make</h3>
+
+<p>ビルドを自動で、行うためのツール。
+ビルドの対象、ソース、ルールを、'Makefile'に記述しておきます。</p>
+
+<pre><code># make
+</code></pre>
+
+<p>下はMakefileの例</p>
+
+<p>TARGETに、出力される実行ファイル名。
+OBJSに、必要なソースファイル(からコンパイルされてオブジェクトになったファイル名)。
+INCLUDESには、追加するヘッダファイルへのパス。
+LIBSに、リンクするライブラリを全部。それぞれ記述する。</p>
+
+<pre><code>CPP = g++
+CPPFLAGS = -g -pthread
+INCLUDES = -I/usr/local/include/zmp
+LIBS = -L/usr/local/lib/zmp -L/usr/lib -lRcImage -lIpm -lpthread -lxml2
+
+TARGET = ipm_server
+OBJS = main.o ServerApp.o RczCommServer.o socket.o ring_buffer.o
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+        $(CPP) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
+
+clean:
+        rm      -rf $(OBJS) $(TARGET)
+
+.cpp.o: $*.h
+        $(CPP) $(CPPFLAGS) $(INCLUDES) -c $&lt;
+</code></pre>
+
+<h3>gdb</h3>
+
+<p>デバッガ。
+デバッグ情報つきでコンパイルした実行ファイルを、動作させながら、デバッグします。</p>
+
+<p>下は一例。my_program実行して、ブレークポイントを関数に設定して、実行。
+ブレイクポイントで止まったら、lでソースを表示して、nでステップ実行。pで変数の内容を表示。</p>
+
+<pre><code># gdb ./my_program
+
+(gdb) b function_name
+(gdb) run
+(gdb) l
+(gdb) n
+(gdb) n
+(gdb) p value
+(gdb) q
+</code></pre>
+
+<h2>プロセスに関するコマンド</h2>
+
+<p>Linuxは複数のプロセスが平行して動作することができるOSです。
+プロセスについての情報を確認したり、操作したりするには、
+以下のコマンドを使います。</p>
+
+<p>基本として、プログラムを実行すると、そのプログラムは1つのプロセスとして、
+システムに存在します。</p>
+
+<h3>ps</h3>
+
+<p>現在実行中のプロセスを表示するコマンド。</p>
+
+<p>プロセスを表示する。
+    # ps</p>
+
+<p>自分が起動したプログラム以外(バックグラウンドで動いていたり)するプロセスも
+すべて表示するには、以下。</p>
+
+<pre><code># ps x
+</code></pre>
+
+<h3>top</h3>
+
+<p>プロセスの状態を監視できます。</p>
+
+<p>1つのプロセスが、CPUの処理量や、メモリを占有すると、他のプロセスにも
+影響を与えます。
+また、自分のプログラムが、どれだけのCPU処理量を消費しているか、目安になります。</p>
+
+<p>CPUを多く使っている上位のプログラムを表示します。終了するには、'q'を押します。</p>
+
+<pre><code># top
+</code></pre>
+
+<h3>kill</h3>
+
+<p>実行中のプロセスを停止させます。</p>
+
+<p>プロセスIDを指定して、任意のプログラムを外部から停止させます。
+psや、topでプロセスを調べたときに、PIDと表示されているのがプロセスIDです。</p>
+
+<p>下は、プロセスID 1000のプロセスを強制終了させます。</p>
+
+<pre><code># kill 1000
+</code></pre>
+
+<h3>jobs</h3>
+
+<p>今のシェルから実行しているプログラムはjobsという
+コマンドで表示することもできます。</p>
+
+<p>vi で、Ctrl-Zと入力したり、
+プログラムを起動時に'&amp;'をつけてプログラムを実行させると、
+そのプログラムは、'バックグラウンド'で
+実行され、画面はbashのコマンドプロンプトに戻ってきます。</p>
+
+<p>バックグラウンドで実行中のプログラムの表示をします。</p>
+
+<pre><code># jobs
+[1]+  Stopped                 vi main.cpp
+[2]-  Running                 ./my_program
+</code></pre>
+
+<h3>fg</h3>
+
+<p>バックグラウンドのジョブを、フォアグラウンドに移行させます。</p>
+
+<p>ジョブIDを指定して、プログラムをフォアグラウンドに持ってきます。
+ジョブIDはjobsコマンドで確認できます。</p>
+
+<pre><code># fg 1
+</code></pre>
+
+<h2>エディタvi</h2>
+
+<p>コマンドではないですが、簡単にここで説明します。
+UNIX系OSの伝統的なテキストエディタです。少し癖がありますが、強力なエディタです。</p>
+
+<h3>起動</h3>
+
+<p>起動は、</p>
+
+<pre><code># vi ファイル名
+</code></pre>
+
+<p>です。既存のファイルを指定するとそのファイルが開きますし、
+存在しないファイル名だと、新規ファイルの編集として、viがオープンします。</p>
+
+<h3>コマンドモードとインサートモード</h3>
+
+<p>通常のエディタと少し違うのが、このモードの存在です。
+検索、コピー、など操作を行うコマンドモードと、
+テキストを入力するインサートモードがあります。</p>
+
+<p>起動するとコマンドモードから始まります。
+この状態でタイプした文字はすべてコマンドと解釈されます。</p>
+
+<pre><code>~
+~
+~
+~
+</code></pre>
+
+<p>'i'というコマンドをタイプすると、カーソルの位置に
+文字を挿入するというインサートモードへ移行します。
+ここで入力した文字はそのままテキストとして入力されていきます。</p>
+
+<pre><code>Hello
+~
+~
+-- INSERT --
+</code></pre>
+
+<p>Escキーを押すとコマンドモードに戻ってきます。</p>
+
+<p>このように、インサートモードと、コマンドモードを行き来しながら
+テキストを入力/編集することになります。</p>
+
+<h3>カーソルの移動</h3>
+
+<p>コマンドモードで、'h', 'j', 'k', 'l'のキーは、それぞれ、
+左、下、上、右へひとつカーソルを移動させるコマンドです。</p>
+
+<p>カーソルキーでも移動できますので、通常はこちらでよいです。</p>
+
+<p>カーソル移動</p>
+
+<pre><code>h
+j
+k
+l
+または、
+カーソルキー
+</code></pre>
+
+<p>ページ移動、半ページ移動</p>
+
+<pre><code>Ctrl+f
+Ctrl+b
+Ctrl+d
+Ctrl+u
+</code></pre>
+
+<h3>文字の挿入</h3>
+
+<p>これらのコマンドでインサートモードに移行します。</p>
+
+<p>現在の位置に挿入開始。</p>
+
+<pre><code>i
+</code></pre>
+
+<p>現在の前の行に挿入開始。</p>
+
+<pre><code>o
+</code></pre>
+
+<h3>検索</h3>
+
+<p>検索ができます。/に続けて、検索したい単語を入力してEnterを押します。</p>
+
+<pre><code>/(word)
+</code></pre>
+
+<p>画面の一番したに、/につづいて文字が入力され、Enterを
+押すと一番最初にみつかった場所にカーソルが移動します。
+つづけて、'n'または、'N'で再検索できます。</p>
+
+<pre><code>n
+N
+</code></pre>
+
+<h3>カット＆ペースト</h3>
+
+<p>行単位のカット＆ペーストは、以下のようにします。</p>
+
+<p>1行をカットする。
+カットしたい行にカーソルを移動させてから、以下、</p>
+
+<pre><code>dd
+</code></pre>
+
+<p>5行をカットする。
+カットしたい何行かのうち一番上の行にカーソルを移動させてから、以下、</p>
+
+<pre><code>d4j
+</code></pre>
+
+<p>削除コマンド＋4回繰り返す＋カーソル下コマンド。の連続で5行のカットになります。</p>
+
+<p>ペーストは、ペーストしたい場所にカーソル移動して、</p>
+
+<pre><code>P
+</code></pre>
+
+<h3>コピー＆ペースト</h3>
+
+<p>行単位のコピー＆ペーストは、以下のようにします。</p>
+
+<p>1行をコピーする。
+コピーしたい行にカーソルを移動させてから、以下、</p>
+
+<pre><code>yy
+</code></pre>
+
+<p>5行をコピーする。
+コピーしたい何行かのうち一番上の行にカーソルを移動させてから、以下、</p>
+
+<pre><code>y4j
+</code></pre>
+
+<p>ヤンクコマンド＋4回繰り返す＋カーソル下コマンド。の連続で5行のコピーになります。</p>
+
+<p>ペーストは、上の同様です。</p>
+
+<pre><code>P
+</code></pre>
+
+<h3>文字列の置換</h3>
+
+<p>文字列を指定して、ファイル内のすべての文字列を置換します。</p>
+
+<pre><code>:%s/(word_from)/(word_to)/g
+</code></pre>
+
+<h3>削除</h3>
+
+<p>インサートモードに入ってから、'Back space'でよいです。</p>
+
+<p>削除のためのコマンドも用意されています。</p>
+
+<p>1行削除</p>
+
+<pre><code>dd
+</code></pre>
+
+<p>行数指定して削除。10行の場合。</p>
+
+<pre><code>d9j
+</code></pre>
+
+<p>これも組み合わせです。</p>
+
+<p>1単語削除</p>
+
+<pre><code>dw
+</code></pre>
+
+<p>削除＋1単語カーソル移動。の組み合わせです。</p>
+
+<h3>Undo</h3>
+
+<p>やり直し。元に戻す。</p>
+
+<pre><code>u
+</code></pre>
+
+<h3>行指定のジャンプ</h3>
+
+<p>エラー行に飛ぶなど、行番号を指定してカーソル移動します。</p>
+
+<p>100行目に移動します。</p>
+
+<pre><code>:100
+</code></pre>
+
+<h3>サスペンド</h3>
+
+<p>(viの機能じゃないけど、ここで紹介します。)</p>
+
+<p>いったんshellにもどります。shellから、
+viはバックグラウンドに移行するので、fgコマンドを使って、フォアグラウンドに
+戻して作業を続行してください。</p>
+
+<pre><code>Ctrl-Z
+</code></pre>
+
+<p>戻ります。shellのコマンドです。</p>
+
+<pre><code># fg
+</code></pre>
+
+<h3>ファイルのセーブ＆終了</h3>
+
+<p>ファイルの保存。</p>
+
+<pre><code>:w
+</code></pre>
+
+<p>viの終了</p>
+
+<pre><code>:q
+</code></pre>
+
+<p>ファイルを保存して、viを終了</p>
+
+<pre><code>:wq
+</code></pre>
+
+<p>ファイルを保存せずに、強制終了</p>
+
+<pre><code>:q!
+</code></pre>
+
+		</div>
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+	  </div>
+	  <div id="footer">
+		<span>Copyright&copy; 2016 ZMP Inc., All rights reserved.</span>
+	  </div>
+	</div>
+  </body>
+</html>

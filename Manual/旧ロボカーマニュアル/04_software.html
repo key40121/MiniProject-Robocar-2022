@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="ja" />
+    <title>4. ソフトウェア環境・構成 : ZMP RoboCar Reference Manual</title>
+	<link type="text/css" rel="stylesheet" href="./css/base.css"/>
+  </head>
+  <body>
+	<div id="container">
+	  <div id="header">
+		<h1>ZMP RoboCar Reference Manual</h1>
+	  </div>
+	  <div id="contents">
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+		<div class="inner">
+		<h1>4. ソフトウェア環境・構成</h1>
+
+<h2>概要</h2>
+
+<h3>はじめに</h3>
+
+<p>（提供する機能）</p>
+
+<ul>
+<li><p>ステレオ視による障害物検知</p></li>
+<li><p>車線認識</p></li>
+<li><p>各種センサ値の取得</p></li>
+<li><p>駆動モータ、ステアリングの制御</p></li>
+</ul>
+
+<p>CPUボード上でLinuxアプリケーションを作成することにより、RoboCarの全機能をコントロールできます。</p>
+
+<p>RoboCarSDKは、Linuxアプリケーションを作成するためのクラスライブラリを提供します。
+これはすべての機能へのインターフェイスになります。</p>
+
+<p>また、ライブラリを使用したサンプルコードと、ライブラリのドキュメント(APIリファレンス)を提供しています。</p>
+
+<p>RoboCarの画像認識/画像処理アルゴリズムは、ユーザの使用したい出力や、
+動作の環境によっていくつかの調整が必要です。また、ステレオカメラの画像を
+正規化するためのキャリブレーションが必要です。
+これら画像認識についてのキャリブレーションおよび、調整のツール（Windowsアプリケーション）
+を添付しています。</p>
+
+<p><img src="images/RC_software_constitution_figure.PNG" alt="Software overview" /></p>
+
+<p>図: ソフトウェア概要</p>
+
+<h2>環境</h2>
+
+<p>サンプルプログラムの利用、およびソフトウェア開発に必要な環境は以下のとおりです。
+Windows8をお使いの場合も、従来のWindowsとまったく同様の手順で環境を構築できます。</p>
+
+<ul>
+<li>PC (Windows ; Windows8にも対応)</li>
+<li>無線LANアクセスポイント</li>
+<li>シリアルケーブル(9ピンD-SUBコネクタのクロスケーブル)</li>
+<li>PC (Linux) : なくても可。エミュレータ環境でも可。</li>
+</ul>
+
+<p>RoboCarの無線LANアクセスの暗号方式はWEPのみサポートしています。
+無線LANアクセスポイントを、WEPの設定にしてください。</p>
+
+<p>RoboCarのソフトウェア操作、開発は、RoboCar内のLinuxにログインして
+操作する必要があります。SSH(Secure Shell)のクライアント
+が起動する、ネットワークにつながった端末(WindowsでもLinuxでも可)を
+用意してください。</p>
+
+<p>Windowsの場合、以下のようなソフトウェアがフリーで公開されています。</p>
+
+<ul>
+<li>TeraTerm</li>
+<li>PuTTY</li>
+</ul>
+
+<p><img src="images/s_development_equipment00.png" alt="Equipment0" /></p>
+
+<p>図: 環境</p>
+
+<p>また、初期のネットワークの設定をするために、RoboCarにはシリアルからログインしますので、
+シリアルケーブルを用意してください。</p>
+
+<p>RoboCarのLinuxアプリケーションは、RoboCarに搭載のLinux上で開発できます。
+大規模な開発を行う場合や、すでにPC上でコード資産を持っている場合、また
+グラフィカルな環境で開発を行いたい場合は、別途Linuxの動作するPCを用意してください。</p>
+
+<p><img src="images/s_development_equipment01.png" alt="Equipment1" /></p>
+
+<p>図: 開発環境その１</p>
+
+<p><img src="images/s_development_equipment02.png" alt="Equipment2" /></p>
+
+<p>図: 開発環境その２</p>
+
+<h2>環境</h2>
+
+<p>Linux内のファイルシステムで、RoboCarのシステムは以下のような場所に
+インストールされています。</p>
+
+<h3>ディレクトリ、ファイル</h3>
+
+<ul>
+<li>ライブラリ</li>
+</ul>
+
+<blockquote>
+  <p>/usr/local/lib/zmp/</p>
+</blockquote>
+
+<ul>
+<li>インクルードファイル</li>
+</ul>
+
+<blockquote>
+  <p>/usr/local/include/zmp/</p>
+</blockquote>
+
+<ul>
+<li>実行ファイル,ツール</li>
+</ul>
+
+<blockquote>
+  <p>/usr/local/bin/zmp/</p>
+</blockquote>
+
+<ul>
+<li>サンプルコード</li>
+</ul>
+
+<blockquote>
+  <p>/root/zmp/samples</p>
+</blockquote>
+
+<ul>
+<li>デモプログラム</li>
+</ul>
+
+<blockquote>
+  <p>/root/zmp/demos</p>
+</blockquote>
+
+<ul>
+<li>設定ファイル、データ</li>
+</ul>
+
+<blockquote>
+  <p>/root/zmp/config</p>
+</blockquote>
+
+		</div>
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+	  </div>
+	  <div id="footer">
+		<span>Copyright&copy; 2009-2011 ZMP Inc., Alright resereved.</span>
+	  </div>
+	</div>
+  </body>
+</html>

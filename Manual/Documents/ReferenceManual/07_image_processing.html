@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="ja" />
+    <title>7. 画像処理 : ZMP RoboCar 1/10 2016 Reference Manual</title>
+	<link type="text/css" rel="stylesheet" href="./css/base.css"/>
+  </head>
+  <body>
+	<div id="container">
+	  <div id="header">
+		<h1>ZMP RoboCar 1/10 2016 Reference Manual</h1>
+	  </div>
+	  <div id="contents">
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+		<div class="inner">
+		<h1>7. 画像処理</h1>
+
+<h2>概要</h2>
+
+<p>RoboCar1/20 2016 では搭載しているカメラの画像処理をおこなうためにOpenCVの環境を用意しています。
+また、PCへの画像転送のために"mjpg-streamer"を起動して動画ストリーミングを行っています。</p>
+
+<h2>OpenCV 開発環境</h2>
+
+<blockquote>
+  <p>バージョン：3.0.0</br>
+  ソースコードパス：/home/zmp/tools/opencv-3.0.0</br>
+  インクルードパス：/usr/local/include/opencv  /usr/local/include/opencv2</br>
+  ライブラリパス：/usr/local/lib</br>
+  サンプルコードパス：/home/zmp/proj/RoboCar110_Ver2/OpenCV</br></p>
+</blockquote>
+
+<p>フロントカメラ(USB接続)のデバイス名が"/dev/video0"となります。</br></p>
+
+<h3>静止画保存サンプル</h3>
+
+<p>/home/zmp/proj/RoboCar110Ver2/OpenCV/capture/sample</br>
+静止画を保存するサンプルです。</br>
+/home/zmp/proj/RoboCar110Ver2/OpenCV/capture/img配下に.pgmファイルが保存されます。</br></p>
+
+<h3>動画保存サンプル</h3>
+
+<p>/home/zmp/proj/RoboCar110Ver2/OpenCV/video/sample
+動画を保存するサンプルです。
+/home/zmp/proj/RoboCar110Ver2/OpenCV/video配下にcap.aviファイルが保存されます。</p>
+
+<h3>エッジ検出サンプル</h3>
+
+<p>/home/zmp/proj/RoboCar110_Ver2/OpenCV/hough/sample
+線のエッジを検出するサンプルです。
+モノクロ画像上に検出した線分を黒で表示します。</p>
+
+<h3>エッジ検出サンプル2</h3>
+
+<p>/home/zmp/proj/RoboCar110_Ver2/OpenCV/hough2/sample
+線のエッジを検出するサンプルです。
+二値化画像上に検出した線分を赤で表示します。</p>
+
+<h2>mjpg-streamer動作環境</h2>
+
+<blockquote>
+  <p>ソースコードパス：/home/zmp/tools/mjpg-streamer/plugins</br>
+  ライブラリファイル：/home/zmp/tools/mjpg-streamer/*.so</br>
+  実行ファイル：/home/zmp/tools/mjpg-streamer/mjpg_streamer</br>
+  起動シェル：/home/zmp/tools/mjpg-streamer/startStream</br></p>
+</blockquote>
+
+<p>起動シェルで引数を指定してmjgp-streamerを実行しています。</br>
+用途に合わせて引数を変更して下さい。</p>
+
+		</div>
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+	  </div>
+	  <div id="footer">
+		<span>Copyright&copy; 2016 ZMP Inc., All rights reserved.</span>
+	  </div>
+	</div>
+  </body>
+</html>

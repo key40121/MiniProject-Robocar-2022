@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="ja" />
+    <title>5. システム構成 : ZMP RoboCar Reference Manual</title>
+	<link type="text/css" rel="stylesheet" href="./css/base.css"/>
+  </head>
+  <body>
+	<div id="container">
+	  <div id="header">
+		<h1>ZMP RoboCar Reference Manual</h1>
+	  </div>
+	  <div id="contents">
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+		<div class="inner">
+		<h1>5. システム構成</h1>
+
+<h2>メカニズム</h2>
+
+<h3>外観</h3>
+
+<p><img src="images/robocar.jpg" alt="RoboCar overview" /></p>
+
+<p>図: RoboCarの外観</p>
+
+<h3>外形</h3>
+
+<p><img src="images/m_orthographic_view.png" alt="RoboCar View" /></p>
+
+<p>図: RoboCarの外形</p>
+
+<h2>エレキ</h2>
+
+<h3>ブロックダイアグラム</h3>
+
+<p>RoboCarエレキブロックダイアグラムを以下に示します。</p>
+
+<p><img src="images/e_block.png" alt="RoboCar Electric block diagram" /></p>
+
+<p>図: RoboCar ブロック図</p>
+
+<h3>IMAPボードブロックダイアグラム</h3>
+
+<p>IMAPボードのブロックダイアグラムを以下に示します。</p>
+
+<p><img src="images/e_imap_block.png" alt="RoboCar IMAPboard Electric block diagram" /></p>
+
+<p>図: RoboCar IMAPボードブロック図</p>
+
+<h2>ソフトウェア</h2>
+
+<h3>概要</h3>
+
+<p>RoboCarは、ネットワーク越しにPCと通信して協調動作などを行うことができます。</p>
+
+<p>CPUボードにはRTパッチを適用したLinuxが稼動しています。</p>
+
+<p>IMAPボードではIMAPCARプロセッサがソフトウェアにより画像処理を行います。</p>
+
+<p>BASEボードはセンサなどの情報を取得して、駆動用のモータをコントロール
+するファームウェアが動作しています。</p>
+
+<p><img src="images/RC_software_constitution_figure.PNG" alt="Software block diagram" /></p>
+
+<p>図: ソフトウェアブロック図</p>
+
+<h3>Linux RoboCarライブラリ</h3>
+
+<p>別章で詳しく説明します。また、APIリファレンスが参考になります。</p>
+
+<h3>IMAPCAR画像認識プログラム</h3>
+
+<p>機能として、ステレオ視による障害物の検知と、白線の認識があります。
+別章で詳しく説明します。</p>
+
+<h4>障害物検知</h4>
+
+<p>RoboCarから距離30cmから3m程度の範囲、水平角度約60度の範囲の物体までの
+距離を測定し、その結果をさまざまな形で返します。</p>
+
+<h4>白線認識</h4>
+
+<p>RoboCarの両側にある、約5cm幅の白線を左右どちらかのカメラで認識し
+その座標を返します。</p>
+
+<h3>BASEボードファームウェア</h3>
+
+<p>以下の処理を行います。CPUとの通信はシリアル(RS232C)で行われ、
+10[msec]毎にすべての情報をCPUに送信します。</p>
+
+<h4>DCモータドライブ</h4>
+
+<p>16bitPWMによりFETのH-Bridgeを介してDCモータを駆動します。</p>
+
+<h4>ロータリーエンコーダ</h4>
+
+<p>モータ軸1箇所と、ホイールの4つの回転をロータリーエンコーダで
+計測しています。カウント値は12bit分です。</p>
+
+<h4>ジャイロセンサ</h4>
+
+<p>ジャイロセンサからの入力をA/D変換で取得します。</p>
+
+<h4>加速度センサ</h4>
+
+<p>加速度センサからの入力をA/D変換で取得します。</p>
+
+<h4>赤外線測距センサ</h4>
+
+<p>赤外線測定距離センサ8個分の値をA/D変換で取得します。</p>
+
+<h4>電流モニタ</h4>
+
+<p>DCモータに流れる電流をモニタリングできます。</p>
+
+<h4>速度制御</h4>
+
+<p>DCモータの回転速度をPID制御でコントロールします。</p>
+
+		</div>
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+	  </div>
+	  <div id="footer">
+		<span>Copyright&copy; 2009-2011 ZMP Inc., Alright resereved.</span>
+	  </div>
+	</div>
+  </body>
+</html>

@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="ja" />
+    <title>6. ログイン設定マニュアル : ZMP RoboCar Reference Manual</title>
+	<link type="text/css" rel="stylesheet" href="./css/base.css"/>
+  </head>
+  <body>
+	<div id="container">
+	  <div id="header">
+		<h1>ZMP RoboCar Reference Manual</h1>
+	  </div>
+	  <div id="contents">
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+		<div class="inner">
+		<h1>6. ログイン設定マニュアル</h1>
+
+<h2>概要</h2>
+
+<p>ここでは、初めにRoboCarのネットワークを設定し、イーサネットケーブル、あるいはwifiなどの無線通信でRoboCarのOSにログインできるまでの手順を解説します。</p>
+
+<p>また、ライブラリの参照やサンプルの実行に必要な環境変数の設定も併せて解説します。</p>
+
+<h2>準備</h2>
+
+<p>設定の前に、以下のものをあらかじめ装着する必要があります。</p>
+
+<h4>バッテリー(情報系と駆動用の2種類)</h4>
+
+<p>情報系のバッテリーは必須です。単三電池12本をご用意ください（充電池の使用をお勧めします）。別途購入が必要ですが、情報系ボードに接続できるACアダプターもございます。</p>
+
+<p>駆動用のバッテリーは、付属品である専用の電池をお使いください。ネットワーク設定には必須ではありませんが、サンプルを動かす際に必要な場合もあるため、起動する前に接続することをお勧めします。</p>
+
+<p>なお、使用後は必ず電源ケーブルをどちらも外してください</p>
+
+<h4>PC接続用アダプタ</h4>
+
+<p>シリアル通信、およびネットワーク通信用のアダプタをRoboCarに装着しておきます。</p>
+
+<p>シリアル通信(RS232C)用のアダプタは必須です。</p>
+
+<p>ネットワーク用については、ご利用の環境に合わせて選択します。利用しないほうのアダプタを外しておくと、OSの起動が早くなります。</p>
+
+<ul>
+<li>有線 ： LANアダプタ</li>
+<li>無線 ： WiFiアダプタ（付属のUSBドングル型）</li>
+</ul>
+
+<h2>バッテリーの接続方法</h2>
+
+<p>以下のようにバッテリーを接続します。</p>
+
+<h3>駆動用バッテリー</h3>
+
+<ul>
+<li>RoboCar本体の電源スイッチがOFFになっていること確認します。</li>
+<li>情報系バッテリーのコネクタをはずします。</li>
+<li>アッパーシャーシを開けます。</li>
+<li>右前輪横の穴、下から、バッテリーコネクタを通します。</li>
+</ul>
+
+<p><img src="images/h_battery_1.jpeg" alt="RoboCar install lower battery 1" /></p>
+
+<p>図: コネクタをとおす</p>
+
+<ul>
+<li>BASEボードのコネクタと接続します。</li>
+</ul>
+
+<p><img src="images/h_battery_2.jpeg" alt="RoboCar install lower battery 2" /></p>
+
+<p>図: 接続</p>
+
+<ul>
+<li>車体下部のマジックテープにあわせてバッテリーを置き、固定します。</li>
+</ul>
+
+<p><img src="images/h_battery_3.jpeg" alt="RoboCar install lower battery 3" /></p>
+
+<p>図: 固定する</p>
+
+<ul>
+<li>ケーブルなどをはさまないように、アッパーシャーシを閉じます。</li>
+<li>バッテリのコネクタを接続します。</li>
+</ul>
+
+<h3>情報系バッテリー</h3>
+
+<ul>
+<li>RoboCar本体の電源スイッチがOFFになっていることを確認します。</li>
+<li>情報系バッテリーのコネクタをはずします。</li>
+<li>アッパーシャーシを開けます。</li>
+<li>電池ボックスに、それぞれ単三形乾電池を6本、計12本入れます。極性を間違えないように注意してください。</li>
+<li>電池ボックスをシャーシの取り付け位置に収めます。</li>
+</ul>
+
+<p><img src="images/h_battery_4.jpeg" alt="RoboCar install upper battery 1" /></p>
+
+<p>図: 電池ボックスをいれる</p>
+
+<ul>
+<li>アッパーシャーシは、ケーブルなどをはさまないように閉じます。</li>
+<li>バッテリのコネクタを接続します。</li>
+</ul>
+
+<p><img src="images/h_battery_5.jpeg" alt="RoboCar install upper battery 2" /></p>
+
+<p>図: コネクタの接続</p>
+
+<h2>ネットワーク設定の流れ</h2>
+
+<p>ネットワークを介してRoboCarにログインするための手順は、以下の通りになります。</p>
+
+<ul>
+<li><p>シリアルコンソールからLinuxにログイン</p></li>
+<li><p>ネットワーク接続の準備をする（LANケーブル、または無線通信モジュールを接続）</p></li>
+<li><p>ネットワークの設定（簡易設定ツール、または手動で設定ファイルを編集）を行い、ログアウトする</p></li>
+<li><p>sshでアクセスすることで、ネットワーク経由のログインを行う</p></li>
+</ul>
+
+<h2>ログイン、シャットダウン</h2>
+
+<h3>シリアルによるログイン</h3>
+
+<p>ネットワークを設定するために、シリアルコンソールからログインします。
+シリアルケーブル（クロス）を、接続してください。</p>
+
+<p>シリアル通信用アダプタの挿し方は、下図のように奥の端子へ、ピンの金属が見えて、ソケットの余りの部分がボードの外側になる向きに挿してください。</p>
+
+<p>なお、ピン配置はボード外枠に近い方から、GND、TxD、RxDになります。</p>
+
+<p><img src="images/Serial.jpg" alt="Connect Serial cable" /></p>
+
+<p>図: シリアルケーブルの接続</p>
+
+<ul>
+<li><p>シリアル通信を行うため、ターミナルソフトウェア（Tera Termなど）を起動します。シリアルポートの設定は以下です。なお、文字コードはUTF-8です。</p>
+
+<pre><code>rate=115200bps data=8bit parity=none stop=1bit
+</code></pre></li>
+<li><p>接続を確認して電源スイッチをONにします。</p></li>
+<li><p>Linuxシステムがロードされます。30秒ほどで、シリアルコンソールに起動メッセージが出力されます。</p>
+
+<pre><code>Fedora release 10 (Cambridge)
+Kernel 2.6.26.8-rt13-zmprc01 on an i586 (/dev/ttyS0)
+
+localhost.localdomain login:
+</code></pre></li>
+<li><p>login: と表示されたら、以下のアカウントでログインします。</p>
+
+<pre><code>login: root
+pass: root254
+</code></pre>
+
+<ul>
+<li>ログインが完了すると、bashの使える環境になっています。</li>
+</ul></li>
+</ul>
+
+<h3>ネットワーク経由のログイン</h3>
+
+<p>（＊事前に、シリアルコンソールを介してのネットワーク設定が必要です）</p>
+
+<p>（＊ネットワーク設定は、以下の<a href="#1">「ネットワークの簡易設定ツール」</a>、または<a href="#2">「ネットワークの設定」</a>を参照）</p>
+
+<ul>
+<li><p>sshでアクセスします。</p></li>
+<li><p>上記アカウントでログインします。</p></li>
+<li><p>ログインが完了すると、bashの使える環境になっています。</p></li>
+</ul>
+
+<p><img src="images/s_login.png" alt="Login" /></p>
+
+<p>図: SSHでのログイン</p>
+
+<h3>シャットダウン</h3>
+
+<p>以下のコマンドを入力して、シャットダウン動作が終了したら、電源をOFFします。</p>
+
+<pre><code>shutdown -h now
+</code></pre>
+
+<h3 id="1">ネットワークの簡易設定ツール</h3>
+
+<hr />
+
+<p>rc_netconfig.shというツールがインストールされています。
+簡単に無線LANの設定を行うことができます。</p>
+
+<p>このツールは、ファイル'/etc/sysconfig/network-scripts/ifcfg-wlan0'を
+自動で作成して上書きします。
+viエディタになれている方は、直接ファイルを編集することを
+お勧めします。</p>
+
+<h3>起動</h3>
+
+<p>rc_netconfig.shとしてください。</p>
+
+<h3>使用方法</h3>
+
+<p>メッセージにしたがって、SSID, WEP key, DHCPの使用, IPアドレス
+を入力します。最後にセーブしてよいか聞かれるので、's'と入力してセーブします。</p>
+
+<pre><code># rc_netconfig.sh
+
+=======================================================
+[ RoboCar netconfig tool v1.0]
+
+  Notice: This program will overwrite the
+  file /etc/sysconfig/network-scripts/ifcfg-wlan0
+  or /etc/sysconfig/network-scripts/ifcfg-wlan0.
+  It only support WEP.
+
+--[eth0]------------------
+BOOTPROTO=dhcp
+--[wlan0]-----------------
+ESSID=
+KEY=
+BOOTPROTO=
+--------------------------
+
+Choose the interface to setup.
+  [1] eth0    (Wired LAN)
+  [2] wlan0   (Wire-less LAN)
+&gt;2
+Searching now...
+
+Select access point by number or bellow command.
+  [r] Refresh access point list.
+  [m] Input Manually.
+  -no---SSID----------------------------Encryption-
+  [ 0] ABCDEFGHIHGLMN               on  WEP
+&gt;0
+
+Please select wep strins format.
+  [1] by hex-decimal
+  [2] by text
+&gt;1
+
+Please input WEP key
+&gt;YYYYYYYYYY
+
+Use static IP address or DHCP.
+  [1] Use DHCP.
+  [2] Use static IP address.
+&gt;2
+
+Please input IP addres. (ex. 192.168.1.101)
+&gt;192.168.1.222
+
+Please input Netmask. (ex. 255.255.255.0)
+&gt;255.255.255.0
+
+
+---------------------
+IF      : wlan0
+SSID    : ABCDEFGHIHGLMN
+KEY     : YYYYYYYYYY
+DHCP    : no
+IPADDR  : 192.168.1.222
+NETMASK : 255.255.255.0
+---------------------
+
+Save the result to file ?
+  [s] OK. Save to file.
+  [r] no. clear result and Re-input all.
+  [q] no. Quit without save.
+&gt;s
+</code></pre>
+
+<h3>確認方法</h3>
+
+<p>ネットワークの有効/無効の切り替えや確認は、手動で行ってください。</p>
+
+<p>例)</p>
+
+<pre><code># ifdown wlan0
+# ifup wlan0
+# ifconfig
+# ping 192.168.1.1
+</code></pre>
+
+<h3 id="2">ネットワークの設定</h3>
+
+<hr />
+
+<p>出荷時の設定では、「有線ネットワーク(eht0)を使用」「DHCP」となっています。
+お使いの環境に合わせて設定しなおしてください。</p>
+
+<p>手動で設定する場合は、以下の方法で設定できます。</p>
+
+<p>Linuxでのファイル編集については、<a href="10_how_to_enjoy_linux.html#vi">10章「Linuxの使い方」のエディタvi</a>にも記載しています。</p>
+
+<h3>無線LANの場合</h3>
+
+<ul>
+<li>シリアルコンソールからログインします</li>
+<li>ディレクトリ /etc/sysconfig/network-scripts に移動</li>
+</ul>
+
+<blockquote>
+  <p>cd /etc/sysconfig/network-scripts</p>
+</blockquote>
+
+<ul>
+<li>ifcfg-wlan0を編集する。</li>
+</ul>
+
+<blockquote>
+  <p>vi ifcfg-wlan0</p>
+</blockquote>
+
+<ul>
+<li><p>RoboCarの無線LANアダプタが接続されていることを確認する。</p></li>
+<li><p>有線LANが有効になっている場合、それを無効にする。</p></li>
+</ul>
+
+<blockquote>
+  <p>ifdown eth0</p>
+</blockquote>
+
+<ul>
+<li>無線通信ネットワークを有効にする。</li>
+</ul>
+
+<blockquote>
+  <p>ifup wlan0</p>
+</blockquote>
+
+<ul>
+<li>次回起動時に自動で接続したい場合は、/etc/rc3.d/S99local を編集し、
+/sbin/ifup wlan0 &amp; を追加しておく。</li>
+</ul>
+
+<h3>有線LANの場合</h3>
+
+<ul>
+<li><p>シリアルコンソールからログインします</p></li>
+<li><p>ディレクトリ /etc/sysconfig/network-scripts に移動</p></li>
+</ul>
+
+<blockquote>
+  <p>cd /etc/sysconfig/network-scripts</p>
+</blockquote>
+
+<ul>
+<li>ifcfg-eth0を編集する。</li>
+</ul>
+
+<blockquote>
+  <p>vi ifcfg-eth0</p>
+</blockquote>
+
+<ul>
+<li><p>LANケーブルが接続されていることを確認する。</p></li>
+<li><p>無線LANが有効になっている場合、それを無効にする。</p></li>
+</ul>
+
+<blockquote>
+  <p>ifdown wlan0</p>
+</blockquote>
+
+<ul>
+<li>有線ネットワークを有効にする。</li>
+</ul>
+
+<blockquote>
+  <p>ifup eth0</p>
+</blockquote>
+
+<ul>
+<li>次回起動時には、ケーブルが接続してあれば、自動で接続されます。</li>
+</ul>
+
+<h2>設定例</h2>
+
+<h3>wlan0 DHCPの場合</h3>
+
+<p>/etc/sysconfig/network-scripts/ifcfg-wlan0</p>
+
+<blockquote>
+  <p>DEVICE=wlan0<br/>
+  BOOTPROTO=dhcp<br/>
+  ONBOOT=no<br/>
+  ESSID=XXXXXXXX<br/>
+  KEY=YYYYYYYY<br/></p>
+</blockquote>
+
+<h3>wlan0 IPアドレスを固定にしたい場合</h3>
+
+<p>/etc/sysconfig/network-scripts/ifcfg-wlan0</p>
+
+<blockquote>
+  <p>DEVICE=wlan0<br/>
+  BOOTPROTO=none<br/>
+  ONBOOT=no<br/>
+  ESSID=XXXXXXXX<br/>
+  KEY=YYYYYYYY<br/>
+  NETWORK=192.168.0.0<br/>
+  NETMASK=255.255.255.0<br/>
+  IPADDR=192.168.0.100<br/></p>
+</blockquote>
+
+<h3>eht0 DHCPの場合</h3>
+
+<p>/etc/sysconfig/network-scripts/ifcfg-eth0</p>
+
+<blockquote>
+  <p>DEVICE=eth0<br/>
+  ONBOOT=yes<br/>
+  BOOTPROTO=dhcp<br/></p>
+</blockquote>
+
+<h3>eht0 IPアドレスを固定にしたい場合</h3>
+
+<p>/etc/sysconfig/network-scripts/ifcfg-eth0</p>
+
+<blockquote>
+  <p>DEVICE=eth0<br/>
+  BOOTPROTO=none<br/>
+  ONBOOT=yes<br/>
+  NETWORK=192.168.0.0<br/>
+  NETMASK=255.255.255.0<br/>
+  IPADDR=192.168.0.100<br/></p>
+</blockquote>
+
+<h3>セキュリティについて</h3>
+
+<p>RoboCarは、OSとしてLinuxを採用し、標準のネットワークプロトコルである
+TCP/IPを使用してネットワークに参加します。</p>
+
+<p>常時起動しているシステムではなく、
+ホストPCとの連携や、車車間通信などのネットワークを介したユーザのアプリケーション
+を構築しやすさを優先させているため、LinuxのセキュリティシステムをほぼOFFにしています。</p>
+
+<p>既存のネットワークやLANに接続する場合は、セキュリティ面に十分注意して、設定を変更してから接続してください。
+RoboCar専用にネットワークを構築することを強く推奨いたします。</p>
+
+<h2>FTPによるログイン</h2>
+
+<p>RoboCarはFTPサーバとなっています。
+外部からftpによってファイルの送受信が可能です。アカウント名ftpとしてログインしてください。</p>
+
+<h4>手順</h4>
+
+<ul>
+<li><p>コマンドプロンプトを起動します。</p>
+
+<pre><code>C:\&gt;
+</code></pre></li>
+<li><p>ftpコマンドで、RoboCarのIPアドレスを指定して接続します。Userに'ftp'としてください。
+passは、任意の文字列で構いません（パスワードは使用しない）。</p>
+
+<pre><code>C:\&gt; ftp 192.168.0.100
+Connected to 192.168.0.100
+220 FTP Server ready.
+User (192.168.0.100:(none)): ftp
+331 Anonymous logi ok, send your complete email address as your password
+Password: (任意の文字列)
+230 Anonymous login ok, restrictions apply.
+ftp&gt;
+</code></pre></li>
+<li><p>ファイルを送信する場合は、'uploads'へ移動してからputしてください。</p>
+
+<pre><code>ftp&gt; cd uploads
+ftp&gt; put file.txt
+</code></pre></li>
+<li><p>バイナリファイルの場合は、忘れずにbinコマンドでバイナリモードにしてください。</p>
+
+<pre><code>ftp&gt; bin
+ftp&gt; put files.zip
+</code></pre></li>
+<li><p>終了は、byです。</p>
+
+<pre><code>ftp&gt; by
+</code></pre></li>
+</ul>
+
+<h4>ディレクトリ</h4>
+
+<p>上記方法でログインすると、以下のディレクトリが見られます。ファイルのやり取りをする場合、
+ftpコマンドでファイルを転送したあと、このディレクトリから、cpコマンドでコピーして
+任意の場所にファイルを移動してください。</p>
+
+<blockquote>
+  <p>/var/ftp</p>
+</blockquote>
+
+<p>uploadsは送信用となっており、書き込み可能です。pubは受信用となっています。</p>
+
+<blockquote>
+  <p>/var/ftp/uploads <br/>
+  /var/ftp/pub <br/></p>
+</blockquote>
+
+<h2>環境変数の設定</h2>
+
+<p>Linux内のファイルシステムにインストールされたRoboCarのシステムへアクセスできるよう、実行パス、共有ライブラリ検索パスを追加しています。</p>
+
+<p>また、ライブラリ内から使用する、設定ファイルやデータの保存先を示す変数として、ZRC<em>CONFIG</em>PATHを設定しています。</p>
+
+<p>PLX<em>SDK</em>DIRは、画像認識ボードへのアクセス用のドライバ、ライブラリのインストールパスです。</p>
+
+<h3>編集方法</h3>
+
+<p>ファイル "zrc.sh" を編集します。</p>
+
+<ul>
+<li>エディタviで、zrc.sh を開く</li>
+</ul>
+
+<blockquote>
+  <p>vi /etc/profile.d/zrc.sh　</p>
+</blockquote>
+
+<ul>
+<li>ファイルに、以下の4つの文を追加して保存</li>
+</ul>
+
+<blockquote>
+  <p>export PLX<em>SDK</em>DIR=/usr/src/PlxSdk<br/>
+  export LD<em>LIBRARY</em>PATH=$LD<em>LIBRARY</em>PATH:/usr/local/lib/zmp:/usr/local/lib/c<em>urg<br/>
+  export ZRC</em>CONFIG_PATH=/root/zmp/config<br/>
+  export PATH=$PATH:/usr/local/bin/zmp<br/></p>
+</blockquote>
+
+<h2>電源制御ツール</h2>
+
+<p>（そのまま、次章にお進みいただいて構いません。）</p>
+
+<p>RoboCarには、ipm_serialという電源制御ツールがインストールされています。
+CPUボードからシリアル通信を通じて、電源回路を操作することができるツールです。</p>
+
+<p>外部から強制でハードウェアリセットをかけたい場合や、
+電池の消費を抑えたいときに使用してください。</p>
+
+<h3>コマンドフォーマット</h3>
+
+<p>ログインしたままの状態（コマンド"cd  "と入力した先のディレクトリ）で、以下のコマンドを入力してください。</p>
+
+<blockquote>
+  <p>ipm_serial (コマンド) (パラメータ1) (パラメータ2)</p>
+</blockquote>
+
+<ul>
+<li><p>コマンド</p>
+
+<p>'S'が電源のOn/Off、'R'がリセットです。
+'P'で、現在のバッテリー状態を取得します。</p></li>
+<li><p>Sコマンド</p>
+
+<p>電源制御の対象と、OnかOff、二つのパラメータを指定します。</p>
+
+<ul>
+<li>パラメータ1、'0x04'がBaseBoard、'0x01'がLaserRangeSensorをあらわします。</li>
+<li>パラメータ2、'1'がOn、'0'がOffをあらわします。</li>
+</ul></li>
+<li><p>Rコマンド</p>
+
+<p>一つのパラメータを指定します。</p>
+
+<ul>
+<li>パラメータ1、'0x01'がIMAPCARをあらわします。</li>
+</ul></li>
+<li><p>Pコマンド</p>
+
+<p>パラメータはありません。
+実行すると、4つの数字が表示されます。それぞれ以下の値です。</p>
+
+<pre><code>- 駆動系バッテリの電圧[V]
+- 5V系電源電圧[V]
+- 3V系電源電圧[V]
+- 情報系バッテリの電圧[V]
+</code></pre></li>
+</ul>
+
+<h3>使用例</h3>
+
+<h4>BaseBoardの電源のOn/Off</h4>
+
+<pre><code>ipm_serial S 0x04 1
+ipm_serial S 0x04 0
+</code></pre>
+
+<h4>LaserRangeSensor電源のOn/Off</h4>
+
+<pre><code>ipm_serial S 0x01 1
+ipm_serial S 0x01 0
+</code></pre>
+
+<h4>IMAPCARのリセット</h4>
+
+<pre><code>ipm_serial R 0x01
+</code></pre>
+
+<h4>電圧の取得</h4>
+
+<pre><code>ipm_serial P
+</code></pre>
+
+		</div>
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+	  </div>
+	  <div id="footer">
+		<span>Copyright&copy; 2009-2011 ZMP Inc., Alright resereved.</span>
+	  </div>
+	</div>
+  </body>
+</html>

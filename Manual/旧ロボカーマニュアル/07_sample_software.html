@@ -1,0 +1,1279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="ja" />
+    <title>7. サンプルアプリケーション : ZMP RoboCar Reference Manual</title>
+	<link type="text/css" rel="stylesheet" href="./css/base.css"/>
+  </head>
+  <body>
+	<div id="container">
+	  <div id="header">
+		<h1>ZMP RoboCar Reference Manual</h1>
+	  </div>
+	  <div id="contents">
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+		<div class="inner">
+		<h1>7. サンプルアプリケーション</h1>
+
+<h2>概要</h2>
+
+<p>Windows上で動作するサンプルアプリケーションの機能及び実行方法を説明します。<br/>
+弊社から提供するサンプルアプリケーションはLANでPCとRCを接続することで<br/>
+各種センサ情報の取得及び、操舵角と駆動速度の送信を行います。<br/>
+<br/></p>
+
+<h3>ソフトウェア構成</h3>
+
+<p><img src="images/RC_sample_software_constitution_figure.PNG" alt="Software consititution" /></p>
+
+<p>図: ソフトウェア構成図
+<br/>
+<br/>
+<br/></p>
+
+<h2>アプリケーション</h2>
+
+<h3>IpmServer</h3>
+
+<h4>機能概要</h4>
+
+<p>Windows上のカメラキャリブレーションツール(RczCameraCal)と情報をやりとりするためのサーバプログラム。<br/></p>
+
+<h4>使用方法</h4>
+
+<p>/root/zmp/samples/IpmServer/ipm_serverを起動<br/></p>
+
+<blockquote>
+  <p>cd /root/zmp/samples/IpmServer <br/>
+  ./ipm_server <br/></p>
+</blockquote>
+
+<p>※ctrl+cでプログラム終了<br/>
+操作は、すべて<a href="#1">カメラキャリブレーションツール</a>から行います。<br/></p>
+
+<h3>SampleGetSensor</h3>
+
+<h4>機能概要</h4>
+
+<p>各種センサの情報を10msec毎に取得する<br/></p>
+
+<h4>使用方法</h4>
+
+<p>/root/zmp/samples/SampleGetSensor/Debug/SampleGetSensorを起動<br/></p>
+
+<blockquote>
+  <p>cd /root/zmp/samples/SampleGetSensor/Debug <br/>
+  ./SampleGetSensor <br/>
+  <br/></p>
+</blockquote>
+
+<p>以下のセンサ情報を10msec間隔で取得して表示します。<br/>
+ステアリングサーボ情報<br/>
+ ・現在位置(deg)<br/>
+ ・現在電流(mA)<br/>
+ ・現在温度(℃)<br/>
+ ・現在電圧(mV)<br/>
+RC内部センサ<br/>
+ ・ジャイロセンサ(deg/sec)<br/>
+ ・加速度X軸(G)<br/>
+ ・加速度Y軸(G)<br/>
+ ・加速度Z軸(G)<br/>
+ ・モータエンコーダ(cycle/sec)<br/>
+ ・WHEELエンコーダ1(mm/sec)<br/>
+ ・WHEELエンコーダ2(mm/sec)<br/>
+ ・WHEELエンコーダ3(mm/sec)<br/>
+ ・WHEELエンコーダ4(mm/sec)<br/>
+赤外線測距センサ<br/>
+ ・赤外線測距センサ0～7(mm)<br/>
+電源情報<br/>
+ ・モータ電流(mA)<br/>
+ ・バッテリレベル(V)<br/>
+<br/>
+※ctrl+cでプログラム終了<br/></p>
+
+<h3>センサ出力</h3>
+
+<p>RCのジャイロセンサ、加速度センサ(X軸/Y軸/Z軸)、赤外線測距センサ8個の値を10ms毎に更新します。<br/>
+キーボード入力及びスライダーのマウス操作によりRCを操作します。<br/>
+<br/></p>
+
+<h4>使用方法</h4>
+
+<h5>　RC側のアプリケーションを起動</h5>
+
+<p>RCにログインして以下のコマンドで実行ファイルのあるディレクトリに移動します。<br/></p>
+
+<blockquote>
+  <p>cd zmp/samples/SampleSocketCommunication/Debug/<br/></p>
+</blockquote>
+
+<p>以下のコマンドで通信アプリを起動します。<br/></p>
+
+<blockquote>
+  <p>./SampleSocketCommunication xxx.xxx.xxx.xxx<br/>
+  (※ xxx.xxx.xxx.xxxはセンサ出力アプリを起動するPCのIPアドレス)<br/></p>
+</blockquote>
+
+<h5>　PC側のアプリケーションを起動</h5>
+
+<p>　[スタート]→[すべてのプログラム]→[ZMP]→[RoboCar]→[センサ出力]を起動<br/>
+　<img src="images/RC_sample_SGS.PNG" alt="Sensor Output" />
+<br/>
+　図: センサ出力　イメージ図<br/>
+<br/></p>
+
+<h5>　ネットワーク接続</h5>
+
+<p>　<img src="images/RC_sample_SGS_connect.PNG" alt="SGS connect" />
+<br/>
+　左側の枠にRCのIPアドレスを入力します。<br/>
+　"Connect"ボタン押してRCとの接続に成功すると右側に"Connected"と表示されます。<br/>
+　接続に失敗すると"start failed"と表示されます。<br/>
+<br/></p>
+
+<h5>　RCの操舵角操作</h5>
+
+<p>　<img src="images/RC_sample_SGS_steer.PNG" alt="SGS steer" />
+<br/>
+　RCの操舵角を手動で操作します。<br/>
+　SETボタン：”target Angle”に入力された値をRCに送信します。<br/>
+　target Angle：RCに送信する値を入力します。(-30度～30度)<br/>
+　スライダー：マウスでスライダーを移動させることでRCに値を送信します。<br/>
+　L+1ボタン：現在の操舵角を左に1度移動させます。<br/>
+　zeroボタン：操舵角を0度に移動させます。<br/>
+　R+1ボタン：現在の操舵角を右に1度移動させます。<br/>
+<br/></p>
+
+<h5>　RCの速度操作</h5>
+
+<p>　<img src="images/RC_sample_SGS_drive.PNG" alt="SGS drive" />
+<br/>
+　RCの直進速度を手動で操作します。<br/>
+　SETボタン：”target”に入力された値をRCに送信します。<br/>
+　target Speed：RCに送信する値を入力します。(-2800mm/s～2800mm/s)<br/>
+　スライダー：マウスでスライダーを移動させることでRCに値を送信します。<br/>
+　B+50ボタン：現在の速度から-50した値を設定します。<br/>
+　zeroボタン：速度を0に設定します。<br/>
+　F+50ボタン：現在の速度から+50した値を設定します。<br/>
+<br/></p>
+
+<h5>　赤外線測距センサ出力</h5>
+
+<p>　<img src="images/RC_sample_SGS_obstacle.PNG" alt="SGS obstacle" />
+<br/>
+　RCから出力された赤外線測距センサの値を10ms毎に更新します。<br/>
+　障害物が10cm以内にある場合は"near"と表示されます。<br/>
+　障害物が75cm以内に無い場合は"long"と表示されます。<br/>
+　障害物が10～75cmの間にある場合は障害物までの距離をmm単位で表示します。<br/>
+<br/></p>
+
+<h5>　エンコーダ出力</h5>
+
+<p>　<img src="images/RC_sample_SGS_encoder.PNG" alt="SGS encoder" />
+<br/>
+　RCから出力されたモータ及び各ホイールのエンコーダの値を10ms毎に更新します。<br/>
+　wheel Encoder1：左前輪エンコーダ値<br/>
+　wheel Encoder2：右前輪エンコーダ値<br/>
+　wheel Encoder3：左後輪エンコーダ値<br/>
+　wheel Encoder4：右後輪エンコーダ値<br/>
+　Motor Encoder ：モータエンコーダ値<br/>
+<br/></p>
+
+<h5>　ジャイロ／加速度出力</h5>
+
+<p>　<img src="images/RC_sample_SGS_internal.PNG" alt="SGS gyro" />
+<br/>
+　RCから出力されたジャイロセンサと加速度センサ(X軸,Y軸,Z軸)の値を10ms毎に更新します。<br/>
+　Gyro：ジャイロセンサ値<br/>
+　AccX：X軸加速度センサ値<br/>
+　AccY：Y軸加速度センサ値<br/>
+　AccZ：Z軸加速度センサ値<br/>
+<br/></p>
+
+<h5>　電源情報出力</h5>
+
+<p>　<img src="images/RC_sample_SGS_power.PNG" alt="SGS power" />
+<br/>
+　RCから出力された電源情報を10ms毎に更新します。<br/>
+　Motor Current：モータ電流<br/>
+　Motor Battery：モータ電圧<br/>
+<br/></p>
+
+<h5>　操舵用サーボモータ出力</h5>
+
+<p>　<img src="images/RC_sample_SGS_servo.PNG" alt="SGS servo" />
+<br/>
+　RCから出力された操舵用サーボモータの値を10ms毎に更新します。<br/>
+　Angle：操舵角<br/>
+　Temp：サーボモータ温度<br/>
+　Current：サーボモータ電流<br/>
+　Volts：サーボモータ電圧<br/>
+<br/></p>
+
+<h3>SampleDriveControl</h3>
+
+<h4>機能概要</h4>
+
+<p>駆動用モータとステアリングサーボモータをコンソールからのキー入力で操作します。<br/></p>
+
+<h4>使用方法</h4>
+
+<p>/root/zmp/samples/SampleDriveControl/SampleDriveControlを起動<br/></p>
+
+<blockquote>
+  <p>cd /root/zmp/samples/SampleDriveControl<br/>
+  ./SampleDriveControl"<br/></p>
+</blockquote>
+
+<p>キー入力によってRCを操作<br/>
+r:ステアリングサーボを現在角度から右に3度切る(-30deg～30deg)<br/>
+l:ステアリングサーボを現在角度から左に3度切る(-30deg～30deg)<br/>
+f:駆動用モータを現在速度から前進方向に(+)100mm/s加速する(-2800mm/s～2800mm/s)<br/>
+b:駆動用モータを現在速度から後退方向に(-)100mm/s加速する(-2800mm/s～2800mm/s)<br/>
+s:駆動用モータの速度をゼロ、ステアリングサーボの角度をゼロに設定する<br/>
+p:駆動用モータの状態をBRAKEにする<br/>
+o:駆動用モータの状態をOFFにする<br/>
+g:駆動用モータの状態をONにする<br/>
+v:駆動用モータの速度を設定する(-2800mm/s～2800mm/s)<br/>
+ 例1) "v300"と入力した場合、300mm/secで前進する<br/>
+ 例2) "v-50"と入力した場青、(-)50mm/secで後退する<br/>
+a:ステアリングサーボの角度を設定する(-30.0deg～30.0deg)<br/>
+ 例1) "a15.2"と入力した場合、原点から15.2度右へ切る<br/>
+ 例2) "a-5.6"と入力した場合、原点から-5.6度左へ切る<br/>
+t:駆動用モータのトルク設定(0～255)<br/>
+ 例1) "t0"と入力した場合、駆動用モータのトルクはゼロになる<br/>
+ 例2) "t10"と入力した場合、駆動用モータのトルクは10になる<br/>
+e:ステアリングサーボ、駆動用モータにゼロを設定して状態をOFFにする(ループから抜ける)<br/>
+※ctrl+cでプログラム終了<br/>
+<br/></p>
+
+<h3>ドライビングシミュレータ</h3>
+
+<p>RCの左側カメラの画像(補正前)を100ms毎に更新します。<br/>
+RCのジャイロセンサ、加速度センサ(X軸/Y軸/Z軸)、赤外線測距センサ8個の値を10ms毎に更新します。<br/>
+PCにUSBで接続したゲーム用ハンドル及びアクセルから値を取得してRCを操作します。<br/>
+※ ゲーム用ハンドルはメーカーや型番によって出力される値が異なるのでサンプルプログラムの修正が必要になります。<br/></p>
+
+<h4>使用方法</h4>
+
+<h5>　RC側のアプリケーションを起動</h5>
+
+<p>RCにログインして以下のコマンドで実行ファイルのあるディレクトリに移動します。<br/></p>
+
+<blockquote>
+  <p>cd zmp/samples/SampleSocketCommunication/Debug/<br/></p>
+</blockquote>
+
+<p>以下のコマンドで通信アプリを起動します。<br/></p>
+
+<blockquote>
+  <p>./SampleSocketCommunication xxx.xxx.xxx.xxx <br/>
+  ※ xxx.xxx.xxx.xxxはドライビングシミュレータアプリを起動するPCのIPアドレス<br/></p>
+</blockquote>
+
+<h5>　PC側のアプリケーションを起動</h5>
+
+<p>　[スタート]→[すべてのプログラム]→[ZMP]→[RoboCar]→[ドライビングシミュレータ]を起動<br/>
+　<img src="images/RC_sample_DS.PNG" alt="Driving Simulator" />
+<br/>
+　図: ドライビングシミュレータ　イメージ図<br/>
+<br/></p>
+
+<h5>　ネットワーク接続</h5>
+
+<p>　<img src="images/RC_sample_DS_connect.PNG" alt="Driving Simulator connect" />
+<br/>
+　左側の枠にRCのIPアドレスを入力します。<br/>
+　"Connect"ボタン押してRCとの接続に成功すると右側に"Connected"と表示されます。<br/>
+　接続に失敗すると"start failed"と表示されます。<br/>
+<br/></p>
+
+<h5>　カメラ画像</h5>
+
+<p>　<img src="images/RC_sample_DS_camera.PNG" alt="Driving Simulator camera" />
+<br/>
+　RCの左側カメラの画像を100ms毎に更新します。<br/>
+　※　ネットワークトラフィック量が多い場合等は、ネットワーク遅延によって画像取得に失敗する場合があります。<br/>
+<br/></p>
+
+<h5>　ハンドル操作</h5>
+
+<p>　<img src="images/RC_sample_DS_handle.PNG" alt="Driving Simulator handle" />
+<br/>
+　PCにUSBで接続したゲーム用ハンドルの値を表示します。<br/>
+　ゲーム用ハンドルは別途用意する必要があります。<br/>
+　ゲーム用ハンドルはメーカー／型番によって出力値が異なるため、ハンドル操作を行う場合はサンプルプログラムの処理を用意したゲーム用ハンドルの出力値に合わせる必要があります。<br/>
+　操舵角：ステアリングの角度を50ms毎に更新します。(-90度～90度)<br/>
+　操舵角速度：操舵角の1秒あたりの移動量を50ms毎に更新します。<br/>
+　設定速度：アクセルからの入力をRoboCarに送信する速度に変換して表示します。<br/>
+　ブレーキ入力：ブレーキからの入力を表示します。<br/>
+　速度リミット：RoboCarに送信する最大速度を設定します。アクセルからの入力が速度リミットより大きい場合でも速度リミット以上の値は送信されません。速度リミットで設定出来る値は0～2800mm/sです。<br/>
+　リミット設定：速度リミットに入力された値を設定します。このボタンを押さないと”速度リミット”へ入力した値は反映されません。<br/>
+　操作有効：このボタンを押すとステアリング・アクセル・ブレーキからの入力が有効になります。デフォルトは有効になっています。<br/>
+　操作無効：このボタンを押すとステアリング・アクセル・ブレーキからの入力が無効になります。<br/>
+<br/></p>
+
+<h5>　RCの操舵角操作</h5>
+
+<p>　<img src="images/RC_sample_DS_steer.PNG" alt="Driving Simulator steer" />
+<br/>
+　RCの操舵角を手動で操作します。<br/>
+　ONボタン：操舵用サーボ状態をONにします。<br/>
+　OFFボタン：操舵用サーボ状態をOFFにします。<br/>
+　SETボタン：”target”に入力された値をRCに送信します。<br/>
+　target：RCに送信する値を入力します。(-30度～30度)<br/>
+　スライダー：マウスでスライダーを移動させることでRCに値を送信します。<br/>
+　present：RCから出力された値を10ms毎に更新します。<br/>
+　offsetボタン：”current”の値をサーボのゼロ位置に設定します。(調整用)<br/>
+　※　ゲーム用ハンドルが接続されている場合は”target”の値が50ms毎に更新されます。<br/>
+<br/></p>
+
+<h5>　RCの速度操作</h5>
+
+<p>　<img src="images/RC_sample_DS_drive.PNG" alt="Driving Simulator drive" />
+<br/>
+　RCの直進速度を手動で操作します。<br/>
+　ONボタン：駆動用モータ状態をONにします。<br/>
+　OFFボタン：駆動用モータ状態をOFFにします。<br/>
+　SETボタン：”target”に入力された値をRCに送信します。<br/>
+　target：RCに送信する値を入力します。(-2800mm/s～2800mm/s)<br/>
+　スライダー：マウスでスライダーを移動させることでRCに値を送信します。<br/>
+　present：RCから出力された値を10ms毎に更新します。<br/>
+　※　ゲーム用ハンドルが接続されている場合は”target”の値が50ms毎に更新されます。<br/>
+<br/></p>
+
+<h5>　赤外線測距センサ出力</h5>
+
+<p>　<img src="images/RC_sample_DS_obstacle.PNG" alt="Driving Simulator obstacle" />
+<br/>
+　RCから出力された赤外線測距センサの値を10ms毎に更新します。<br/>
+  障害物が10cm以内にある場合は"near"と表示されます。<br/>
+  障害物が75cm以内に無い場合は"long"と表示されます。<br/>
+　障害物が10～75cmの間にある場合は障害物までの距離をmm単位で表示します。<br/>
+<br/></p>
+
+<h5>　エンコーダ出力</h5>
+
+<p>　<img src="images/RC_sample_DS_encoder.PNG" alt="Driving Simulator encoder" />
+<br/>
+　RCから出力されたモータ及び各ホイールのエンコーダの値を10ms毎に更新します。<br/>
+　wheel Encoder1：左前輪エンコーダ値<br/>
+　wheel Encoder2：右前輪エンコーダ値<br/>
+　wheel Encoder3：左後輪エンコーダ値<br/>
+　wheel Encoder4：右後輪エンコーダ値<br/>
+　Motor Encoder ：モータエンコーダ値<br/>
+<br/></p>
+
+<h5>　ジャイロ／加速度出力</h5>
+
+<p>　<img src="images/RC_sample_DS_gyro.PNG" alt="Driving Simulator gyro" />
+<br/>
+　RCから出力されたジャイロセンサと加速度センサ(X軸,Y軸,Z軸)の値を10ms毎に更新します。<br/>
+　Gyro：ジャイロセンサ値<br/>
+　AccX：X軸加速度センサ値<br/>
+　AccY：Y軸加速度センサ値<br/>
+　AccZ：Z軸加速度センサ値<br/>
+　GyroOffSetボタン：”Gyro”の値をGyroセンサのゼロ位置に設定します。(調整用)<br/>
+<br/>
+<br/></p>
+
+<h3>SampleObstacleAvoidance</h3>
+
+<h4>機能概要</h4>
+
+<p>画像処理ボードからオブジェクト抽出(ヒストグラム)結果を取得して障害物を発見すると直進を停止する。<br/></p>
+
+<h4>使用方法</h4>
+
+<p>/root/zmp/samples/SampleObstacleAvoidance/SampleObstacleAvoidanceを起動<br/></p>
+
+<blockquote>
+  <p>cd /root/zmp/samples/SampleObstacleAvoidance<br/>
+  ./SampleObstacleAvoidance<br/></p>
+</blockquote>
+
+<p>画像処理ボードからのオブジェクト抽出(ヒストグラム)結果を定期定期に取得して、障害物を検知すると直進を停止します。障害物が無くなると再度前進します。<br/>
+※ctrl+cでプログラム終了<br/>
+<br/></p>
+
+<h3>レーザレンジセンサ(オプション)</h3>
+
+<p>RCにUSBケーブルで接続したレーザレンジセンサの値を100ms毎に更新します。<br/>
+RCと接続開始と同時に前進して障害物を回避するように操舵角を送信します。<br/>
+障害物に対して一定距離以内に近づくと後進して障害物から離れます。<br/>
+<br/></p>
+
+<h4>使用方法</h4>
+
+<h5>　RC側のアプリケーションを起動</h5>
+
+<p>RCにログインして以下のコマンドで実行ファイルのあるディレクトリに移動します。<br/></p>
+
+<blockquote>
+  <p>cd zmp/samples/SampleSocketCommunication/Debug/<br/></p>
+</blockquote>
+
+<p>以下のコマンドで通信アプリを起動します。<br/></p>
+
+<blockquote>
+  <p>./SampleSocketCommunication xxx.xxx.xxx.xxx<br/>
+  (※ xxx.xxx.xxx.xxxはレーザレンジセンサアプリを起動するPCのIPアドレス)<br/></p>
+</blockquote>
+
+<h5>　PC側のアプリケーションを起動</h5>
+
+<p>　[スタート]→[すべてのプログラム]→[ZMP]→[RoboCar]→[レーザレンジセンサ]を起動<br/>
+　<img src="images/RC_sample_LRS.PNG" alt="Laser Range Sensor" />
+<br/>
+　図: レーザレンジセンサ　イメージ図<br/>
+<br/></p>
+
+<h5>　ネットワーク接続</h5>
+
+<p>　<img src="images/RC_sample_LRS_connect.PNG" alt="LRS connect" />
+<br/>
+　左側の枠にRCのIPアドレスを入力します。<br/>
+　"connect"ボタン押してRCとの接続に成功すると右側に"Connected"と表示されます。<br/>
+　接続に失敗すると"start failed"と表示されます。<br/>
+<br/></p>
+
+<h5>　モータON/OFF</h5>
+
+<p>　<img src="images/RC_sample_LRS_motor.PNG" alt="LRS motor" />
+<br/>
+　"Motor On/Off"ボタンを押すたびにRCの駆動用モータと操舵用モータのON/OFFが切替わります。<br/>
+<br/></p>
+
+<h5>　赤外線測距センサ出力</h5>
+
+<p>　<img src="images/RC_sample_LRS_obstacle.PNG" alt="LRS obstacle" />
+<br/>
+　RCから出力された赤外線測距センサの値を10ms毎に更新します。<br/>
+　障害物が10cm以内にある場合は"near"と表示されます。<br/>
+　障害物が75cm以内に無い場合は"long"と表示されます。<br/>
+　障害物が10～75cmの間にある場合は障害物までの距離をmm単位で表示します。<br/>
+<br/></p>
+
+<h5>　障害物表示</h5>
+
+<p>　<img src="images/RC_sample_LRS_map.PNG" alt="LRS map" />
+<br/>
+　RCから出力されたレーザレンジセンサの値を100ms毎に更新します。<br/>
+　黄色い部分はセンサの測定範囲を現し、青い部分は障害物が無い範囲を表します。<br/>
+　黒線の升目は一辺が100cmです。<br/>
+<br/>
+<br/></p>
+
+<h3>SampleLRS(LaserRangeSensor接続時のみ実行可能)</h3>
+
+<h4>機能概要</h4>
+
+<p>LaserRangeSensorの値を定期的に取得して、障害物までの距離と方向を判断して<br/>
+RCの駆動モータ速度とステアリングサーボの角度を制御します。<br/></p>
+
+<h4>使用方法</h4>
+
+<p>/root/zmp/samples/SampleLRS/Debug/SampleLRSを起動<br/></p>
+
+<blockquote>
+  <p>cd /root/zmp/samples/SampleLRS/Debug<br/>
+  ./SampleLRS<br/></p>
+</blockquote>
+
+<p>起動と同時に直進して、障害物が60cm以内に近づくとステアリングを操作して25cm以内に近づくと後退して障害物を回避します。<br/>
+※ctrl+cでプログラム終了<br/>
+<br/></p>
+
+<h2><a id="1" name="1">キャリブレーションツール</a></h2>
+
+<p>カメラ画像正規化処理のために、RoboCar毎に適切な補正データが必要です。</p>
+
+<p>そのため、RoboCarを初めてお使いになるときは、カメラキャリブレーション作業を
+行ってください。</p>
+
+<p>また、大きな衝撃を与えるなど、両カメラの位置関係が
+変わってしまった可能性がある場合はカメラキャリブレーションを
+やりなおしてください。</p>
+
+<h3>キャリブレーション環境</h3>
+
+<ul>
+<li>Windows PC</li>
+</ul>
+
+<p>キャリブレーション用ツールはWindowsアプリケーションです。
+Windowsの動作するPCを用意してください。</p>
+
+<ul>
+<li>ネットワーク環境</li>
+</ul>
+
+<p>また、画像をPCに送りその画像を元にキャリブレーションするため、
+高速で安定したネットワーク環境が必要です。
+無線LANで安定した速度が得られない場合、有線LANでの接続
+で試してみてください。</p>
+
+<ul>
+<li>チェスボード</li>
+</ul>
+
+<p>カメラの前にかざします。CD内にあるchesboardパターンを大きめの紙(A4以上)に
+印刷して、平らなボードに貼り付けてください。</p>
+
+<h3>機能一覧</h3>
+
+<p><img src="images/i_caltool.png" alt="Calibration Tool" /></p>
+
+<p>図: キャリブレーションツール</p>
+
+<ol>
+<li><p>接続先IPアドレス設定ボックスと、接続ボタン</p>
+
+<p>RoboCarのIPアドレスを指定して、接続します。
+RoboCarには、あらかじめログインして、IpmServerを起動しておいてください。
+（6.サンプルアプリケーション の IpmServer を参照）</p></li>
+<li><p>プログラム選択ボックスと、ロードボタン</p>
+
+<p>プログラムを選択して、IMAPCARへロードをします。
+プログラムとデータのロードが完了すると、IMAPCARはプログラムを
+開始します。</p></li>
+<li><p>ステータスメッセージ表示ボックス</p>
+
+<p>接続情報や、ロード中、ロード完了、またエラー発生など、
+ネットワークコネクションの状態や、IMAPCARからのメッセージを
+表示するエリアです。</p></li>
+<li><p>イメージID選択ボックスと、イメージID選択ボタン</p>
+
+<p>処理途中の画像を表示するために、イメージIDを選択します。
+イメージIDを要求すると、IpmServerは、IMAPCARから指定された画像を読み込み、送り返してきます。</p></li>
+<li><p>イメージ更新インターバル</p>
+
+<p>処理途中の画像を読み込むタイミングを設定します。
+表示の更新の速さと、ネットワーク越しにやりとりするデータ量のトレードオフになります。
+適切に表示される値を選んでください。</p></li>
+<li><p>リザルトID選択ボックスと、リザルトID選択ボタン</p>
+
+<p>結果を取得するためにリザルトIDを選択します。
+IMAPCARは、オブジェクト抽出のアルゴリズムを切り替え、
+IpmServerは指定された結果を読みこんで返します。</p></li>
+<li><p>画像View領域</p>
+
+<p>画像または結果を表示する領域です。</p></li>
+<li><p>View選択ラジオボタン</p>
+
+<p>ImageIDや、ResultIDによっては、
+受け取ったひとつのデータを、
+いくつかの表示方法で表示するように、作られています。
+どの表示方法を選択するかをここでチェックします。</p></li>
+<li><p>ディスプレイゲイン設定スライダ</p>
+
+<p>画像によっては値が小さいために、そのままでは
+見にくい場合があります。そのような場合に、
+表示のみゲインを上げ、見やすくすることができます。</p></li>
+<li><p>リザルトチェックボタン</p>
+
+<p>ImageIdも、ResultIDも要求している場合、IpmServerは
+両方のデータを送信してきています。
+どちらを表示するか、このチェックボックスで切り替えます。</p></li>
+<li><p>画像パラメータスライダ</p>
+
+<p>IMAPCARへ送信する外部パラメータの値です。
+スライダを操作するごとに値が更新されます。</p></li>
+<li><p>画像パラメータリセットボタンと、オールセットボタン</p>
+
+<p>リセットは起動時のデフォルト値に戻ります。
+オールセットボタンは、すべての値をIMAPCARに送信し、
+更新するボタンです。</p></li>
+<li><p>View C Foramtボタン</p>
+
+<p>現在の画像パラメータの値を、C++言語の形式で表示します。
+プログラムを開発する際に、
+初期設定として、IpmManagerSetParam()メソッドにそのまま渡す場合に
+便利です。</p></li>
+<li><p>チェスボードセルサイズボックス</p>
+
+<p>キャリブレーション時に使用する実際にチェスボードの
+1つのセルのサイズを指定します。できる限り正確な値を
+入力してください。単位は[cm]で、小数で入力します。</p></li>
+<li><p>チェスボード画像キャプチャボタン</p>
+
+<p>キャリブレーションのための画像を1枚キャプチャします。
+チェスボードをカメラの前に掲げてボタンを押してください。</p>
+
+<p>ImageIdを「<code>03-INPUT_STEREO</code>」にしている場合のみ有効です。</p></li>
+<li><p>キャリブレーション計算ボタン</p>
+
+<p>20枚のチェスボードイメージをキャプチャできたら、
+キャリブレーションの計算ができます。
+計算に多少時間がかかります。</p>
+
+<p>キャリブレーションの結果「カメラパラメータ」と、「マップファイル」
+が内部に生成されます。</p></li>
+<li><p>カメラパラメータLoad/Saveボタン</p>
+
+<p>カメラパラメータ(camera.xml)をディスクに保存、あるいはディスクから読み出します。
+Loadは、カメラパラメータを読み込み、内部の「マップファイル」を再計算します。</p></li>
+<li><p>カメラ正規化プレビューチェック</p>
+
+<p>現在カメラパラメータと、マップファイルで、
+入力画像を正規化して見るためのプレビューです。
+ImageIdを「<code>03-INPUT_STEREO</code>」にしている場合のみ有効です。</p></li>
+<li><p>マップデータセーブボタン</p>
+
+<p>現在のマップデータをディスクに保存します。</p></li>
+<li><p>マップデータ更新ボタン</p>
+
+<p>RoboCar内部のマップデータを更新します。
+このボタンを押すと、FTP経由でRoboCarにマップデータファイルが
+送られます。
+IMAPCARは直ちにリロードされ、MAPファイルも最新のものが読み込まれます。</p></li>
+<li><p>座標表示ボックス</p>
+
+<p>カメラパラメータ調整のために、現在の距離の値を読み取るボックスです。
+以下の条件を満たした場合のみ有効です。
++内部に「カメラパラメータ」データが存在(CaliculateするかLoadで読み込む)
++Result Idに「<code>0x01-HISTOGRAM</code>」を指定
++ResultチェックボックスがON
++Viewの選択が「<code>View1</code>」</p>
+
+<p>RoboCarを原点とした、平面の座標(x,z)を[cm]単位で表示します。</p></li>
+
+<li><p>カメラパラメータ調整ボックス</p>
+
+<p>「カメラパラメータ」のうち、距離画像から実座標に変換する
+「プロジェクション」に関係する4つの値を表示しています。</p>
+
+<p>実距離との差がある場合、ここで値を調節することができます。</p></li>
+<li><p>カメラパラメータ調整プレビューボタン</p>
+
+<p>カメラパラメータ調整ボックスに入力した値で、<code>0x01-HISTOGRAM</code>の
+結果を表示します。
+以下の条件を満たした場合のみ有効です。</p>
+
+<p>+内部に「カメラパラメータ」データが存在(CaliculateするかLoadで読み込む)
++Result Idに「<code>0x01-HISTOGRAM</code>」を指定
++ResultチェックボックスがON
++Viewの選択が「<code>View1</code>」</p></li>
+<li><p>カメラパラメータ更新ボタン</p>
+
+<p>カメラパラメータ(上記ボックスで調整済み)のファイル(camera.xml)を
+RoboCarに送信します。</p></li>
+</ol>
+
+<h3>カメラキャリブレーション手順</h3>
+
+<p>ステレオ視のためのカメラキャリブレーションの手順です。</p>
+
+<h4>IpmServerの起動</h4>
+
+<ol>
+<li>RoboCarにログインします。</li>
+<li><p>以下のディレクトリに移動します。</p>
+
+<pre><code>cd /root/zmp/samples/IpmServer
+</code></pre></li>
+<li><p>起動します。</p>
+
+<pre><code>./ipm_server
+</code></pre></li>
+</ol>
+
+<h4>キャリブレーションツールの起動</h4>
+
+<ol>
+<li>RczCameraCal.exe をダブルクリックで起動します。</li>
+</ol>
+
+<p>以下のエラーが表示される場合は[Microsoft Visual C++ 2008 再頒布可能パッケージ (x86) ]をインストールする必要があります。
+下記URLからダウンロードして下さい。</p>
+
+<ul>
+<li><a href="http://www.microsoft.com/downloads/ja-jp/details.aspx?FamilyID=9B2DA534-3E03-4391-8A4D-074B9F2BC1BF">Microsoft Visual C++ 2008 再頒布可能パッケージ (x86) </a></li>
+</ul>
+
+<p><img src="images/i_calerr.png" alt="Calibration ToolError" /></p>
+
+<p>以下、キャリブレーションツール上の操作です。</p>
+
+<h4>接続と、画像の表示</h4>
+
+<ol>
+<li>RoboCarのIPアドレスを指定して、「<code>Connect</code>」します。</li>
+<li>プログラムを「<code>01-ALG_STEREO</code>」と指定して、「<code>Load</code>」します。</li>
+<li>Image Idを、「<code>03-INPUT_STEREO</code>」とし、「<code>Set</code>」します。
+これで、ステレオ画像が表示されます。</li>
+<li><code>Imgout Interval</code>を適切な値にセットします。</li>
+</ol>
+
+<p>接続できない場合は、ネットワークの確認をしてください。
+画像が乱れる場合、ときどきしか更新されない場合は、
+ネットワークの負荷が大きいことが原因です。
+有線LANに切り替えるか、ほかの機器がつながっていない閉じたネットワークなど、
+十分に速さの出るネットワークで接続してください。</p>
+
+<p><code>Imgout Interval</code>は、画像が乱れない値にしてください。
+ネットワーク環境によっては、大きな値にして
+更新の間隔を大きくする必要があります。</p>
+
+<h4>チェスボードのキャプチャ</h4>
+
+<ol>
+<li>用意したチェスボードの1マスの大きさを定規などで測ってください。0.1[mm]程度までの精度があると補正が正確になります。</li>
+<li>チェスボードサイズを入力して「Set」してください。</li>
+<li>チェスボードを、ステレオカメラの前に掲げ、すべてのマスが両方の画面に収まる位置にもってきてください。</li>
+<li>「Capture Corner」ボタンを押します。</li>
+<li><p>うまくチェスボードを発見でき、コーナーを検出できれば、上の画面のように表示されます。</p>
+
+<p>表示されない場合は、物体がカメラに収まっていない、距離が離れている、周辺がくらいといった原因が考えられます。
+カメラに近づける、チェッカー柄を画面内におさめる、部屋の明るさを調整するなどを試してください。</p></li>
+<li><p>20枚キャプチャします。</p>
+
+<p>コーナーがなるべく画面のすみずみまで、すべての位置でキャプチャされるように、
+左右、上下の縁のちかくにもっていったり、少し傾けてみたりする等、工夫してみてください。</p></li>
+</ol>
+
+<h4>キャリブレーション計算</h4>
+
+<ol>
+<li>20枚キャプチャできたら、「Calculate」ボタンを押します。</li>
+<li>計算が終了すると、「Preview」チェックボックスが自動でONになり、Viewにプレビューが表示されます。</li>
+<li><p>補正された画像を確認してください。</p>
+
+<p>チェスボードをかざしてみると、歪みが補正され、チェスボードの直線が
+画面上でも直線に見えます。</p>
+
+<p>また、左右の画像の高さ、向きもあっているはずです。</p>
+
+<p>歪みが大きい、あるいは画像が傾いている場合は失敗です。
+ひとつもどって、何枚かを「Capture Corner」しなおしてから、もう一度「Calculate」してみてください。</p></li>
+</ol>
+
+<h4>マップファイルの更新</h4>
+
+<ol>
+<li>「Update Mapfile」ボタンを押すと、RoboCarに転送され、IMAPCARプログラムが再ロードされます。</li>
+<li><p>プログラムが再スタートしたら、Image Iｄを「<code>10-NORMALIZED_STEREO</code>」にして「Set」してみてください。</p>
+
+<p>IMAPCAR上で正規化されたカメラ画像が確認できます。
+さきほどのプレビューでみた画像と同じ画像となっているはずです。</p></li>
+</ol>
+
+<h4>カメラパラメータファイルの保存</h4>
+
+<p>「Save」ボタンを押し、「camera.xml」と保存してください。</p>
+
+<h4>ユーザーアプリケーションからの利用</h4>
+
+<p>以後、API(ライブラリlibRcImage、クラスIpmManager)を使って、
+ユーザーアプリケーションを実行すれば、
+今設定したマップファイルを自動で読み込むようになります。</p>
+
+<h3>カメラパラメータファイルの調整</h3>
+
+<p>ステレオ視の結果データから、実距離に投影するために必要なカメラパラメータファイルを、
+実測値を元に補正します。
+カメラキャリブレーションが終了していて、正しく距離画像が得られていることが前提です。
+ライブラリRcImageの、クラスRcImageUtilから使用します。</p>
+
+<h4>IpmServerの起動と、キャリブレーションツールの起動</h4>
+
+<p>上記と同様に、両方を起動します。</p>
+
+<p>以下、キャリブレーションツール上の操作です。</p>
+
+<h4>カメラパラメータファイルの読み込み</h4>
+
+<ol>
+<li><p>「Load」ボタンを押して、カメラパラメータファイルをロードする。</p>
+
+<p>キャリブレーション時に作成して保存した「camera.xml」を
+ロードしてください。</p></li>
+</ol>
+
+<h4>接続と、パラメータの調整</h4>
+
+<ol>
+<li>RoboCarのIPアドレスを指定して、「Connect」します。</li>
+<li>プログラムを「<code>01-ALG_STEREO</code>」と指定して、「Load」します。</li>
+<li>Image Idを、「<code>11-DISPARITY_I</code>」とし、「Set」します。
+これで、視差画像が表示されます。</li>
+<li><p>Imgout Intervalを適切な値にセットします。</p>
+
+<p>以下のパラメータを調整して、対象としたい物体がよく現れる値にします。</p>
+
+<ul>
+<li><code>STEREO_SAD_TH</code></li>
+<li><code>STEREO_EDGE_TH</code></li>
+<li><code>STEREO_DIS_SHIFT</code></li>
+</ul></li>
+<li><p>Image Idを、「<code>14-HISTOGRAM</code>」とし、「Set」します。
+これで、ヒストグラム画像が表示されます。</p>
+
+<p>以下のパラメータを調整して、対象としたい物体がよく現れる値にします。</p>
+
+<ul>
+<li><code>HISTOGRAM_Y0</code></li>
+<li><code>HISTOGRAM_Y1</code></li>
+</ul></li>
+<li><p>Image Idを、「<code>15-HISTOGRAM_FILTERED</code>」とし、「Set」します。
+これで、ヒストグラム画像にフィルタをかけた画像が表示されます。</p>
+
+<p>以下のパラメータを調整して、対象としたい物体がよく現れる値にします。</p>
+
+<ul>
+<li><code>FILTER_CX</code></li>
+<li><code>FILTER_K</code></li>
+</ul></li>
+</ol>
+
+<h4>結果の表示</h4>
+
+<ol>
+<li>Image Idは、Imgout Interval、「<code>00-(no update)</code>」とし、「Set」します。</li>
+<li>Result Idは、「<code>0x01-HISTOGRAM</code>」とし、「Set」します。</li>
+<li><p>Viewは、「<code>View 1</code>」とします。</p>
+
+<p>実距離に投影された結果が表示されています。
+画像上をクリックすると、その位置が、「Location」ボックスに座標値として
+表示されます。</p></li>
+</ol>
+
+<h4>パラメータの調整</h4>
+
+<p>ここで実際に、カメラの正面50[cm]前方に物体を置き、実際の値と
+計測した値でどれだけずれているか確認します。</p>
+
+<p>ずれを直すためには、</p>
+
+<ul>
+<li><code>X_Off</code></li>
+<li><code>Z_Off</code></li>
+<li><code>W_Dprop</code></li>
+<li><code>W_Static</code></li>
+</ul>
+
+<p>の4つの値を変更して、「Preview」ボタンを押してください。</p>
+
+<p>それぞれの意味は、以下の通りです。</p>
+
+<p>ヒストグラム画像(スクリーン座標)のx,yと、その点での視差値をdとし、
+実世界の3次元座標(カメラ座標)をPとすると、</p>
+
+<p><img src="images/i_equals.png" alt="Equation" /></p>
+
+<p>となります。</p>
+
+<p>ここで、Qで表される行列が、キャリブレーション時に生成され、
+カメラパラメータファイル(camera.xml)内に保存されています。</p>
+
+<p>このうち4つの値が意味をもち、それぞれ以下の成分となる値です。</p>
+
+<p><img src="images/i_matrix.png" alt="Matrix" /></p>
+
+<p>実際の対象物を、たとえば、(0,50)、(100,0)、(100,50)[cm]に置き、
+それぞれ正しく値が取れるようなパラメータを見つけます。
+二つの'W'は、X,Zの両方に影響を与えることに注意してください。</p>
+
+<p>ヒストグラムに変換する際に、Y方向成分を削除し2次元に落としますので、
+<code>Y_Off</code>は、使用しません。</p>
+
+<h4>カメラパラメータファイルの更新</h4>
+
+<ol>
+<li>「Update Camera Param」ボタンを押すと、RoboCarに転送されます。</li>
+</ol>
+
+<h4>ユーザーアプリケーションからの利用</h4>
+
+<p>以後、API(ライブラリlibRcImage、クラスRcImageUtil)を使って、
+ユーザーアプリケーションを実行すれば、
+今設定したカメラパラメータファイルを使用した変換結果が得られます。</p>
+
+<h2>ZMPライブラリの使用方法 </h2>
+
+<h3>RcControlライブラリ</h3>
+
+<p>　RCの駆動操作及び各種センサ情報の取得を行います。<br/>
+　カメラ画像及びレーザレンジセンサの情報は別ライブラリを使用します。<br/></p>
+
+<h4>　用途</h4>
+
+<p>　・RCの直進操作(-2800mm/s～2800mm/s)<br/>
+　・RCの陀角操作(-30.0deg～30.0deg)<br/>
+　・センサ情報の取得(ジャイロ、加速度(X,Y,Z)、赤外線測距、モータ及びホイールエンコーダ、電源情報)<br/></p>
+
+<h4>　使用準備</h4>
+
+<h5>　初期化　</h5>
+
+<p>　init()<br/>
+　最初に初期化を行う必要があります。<br/>
+　初期化では各種デバイスの初期化とリソース確保を行います。<br/></p>
+
+<h5>　スタート　</h5>
+
+<p>　Start()<br/>
+　初期化後にStart()で処理が開始します。<br/>
+　Start()を使わないとセンサ情報の取得が出来ません。<br/></p>
+
+<h4>　RcControlの主なインタフェース</h4>
+
+<h5>　駆動用モータのON/OFF　</h5>
+
+<p>　SetMotorEnableReq(char enable)<br/>
+　駆動用モータのON/OFF(0=OFF, 1=ON, 2=ブレーキ)を設定します。<br/>
+　初期化後に駆動速度を設定する場合は駆動用モータをONにしておく必要があります。<br/></p>
+
+<h5>　駆動速度の設定　</h5>
+
+<p>　SetDriveSpeed(int speed)<br/>
+　RCの駆動速度を(-2800mm/s～2800mm/s)で設定します。<br/>
+　駆動用モータがONになっていないと駆動速度を設定してもRCは動きません。<br/></p>
+
+<h5>　操舵用サーボモータのON/OFF　</h5>
+
+<p>　SetServoEnable(int enable)<br/>
+　操舵用サーボモータのON/OFF(0=OFF, 1=ON, 2=ブレーキ)を設定します。<br/>
+　初期化後に操舵角を設定する場合は操舵用サーボモータをONにしておく必要があります。<br/></p>
+
+<h5>　操舵角の設定　</h5>
+
+<p>　SetSteerAngle(float angle)<br/>
+　RCの操舵角を0.1deg単位(－30.0deg～30.0deg)で設定します。<br/>
+　操舵用サーボモータがONになっていないと操舵角を設定してもRCは動きません。<br/></p>
+
+<h5>　操舵用サーボモータ情報の取得</h5>
+
+<p>　GetServoInfoReq(int id, SERVO<em>INFO</em>ADR adr, int len, DRIVE_VALUE* value)<br/>
+　操舵用サーボモータの情報取得を行います。<br/>
+　情報取得の要求からサーボモータの応答を受信するまでの遅延が5ms程度あるのでそれより早い周期で情報取得を行っても値が更新されません。<br/></p>
+
+<h5>情報取得フラグ設定</h5>
+
+<p>　SetReportFlagReq(char flag)<br/>
+　ベースボードから取得するセンサ情報を設定します。<br/>
+　デフォルトでは全て(ジャイロ、加速度、エンコーダ、障害物センサ、電源情報)の情報を10ms毎に受信してlibRcControl内部保持します。<br/>
+　flag=0：何も受信しない。<br/>
+　flag=1：ジャイロ、加速度、エンコーダ<br/>
+　flag=2：障害物センサ<br/>
+　flag=3：ジャイロ、加速度、エンコーダ、障害物センサ<br/>
+　flag=4：電源情報<br/>
+　flag=5：ジャイロ、加速度、エンコーダ、電源情報<br/>
+　flag=6：障害物センサ、電源情報<br/>
+　flag=7：ジャイロ、加速度、エンコーダ、障害物センサ、電源情報<br/></p>
+
+<h5>　ジャイロ／加速度／エンコーダの取得</h5>
+
+<p>　GetSensorInfoReq(SENSOR_VALUE* value)<br/>
+　ジャイロ／加速度／エンコーダの情報を取得します。<br/>
+　10ms毎に値が更新されるのでそれより早い周期で情報取得を行っても値が更新されません。<br/>
+　情報取得フラグ設定でジャイロ、加速度、エンコーダを取得しない設定にしていると値は更新されません。<br/></p>
+
+<h5>　障害物センサ情報の取得</h5>
+
+<p>　GetObstacleSensorInfoReq(OBSTACLE_VALUE* value)<br/>
+　障害物センサ情報8個の情報を取得します。<br/>
+　10ms毎に値が更新されるのでそれより早い周期で情報取得を行っても値が更新されません。<br/>
+　情報取得フラグで障害物センサの情報を取得しない設定にしていると値は更新されません。<br/></p>
+
+<h5>　電源情報の取得</h5>
+
+<p>　GetPowerInfoReq(POWER_VALUE* value)<br/>
+　電源情報を取得します。<br/>
+　10ms毎に値が更新されるのでそれより早い周期で情報取得を行っても値が更新されません。<br/>
+　情報取得フラグで電源情報を取得しない設定にしていると値は更新されません。<br/></p>
+
+<h4>　使用例</h4>
+
+<pre><code>int main() {
+　　RcControl     _RcControl; // RCコントロールクラス
+　　DRIVE_VALUE   drive;      // 操舵用サーボモータ情報構造体 
+　　SENSOR_VALUE  sensor; // ジャイロ/加速度/エンコーダ構造体
+　　OBSTACLE_VALUE    obstacle;   // 障害物センサ構造体
+　　POWER_VALUE   power;      // 電源情報構造体
+
+　　system("ipm_serial S 4 0");   // ベースボードのストップ
+　　sleep(1);
+　　system("ipm_serial S 4 1");   // ベースボードのスタート
+
+　　_RcControl.init();            // 初期化
+　　_RcControl.Start();           // 処理開始
+　　_RcControl.SetReportFlagReq(7);   // 情報取得フラグ設定
+　　_RcControl.SetMotorEnableReq(1);  // 駆動用モータON
+　　_RcControl.SetServoEnable(1);     // 操舵用サーボモータON 
+
+　　for(int i=0; i&lt;100; i++){
+　　　　usleep(1000**100);
+　　　　_RcControl.SetDriveSpeed(i**10);        // 速度設定
+　　　　_RcControl.SetSteerAngle((float)i%30);  // 操舵角設定
+　　　　_RcControl.GetServoInfoReq(1, 42, 12, &amp;drive); // 操舵用サーボ情報取得
+　　　　_RcControl.GetSensorInfoReq(&amp;sensor);       // ジャイロ/加速度/エンコーダ情報取得
+　　　　_RcControl.GetObstacleSensorInfoReq(&amp;obstacle);// 障害物センサ情報取得
+　　　　_RcControl.GetPowerInfoReq(&amp;power);     // 電源情報取得
+　　}
+
+　　_RcControl.SetDriveSpeed(0);  // 速度設定
+　　_RcControl.SetSteerAngle(0);  // 操舵角設定
+　　_RcControl.SetMotorEnableReq(0);// 駆動用モータOFF
+　　_RcControl.SetServoEnable(0); // 操舵用サーボモータOFF 
+　　_RcControl.Stop();        // 処理の停止
+　　_RcControl.Close();       // リソースの解放
+
+　　return 0;
+}
+</code></pre>
+
+<h3>RcImageライブラリ</h3>
+
+<p>　画像データの取得と処理を行うためのライブラリです。<br/></p>
+
+<h4>　用途</h4>
+
+<p>　・画像データの取得<br/></p>
+
+<h4>　使用条件</h4>
+
+<h5>　初期化</h5>
+
+<p>　Init()<br/>
+　最初に初期化を行う必要があります。<br/>
+　初期化では各種デバイスの初期化とリソース確保を行います。<br/></p>
+
+<h5>プログラムロード</h5>
+
+<p>　LoadProgram(IMAP<em>ALGORITHM</em>NAME alg)<br/>
+　IMAPCARのメモリにオブジェクトファイルとデータ(マップファイル)をロードします。<br/>
+　LoadProgram()の前に初期化が終了している必要があります。<br/></p>
+
+<h5>スタート</h5>
+
+<p>　StartImap()<br/>
+　ロードしたプログラムをスタートさせます。<br/>
+　StartImap()の前に初期化とプログラムロードが終了している必要があります。<br/></p>
+
+<h4>　RcImageの主なインタフェース</h4>
+
+<h5>取得画像の選択</h5>
+
+<p>　SelectImageOutput(STEREO<em>ALG</em>OUTPUT<em>IMAGE</em>ID sel)<br/> <br />
+　IMAPCARプログラムから取得する画像を選択します。<br/></p>
+
+<h5>取得結果の選択</h5>
+
+<p>　SelectResultOutput(STEREO<em>ALG</em>OUTPUT<em>RESULT</em>ID)<br/>
+　IMAPCARプログラムから取得する結果を選択します。(レーン検出、オブジェクト抽出、両方)<br/></p>
+
+<h5>外部パラメータの設定</h5>
+
+<p>　SetParam(const StereoAlgParam *param)<br/>
+　IMAPCARプログラムに対して外部パラメータを設定します。<br/></p>
+
+<h5>リクエスト待ち</h5>
+
+<p>　Wait()<br/>
+　IMAPCARプログラムからのリクエストを待ちます。<br/>
+　通常は要求するOutput,Imageの結果が揃ったときにリクエストが生じます。<br/></p>
+
+<h5>結果出力の保存</h5>
+
+<p>　CollectResult()<br/>
+　結果出力を画像処理ボードから読み出してオブジェクト内部に保存します。<br/></p>
+
+<h5>レーン検出結果の取得</h5>
+
+<p>　GetResultLane()<br/>
+　レーン検出結果を取得します。<br/>
+　CollectResultで得た値をこのメソッドで読み出します。<br/></p>
+
+<h5>オブジェクト抽出(ヒストグラム)結果の取得</h5>
+
+<p>　GetResultStereoHist()<br/>
+　オブジェクト抽出(ヒストグラム)結果を取得します。<br/>
+　CollectResultで得た値をこのメソッドで読み出します。<br/></p>
+
+<h5>オブジェクト抽出(ハフ変換)結果の取得</h5>
+
+<p>　GetResultStereoHough()<br/>
+　オブジェクト抽出(ハフ変換)結果を取得します。<br/>
+　CollectResultで得た値をこのメソッドで読み出します。<br/></p>
+
+<h5>オブジェクト抽出(ラベリング)結果の取得</h5>
+
+<p>　GetResultStereoLabeling()<br/>
+　オブジェクト抽出(ラベリング)結果を取得します。<br/>
+　CollectResultで得た値をこのメソッドで読み出します。<br/></p>
+
+<h5>画像出力の保存</h5>
+
+<p>　CollectImage()<br/>
+　画像出力を画像処理ボードから読出し、オブジェクト内部に保存します。<br/></p>
+
+<h5>画像サイズの取得</h5>
+
+<p>　ImageLength()<br/>
+　収集した画像サイズを取得します。<br/></p>
+
+<h5>画像の先頭ポインタを取得</h5>
+
+<p>　ImageData()<br/>
+　収集した画像の先頭ポインタを取得します。<br/></p>
+
+<h4>使用例</h4>
+
+<pre><code>int main() {
+　　IpmManager _ipmm; // 画像処理モジュールコントロールクラス
+
+　　_ipmm.Init(); // 初期化
+　　_ipmm.LoadProgram(IMAP_ALG_STEREO_OBSTACLES_1); // プログラムのロード
+　　_ipmm.StartImap(); // 処理の開始
+
+　　_ipmm.SelectImageOutput(SOF_INPUT_L); // 取得画像の選択(入力画像 左)
+　　_ipmm.ResultOutput(SOR_RESULT_HIST); // 取得結果の選択(ヒストグラム)
+
+　　while(1) {
+　　　　_ipmm.Wait(); // リクエスト待ち
+　　　　if(_ipmm.CollectResult()) { // 結果出力の保存
+　　　　　　StereoResultHist result;
+　　　　　　_ipmm-&gt;GetResultStereoHist(&amp;result); // オブジェクト抽出(ヒストグラム)結果の取得
+　　　　}
+
+　　　　if(_ipmm.CollectImage()) { // 画像出力の保存
+　　　　　　ulong length = _ipmm.ImageLength(); // 画像サイズの取得
+　　　　　　uchar **data = new uchar[length];
+　　　　　　uchar **p = data;
+　　　　　　memcpy(data, _ipmm.ImageData(), length); // データを取得
+　　　　}
+　　}
+　　return 0;
+}
+</code></pre>
+
+<h3>LaserRangeSensorライブラリ</h3>
+
+<p>　レーザレンジセンサ情報の取得を行います。<br/>
+　※　レーザレンジセンサはオプションのため別途購入する必要があります。<br/></p>
+
+<h4>　用途</h4>
+
+<p>　・レーザレンジセンサ情報の取得<br/></p>
+
+<h4>　使用準備</h4>
+
+<h5>　初期化</h5>
+
+<p>　Init()<br/>
+　Init(int skip<em>line)<br/>
+　最初に初期化を行う必要があります。<br/>
+　初期化では各種デバイスの初期化とリソース確保を行います。<br/>
+　Init()の引数にskip</em>lineを設定するとデータを間引いて情報量をへらします。<br/>
+　例：<br/>
+　Init(2);  // 情報量が1/2になります<br/></p>
+
+<h5>スタート</h5>
+
+<p>　Start()<br/>
+　センサ情報の取得を開始します。<br/>
+　センサ情報の取得を開始するには初期化が終了している必要があります。<br/></p>
+
+<h4>　LaserRangeSensorの主なインタフェース</h4>
+
+<h5>　コールバック関数</h5>
+
+<p>　OnReceive()<br/>
+　libLaserRangeSensorでセンサ情報を取得すると(100ms毎)ユーザアプリで定義したOnReceive()が呼ばれます。<br/>
+　OnReceive()でデータの処理を行います。</p>
+
+<h5>データの取得</h5>
+
+<p>　GetData(LrsResult *res)
+　libLaserRangeSensorのバッファに蓄積されたデータを取得します。<br/>
+　弊社オプションのレーザレンジセンサはデータ収集周期が100msなのでそれより早い周期でデータ取得を行っても値は更新されません。<br/>
+　OnReceive()はデータ収集完了時に呼ばれるのでOnReceive()の中でGetData()を呼ぶと収集周期毎にデータの取得が可能です。<br/></p>
+
+<h4>使用例</h4>
+
+<pre><code>// サンプルレーザレンジセンサクラス
+class SampleLRS :public LaserRangeSensorReceiveHandler {
+public:
+　　SampleLRS(){}; // コンストラクタ
+　　virtual ~SampleLRS(){}; // デストラクタ
+
+// 初期化
+　　bool Init() {
+　　　　bool res = lrs.Init(); // レーザレンジセンサの初期化
+　　　　return true;
+　　}
+
+　　void SetReceiveHandler() {
+　　　　lrs.SetReceiveHander(this); // コールバックハンドラの登録
+　　}
+
+　　bool Start(){
+　　　　bool res = lrs.Start(); // 処理開始
+　　　　return true;
+　　}
+
+　　bool Stop(){
+　　　　lrs.Stop(); // 処理終了
+　　　　return true;
+　　}
+
+private:
+// コールバック関数
+　　void OnReceive(){
+　　　　lrs.GetData(&amp;res); // レーザレンジセンサ情報の取得
+　　}
+　　LaserRangeSensor lrs; // レーザレンジセンサクラス
+　　LrsResult res; // 受信データ構造体
+};
+
+int main() {
+　　SampleLRS slrs;// サンプルLRSクラス
+　　system("ipm_serial S 4 0");// ベースボードのストップ
+　　sleep(1);
+　　system("ipm_serial S 4 1");// ベースボードのスタート
+
+　　signal(SIGINT, funcx);// "Ctrl"+"C"の処理を変更
+
+　　bool flg = 1;
+　　bool ires = slrs.Init(); // サンプルLRSクラスの初期化
+　　if(ires == false)
+　　　　flg = 0;
+　　slrs.SetReceiveHandler(); // コールバックハンドラの登録
+　　bool sres = slrs.Start(); // 受信処理開始
+　　if(sres == false)
+　　　　flg = 0;
+
+　　while (flg) {
+　　　　usleep(3000);
+　　}
+　　slrs.Stop(); // 受信処理終了
+　　return 0;
+}
+
+void funcx(int sig) {
+　　system("ipm_serial S 4 0"); // ベースボードのストップ
+　　sleep(1);
+　　system("ipm_serial S 4 1"); // ベースボードのスタート
+　　signal(SIGINT, SIG_DFL); // "Ctrl"+"C"の処理をデフォルトに戻す
+　　raise(SIGINT); // "Ctrl"+"C"を発生
+}
+</code></pre>
+
+		</div>
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+	  </div>
+	  <div id="footer">
+		<span>Copyright&copy; 2009-2011 ZMP Inc., Alright resereved.</span>
+	  </div>
+	</div>
+  </body>
+</html>

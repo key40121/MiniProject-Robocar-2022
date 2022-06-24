@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="ja" />
+    <title>9. 開発環境の構築 : ZMP RoboCar 1/10 2016 Reference Manual</title>
+	<link type="text/css" rel="stylesheet" href="./css/base.css"/>
+  </head>
+  <body>
+	<div id="container">
+	  <div id="header">
+		<h1>ZMP RoboCar 1/10 2016 Reference Manual</h1>
+	  </div>
+	  <div id="contents">
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+		<div class="inner">
+		<h1>9. 開発環境の構築</h1>
+
+<h2>概要</h2>
+
+<p>Ubuntuを搭載したPCを使用してRobocarのプログラムをコンパイルできる環境を構築します。</p>
+
+<p>また、J.DRIVE内でのリモートで開発する際の環境構築方法について記しています。</p>
+
+<h2>動作環境</h2>
+<p>Ubuntu 20.04 LTSにて確認</br>
+	Raspberry Pi(Raspbian)では構築できませんでした。おそらくARMアーキテクチャ上ではライブラリが起動しないためだと思います。</p>
+
+
+<h2>ライブラリのインストール</h2>
+<p>1. 必要なライブラリ</p>
+<table border=”1″>
+	<tr>
+		<td>name</td>
+		<td>description</td>
+	</tr>
+	<tr>
+		<td>urg_library</td>
+		<td>測域センサ(2D LiDAR)</td>
+	</tr>
+	<tr>
+		<td>opencv2</td>
+		<td>openCV(画像処理)</td>
+	</tr>
+	<tr>
+		<td>rc110_v2</td>
+		<td>Robocar操作</td>
+	</tr>
+</table>
+
+<p><br/>必要なソフトウェアのダウンロード<br/></p>
+
+<pre><code>$ sudo apt update
+$ sudo apt upgrade -y
+$ Sudo apt install build-essential cmake git </code></pre>
+
+<p><br/>1. Robocar環境をセットアップするファイルのコピー<br/>
+まず初めにホームディレクトリにファイル一式を移動します。<br/>
+<br/>2. rc110_v2のインストール<br/>
+/lib/rc110_v2を作業用PCのlibに移動します</p>
+
+<pre><code>$ sudo mkdir /usr/local/lib/zmp
+$ sudo cp -r ~/Robocar-1.0.0/setup/lib/rc110_v2 /usr/local/lib/zmp/
+$ sudo chmod 755 /usr/local/lib/zmp/rc110_v2</code></pre>
+
+<p>を実行します。<br/>
+<br/>3. urg_libraryのインストール<br/>
+urg関係のライブラリをインストールします。</p>
+
+<pre><code>$ cd ~/Robocar-1.0.0/setup
+$ unzip urg_library-1.2.0.zip
+$ cd urg_library-1.2.0
+$ make
+$ sudo make install</code></pre>
+
+<p><br/>4. OpenCVのインストール<br/>
+<pre><code>$ wget https://github.com/opencv/opencv/archive/3.3.0.tar.gz
+$ tar zxvf 3.3.0.tar.gz
+$ cd opencv-3.3.0
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+$ sudo make install</code></pre>
+</p>
+
+<p><br/>5. includeファイルの移動<br/>
+Robocarをコンパイルする際に必要なステアリングやセンサを一元的に管理するincludeファイルを移動します。</p>
+
+<pre><code>$ sudo mkdir /usr/local/include/zmp
+$ sudo cp -r ~/Robocar-1.0.0/setup/include/rc110_v2 /usr/local/include/zmp/
+$ sudo chmod 755 /usr/local/include/zmp/rc110_v2</code></pre>
+
+<h2>2. ライブラリの認識</h2>
+<p>ライブラリをインストールしたりコピーするだけでは、Linux側がコンパイル時にライブラリを参照できないため、ライブラリを認識させます。</p>
+<pre><code>$ sudo vi /etc/ld.so.conf</code></pre>
+<p>を実行すると中身が</p>
+<pre><code>include /etc/ld.so.conf.d/*.conf</code></pre>
+<p>とのみ記載されています。ここに、</p>
+<pre><code>include /usr/local/lib/</code></pre>
+<p>を下に追加し保存。その後</p>
+<pre><code>$ sudo ldconfig</code></pre>
+<p>を実行します。</p>
+
+<h2>3. 環境変数の定義</h2>
+<p>ライブラリを認識させることで、Linux側がライブラリの存在を把握しますが、配置されているディレクトリまでは認識しないため、環境変数を定義します。</p>
+<pre><code>$ nano ~/.bashrc</code></pre>
+<p>を実行し、最終行に</p>
+<pre><code>LD_LIBRARY_PATH=/usr/local/lib/:/usr/local/lib/zmp/rc110_v2/:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH</code></pre>
+<p>を追加します。</p>
+
+
+<h2>仮想環境の作成</h2>
+<p>windows上でUbuntuの仮想環境を作成します。</p>
+<p>タスクマネージャーを開き、PerformanceよりCPUのVirtualizationの項目を確認します</p>
+<p>Disableとなっていた場合、BIOSよりVirtualizationを有効化します</p>
+<p>やり方は、<a href= "https://support.hp.com/jp-ja/document/c03836690" >https://support.hp.com/jp-ja/document/c03836690</a>を確認して変更してください</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_000.png" alt="RemoteDevelopment_000" width="640"/></p>
+<p>まず初めにVirtual Boxを<a href= "https://www.virtualbox.org/" >https://www.virtualbox.org/</a>よりダウンロードします。</p>
+<p>そして、ダウンロードしたexeファイルを起動します。</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_001.png" alt="RemoteDevelopment_001" width="640"/></p>
+<p>Nextを選択</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_002.png" alt="RemoteDevelopment_002" width="640"/></p>
+<p>なにも変更せずにNextを選択</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_003.png" alt="RemoteDevelopment_003" width="640"/></p>
+<p>変更せずにNextを選択</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_004.png" alt="RemoteDevelopment_004" width="640"/></p>
+<p>Yesを選択</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_005.png" alt="RemoteDevelopment_005" width="640"/></p>
+<p>Installを選択</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_006.png" alt="RemoteDevelopment_006" width="640"/></p>
+<p>Yesを選択</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_007.png" alt="RemoteDevelopment_007" width="640"/></p>
+<p>インストールを選択</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_008.png" alt="RemoteDevelopment_008" width="640"/></p>
+<p>Finishを選択</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_009.png" alt="RemoteDevelopment_009" width="640"/></p>
+<p>無事VM Boxがインストールされるので、VM Boxを起動します。次はUbuntuをインストールします</p>
+<p>はじめにNewを選択します</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_010.png" alt="RemoteDevelopment_010" width="640"/></p>
+<p>設定ウィザードが表示されるので、仮想環境を保存する場所を選択します。<br>この時、容量の都合からDドライブにファイルを作成することをお勧めします。</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_011.png" alt="RemoteDevelopment_011" width="640"/></p>
+<p>設定を変更せずにNextを選択します</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_012.png" alt="RemoteDevelopment_012" width="640"/></p>
+<p>Nextを選択</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_013.png" alt="RemoteDevelopment_013" width="640"/></p>
+<p>なにも変更しないでNextを選択</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_014.png" alt="RemoteDevelopment_014" width="640"/></p>
+<p>なにも変更しないでNextを選択</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_015.png" alt="RemoteDevelopment_015" width="640"/></p>
+<p>なにも変更しないでNextを選択。必要があれば容量を増やしてください。基本はそのままで大丈夫です</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_016.png" alt="RemoteDevelopment_016" width="640"/></p>
+<p>仮想環境が作成されたのでUbuntuをインストールします</p>
+<p>Ubuntu Desktopを<a href= "https://ubuntu.com/download/desktop" >https://ubuntu.com/download/desktop</a>よりダウンロードします。</p>
+<p>その後Startから仮想環境を起動します</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_017.png" alt="RemoteDevelopment_017" width="640"/></p>
+<p>起動に使用するイメージを選択します</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_018.png" alt="RemoteDevelopment_018" width="640"/></p>
+<p>Addよりダウンロードしたisoイメージを選択しchooseを選択肢ます。<br>その後、先ほどの画面に戻るのでYesを選択します</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_019.png" alt="RemoteDevelopment_019" width="640"/></p>
+<p>Ubuntuのインストールウィザードが表示されるのでInstallを選択します</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_020.png" alt="RemoteDevelopment_020" width="640"/></p>
+<p>Ubuntu上で使用するキーボードの選択をします。windowsのキーボード配列と合わせると楽です</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_021.png" alt="RemoteDevelopment_021" width="640"/></p>
+<p>Continueを選択します</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_022.png" alt="RemoteDevelopment_022" width="640"/></p>
+<p>Install nowを選択します</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_023.png" alt="RemoteDevelopment_023" width="640"/></p>
+<p>Continueを選択します</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_024.png" alt="RemoteDevelopment_024" width="640"/></p>
+<p>タイムゾーンを選択します</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_025.png" alt="RemoteDevelopment_025" width="640"/></p>
+<p>ログイン情報を入力します。好きな名前を入力してContinueを選択します</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_026.png" alt="RemoteDevelopment_026" width="640"/></p>
+<p>インストールが開始するので待機します。終了したら以下の画面が出るのでRestart Nowを選択します</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_027.png" alt="RemoteDevelopment_027" width="640"/></p>
+<p>お疲れ様でした！</p>
+<p><img src="images/RemoteDevelopment/RemoteDevelopment_028.png" alt="RemoteDevelopment_028" width="640"/></p>
+		</div>
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+	  </div>
+	  <div id="footer">
+		<span>Copyright&copy; 2016 ZMP Inc., All rights reserved.</span>
+	  </div>
+	</div>
+  </body>
+</html>

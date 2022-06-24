@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="ja" />
+    <title>9-1. 画像認識 (STEREO) : ZMP RoboCar Reference Manual</title>
+	<link type="text/css" rel="stylesheet" href="./css/base.css"/>
+  </head>
+  <body>
+	<div id="container">
+	  <div id="header">
+		<h1>ZMP RoboCar Reference Manual</h1>
+	  </div>
+	  <div id="contents">
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+		<div class="inner">
+		<h1>9-1. 画像認識 (STEREO)</h1>
+
+<h2>概要</h2>
+
+<p>ここでは、RoboCarが搭載している画像認識処理について説明します。
+ステレオカメラから取得し、IMAPCARでリアルタイム画像処理した結果を、ライブラリを通じて利用できます。</p>
+
+<h2>処理シーケンス</h2>
+
+<p>IMAPCAR内で実装されている処理のフローダイアグラムです。</p>
+
+<p><img src="images/i_process_flow.png" alt="Image process flow" /></p>
+
+<p>図: 画像処理フロー</p>
+
+<h3>カメラ画像正規化処理 (Undistortion and Rectification)</h3>
+
+<p>レンズ歪み、光軸の補正を行い、左右のカメラの歪みのない画像を
+出力します。また、両カメラ間の位置、姿勢補正を行い、方向位置を合わせて、
+x方向のみオフセットされた位置関係のステレオ画像を生成します。</p>
+
+<h3>距離画像変換 (Stereo correspondence)</h3>
+
+<p>ブロックマッチング法により、画素ごとの左右の視差を求め、
+奥行き情報が色の濃淡になるような画像に変換します。
+ここでは、1ピクセル以下の視差情報も計算から求めています。</p>
+
+<h3>ヒストグラム (Histogram)</h3>
+
+<p>主に車両での移動に必要な水平面に投影するために
+画像Y方向のヒストグラムをとります。
+視差情報(物体の奥行き情報)と、その距離における物体の量
+の関係になります。</p>
+
+<h3>ガウシアンフィルタ (Gaussian filter)</h3>
+
+<p>ヒストグラム画像に対してノイズを削除するために
+ぼかしフィルタをかけます。
+後段のオブジェクトの抽出のためです。</p>
+
+<h3>オブジェクト抽出 (Object detection)</h3>
+
+<h4>ヒストグラム抽出 (Histogram threshold)</h4>
+
+<p>量の多いbinを抽出し、少ないbinを捨てるフィルタです。</p>
+
+<h4>ハフ変換 (Hough transform)</h4>
+
+<p>ヒストグラムから横方向に長い直線成分を検出します。
+同じ距離にある物体を抽出するための処理です。</p>
+
+<h4>ラベリング (Labeling)</h4>
+
+<p>まとまった画素をひとつの障害物とみなすためのラベリング処理です。</p>
+
+<h4>車線検出 (Lane detection)</h4>
+
+<p>画面中から車線を検出します。</p>
+
+<h2>画像フォーマット</h2>
+
+<p>それぞれのステップ後の画像や結果のフォーマットについて
+説明します。
+ユーザは、それぞれの処理途中の画像を読み出して、
+処理の確認と、パラメータの調整の確認に使用することができます。</p>
+
+<p><img src="images/i_image_format.png" alt="Images" /></p>
+
+<p>図: 各ポイントの画像データ</p>
+
+<p>以下、読み込み可能な各フォーマットについて説明します。</p>
+
+<h3>入力画像 (<code>INPUT_L</code>, <code>INPUT_R</code>)</h3>
+
+<p>カメラからの入力画像、左と右です。</p>
+
+<p>それぞれ、640x240の8bitグレースケールデータです。</p>
+
+<p><img src="images/INPUT_L.jpeg" alt="Input image" /></p>
+
+<p>図: 入力画像(L)</p>
+
+<h3>入力画像ステレオ (<code>INPUT_STEREO</code>)</h3>
+
+<p>カメラからの入力画像、左と右です。</p>
+
+<p>320x240の8bitグレースケールデータです。</p>
+
+<p><code>INPUT_L</code>,<code>INPUT_R</code>をそれぞれ320x240に縮小し、両方をまとめて
+読み出します。</p>
+
+<p><img src="images/INPUT_STEREO.jpeg" alt="Input image stereo" /></p>
+
+<p>図: 入力画像 ステレオ</p>
+
+<h3>補正用マップ画像X (<code>MAP_X_L</code>, <code>MAP_X_R</code>)</h3>
+
+<p>レンズ歪み補正と、ステレオカメラ間の位置、姿勢補正を同時に行うX方向マップ用のデータです。
+256x640の8bitグレースケールデータです。このうち有効な画素は、240x640です。</p>
+
+<p>カメラキャリブレーション時に作成し、
+プログラム実行時にIMAPCARメモリへ転送して使用されます。
+そのデータの確認用として読み出すことができます。</p>
+
+<p><img src="images/MAP_X_L.jpeg" alt="Map image X" /></p>
+
+<p>図: 補正用マップ画像X</p>
+
+<h3>補正用マップ画像Y (<code>MAP_Y_L</code>, <code>MAP_Y_R</code>)</h3>
+
+<p>レンズ歪み補正と、ステレオカメラ間の位置、姿勢補正を同時に行うY方向マップ用のデータです。
+640x240の8bitグレースケールデータです(左に90度回転しているため)。</p>
+
+<p>カメラキャリブレーション時に作成し、
+プログラム実行時にはIMAPCARメモリに転送して使用されます。
+そのデータの確認用として読み出すことができます。。</p>
+
+<p><img src="images/MAP_Y_L.jpeg" alt="Map image Y" /></p>
+
+<p>図: 補正用マップ画像Y</p>
+
+<h3>正規化された画像 (<code>NORMALIZED_L</code>, <code>NORMALIZED_R</code>)</h3>
+
+<p>レンズ歪みとステレオカメラ間の位置、姿勢補正によって正規化された画像です。
+640x240の8bitグレースケールデータです。ただし、歪み補正の結果により有効ではない
+領域が存在します。</p>
+
+<p><img src="images/NORMALIZED_L.jpeg" alt="Normalized image" /></p>
+
+<p>図: 正規化画像(L)</p>
+
+<h3>正規化された画像ステレオ (<code>NORMALIZED_STEREO</code>)</h3>
+
+<p>正規化画像の左右です。</p>
+
+<p><code>NORMALIZED_L</code>, <code>NORMALIZED_R</code>をそれぞれ320x240に縮小し、両方をまとめて
+読み出します。</p>
+
+<p><img src="images/NORMALIZED_STEREO.jpeg" alt="Normalized image stereo" /></p>
+
+<p>図: 正規化画像 ステレオ</p>
+
+<h3>視差画像 (<code>DISPARITY_I</code>, <code>DISPARITY_F</code>)</h3>
+
+<p>256x237の8bitグレースケールデータです。このうち有効画素は、213x237です。</p>
+
+<p><code>DISPARITY_I</code>の各画素の値は視差値(Disparity)の整数部分になります。0～120の範囲です。</p>
+
+<p><code>DISPARITY_F</code>の各画素の値は視差値(Disparity)の少数点以下の値になります。</p>
+
+<p>ブロックマッチング処理において、閾値以下の画素は0になります。</p>
+
+<p><img src="images/DISPARITY_I.jpeg" alt="Disparity image I" /></p>
+
+<p>図: 視差画像 整数部</p>
+
+<p><img src="images/DISPARITY_F.jpeg" alt="Disparity image F" /></p>
+
+<p>図: 視差画像 小数部</p>
+
+<h3>視差画像 両方 (<code>DISPARITY_COMP</code>)</h3>
+
+<p>256x237の8bitグレースケールデータです。このうち有効画素は、213x237です。
+上記の<code>DISPARITY_I</code>と<code>DISPARITY_F</code>を両方読み出すデータです。</p>
+
+<h3>視差ヒストグラム画像 (<code>HISTOGRAM</code>)</h3>
+
+<p>視差画像<code>DISPARITY_I</code>において、各X座標で、縦方向(画像のY方向)の値をヒストグラムにした画像です。
+XYZの3次元の画像を、擬似的にXZの2次元に投影した画像となります。
+各画素の値は、その位置に物体があるらしい「度合い」をあらわします。
+128x213の8bitグレースケールデータです(213x128のデータが左に90度回転している)。</p>
+
+<p><img src="images/HISTOGRAM.jpeg" alt="Histogram" /></p>
+
+<p>図: ヒストグラム画像</p>
+
+<h3>視差ヒストグラム画像 フィルタ後 (<code>HISTOGRAM_FILTERED</code>)</h3>
+
+<p>上記データをガウシアンフィルタでスムージングした画像です。
+128x213の8bitグレースケールデータです(213x128のデータが左に90度回転している)。</p>
+
+<p><img src="images/HISTOGRAM_FILTERED.jpeg" alt="Histogram" /></p>
+
+<p>図: ヒストグラム画像 フィルター後</p>
+
+<h2>外部パラメータ</h2>
+
+<p>それぞれの処理ブロックには外部からパラメータを指定できます。
+ユーザが認識したい物体や、実験の環境によって
+もっとも適切なパラメータを調整できるようになっています。</p>
+
+<p><img src="images/i_parameters.png" alt="Parameters" /></p>
+
+<p>図: ヒストグラム画像</p>
+
+<h3>カメラ画像正規化処理</h3>
+
+<p>なし</p>
+
+<h3>距離画像変換</h3>
+
+<h4><code>STEREO_SAD_TH</code></h4>
+
+<p>ブロックマッチングの相関度に対する閾値を設定します。</p>
+
+<h4><code>STEREO_EDGE_TH</code></h4>
+
+<p>エッジ量に対する閾値を設定します。</p>
+
+<h4><code>STEREO_DIS_SHIFT</code></h4>
+
+<p>視差計算結果をnビット上位へシフトします。
+空いた最下位ビットには、サブピクセル計算結果がシフトインします。</p>
+
+<h4><code>STEREO_DIS_OFFSET</code></h4>
+
+<p>ブロックマッチングの探索初期位置シフトさせます。
+無限遠で、マイナスの視差になっていしまう場合、視差が正しく計算できないので、
+この値を調整することで、無限遠を視差0に調整します。</p>
+
+<h4><code>STEREO_PRE_FILTER</code></h4>
+
+<p>ブロックマッチング計算前に、左右のそれぞれの画像に
+エッジ強調フィルタをかけます。OffかOnです。</p>
+
+<p><img src="images/edge_filter.png" alt="エッジ強調フィルタ" /></p>
+
+<p>図: エッジ強調フィルタごおgぇdら鵜by</p>
+
+<h3>車線検出</h3>
+
+<h4><code>LANE_INPUT_CH</code></h4>
+
+<p>車線検出に左右どちらの画像を使用するかを選択します。</p>
+
+<h4><code>LANE_BIN_TH</code></h4>
+
+<p>白線検出に用いる二値化閾値を指定します。</p>
+
+<h4><code>LANE_NUM_TH</code></h4>
+
+<p>白線面積に対する閾値を設定します。
+二値化画像の白画素面積を領域ごとに求め、閾値以上の領域のみ有効とします。</p>
+
+<h3>ヒストグラム</h3>
+
+<h4><code>HISTOGRAM_Y0</code></h4>
+
+<h4><code>HISTOGRAM_Y1</code></h4>
+
+<p>ヒストグラム画像に変換する対象をY方向で指定します。Y0<Y1となるようにします。
+画面の上部および下部を、検出の対象にしたくない場合に、値を指定します。
+画面すべてを対象としたい場合は、Y0=0, Y1=240となります。</p>
+
+<h3>ガウシアンフィル</h3>
+
+<h4><code>FILTER_C1</code>～<code>FILTER_C6</code></h4>
+
+<p>ガウスフィルタの係数を設定します。
+フィルタは5x5で演算を行い、係数は以下の通り適用します。</p>
+
+<p><img src="images/i_filter_coeffs.png" alt="Filter coeffs" /></p>
+
+<p>図: フィルタ係数</p>
+
+<h4><code>FILTER_K</code></h4>
+
+<p>ガウスフィルタの係数を設定します。
+最後にこの値をかけます。</p>
+
+<h3>ヒストグラム抽出</h3>
+
+<p>なし</p>
+
+<h3>ハフ変換</h3>
+
+<h4><code>HOUGH_BIN_TH</code></h4>
+
+<p>ハフ変換に用いる二値化閾値を設定します。</p>
+
+<h4><code>HOUGH_MIN_COUNT</code></h4>
+
+<p>ハフ変換で求められる直線の、有効線長に対する閾値を設定します。</p>
+
+<h4><code>HOUGH_MIN_LENGTH</code></h4>
+
+<p>ハフ変換で求められる直線の、全体線長に対する閾値を設定します。</p>
+
+<h4><code>HOUGH_MAX_BREAK</code></h4>
+
+<p>ハフ変換における、線分の途切れに対する閾値を設定します。</p>
+
+<h3>ラベリング</h3>
+
+<h4><code>LABEL_BIN_TH</code></h4>
+
+<p>ラベリングに用いる二値化閾値を設定します。</p>
+
+<h4><code>LABEL_NOISE_TH</code></h4>
+
+<p>ラベリング時のノイズ除去閾値を設定します。
+ラベル付けを行う前の二値画像に対して指定回数の収縮処理を行います。</p>
+
+<h4><code>LABEL_DIRATION</code></h4>
+
+<p>ラベリング時のラベル連結強度を設定します。
+ラベル付けを行う前の二値画像に対して指定回数の膨張処理を行います。</p>
+
+<h4><code>LABEL_MIN_WIDTH</code></h4>
+
+<p>検出するオブジェクトの最小幅を設定します。
+ラベル付けされたオブジェクトに対して、X方向のサイズによりフィルタリングを行います。</p>
+
+<h2>出力結果</h2>
+
+<h3>車線検出</h3>
+
+<ul>
+<li><code>LANE_XPOS_L[8]</code></li>
+<li><code>LANE_YPOS_L[8]</code></li>
+<li><code>LANE_XPOS_R[8]</code></li>
+<li><code>LANE_YPOS_R[8]</code></li>
+</ul>
+
+<p>白線領域を検知した場合、領域の中心画像を格納します。
+<code>XPOS_L</code>、<code>YPOS_L</code>に画面左側の白線領域、<code>XPOS_R</code>、<code>YPOS_R</code>に画面右側の白線領域を格納します。
+白線領域が検知できなかった場合は、<code>XPOS</code>、<code>YPOS</code>共に0が格納されます。</p>
+
+<p>このツール上で車線検出を表示する場合は、あわせてImage Idを、
+<code>INPUT_L</code>, <code>INPUT_R</code>, <code>NORMALIZED_L</code>, <code>NORMALIZED_R</code> のどれかに指定してください。</p>
+
+<h3>ヒストグラム抽出</h3>
+
+<ul>
+<li><code>VALUE[213*20]</code></li>
+<li><code>INDEX[213*20]</code></li>
+</ul>
+
+<p>ヒストグラム値(value)と、そのヒストグラムの表すindex(つまりヒストグラム画像でのY座標値=視差量)
+のセットを、横方向213ピクセル分。1位から20位までのトップ20を返します。</p>
+
+<h3>ハフ変換</h3>
+
+<ul>
+<li><code>OBJECT_NPOINT</code></li>
+</ul>
+
+<p>検出したオブジェクトの数が格納されます。
+座標データは先頭から順に有効データが格納され、それ以降のデータは無効となります。</p>
+
+<ul>
+<li><code>OBJECT_POINT_X0[512]</code></li>
+<li><code>OBJECT_POINT_X1[512]</code></li>
+</ul>
+
+<p>検出したオブジェクトのX座標が格納されます。
+X0が左端のX座標、X1が右端のX座標を表します。
+（常に X0[n] ≦ X1[n] の関係が成立する）</p>
+
+<ul>
+<li><code>OBJECT_POINT_Y0[512]</code></li>
+<li><code>OBJECT_POINT_Y1[512]</code></li>
+</ul>
+
+<p>検出したオブジェクトの視差情報が格納されます。
+Y0、Y1にはそれぞれX0、X1に対応する視差情報が格納されます。
+ラベリングを用いた場合は、常にY0[n] = Y1[n] の関係が成立します。</p>
+
+<h3>ラベリング</h3>
+
+<p>出力結果フォーマットはハフ変換と同じです。</p>
+
+<h2>キャリブレーションについて（第7章のキャリブレーションツールと共通）</h2>
+
+<p><a href="07_sample_software.html#1">こちらをご参照ください。</a></p>
+
+		</div>
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+	  </div>
+	  <div id="footer">
+		<span>Copyright&copy; 2009-2011 ZMP Inc., Alright resereved.</span>
+	  </div>
+	</div>
+  </body>
+</html>

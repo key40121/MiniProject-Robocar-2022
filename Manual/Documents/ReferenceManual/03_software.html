@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="ja" />
+    <title>3. ソフトウェア環境・操作マニュアル : ZMP RoboCar 1/10 2016 Reference Manual</title>
+	<link type="text/css" rel="stylesheet" href="./css/base.css"/>
+  </head>
+  <body>
+	<div id="container">
+	  <div id="header">
+		<h1>ZMP RoboCar 1/10 2016 Reference Manual</h1>
+	  </div>
+	  <div id="contents">
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+		<div class="inner">
+		<h1>3. ソフトウェア環境・操作マニュアル</h1>
+
+<h2>概要</h2>
+
+<h3>はじめに</h3>
+
+<p>RoboCar 1/10 2016が提供する機能として、各種センサ値の取得、駆動モータ、ステアリングの制御があります。</p>
+
+<p>それらすべての機能は、CPUボード上のLinuxアプリケーションによってコントロール
+されます。ユーザはこのアプリケーションを作成することで、RoboCarを
+操ることになります。</p>
+
+<p>RoboCarSDKは、このLinuxアプリケーションを作成するための
+クラスライブラリを提供します。これはすべての機能へのインターフェイスになります。</p>
+
+<p>また、このライブラリを使うためのサンプルコードと、
+ライブラリのドキュメント(APIリファレンス)を提供しています。</p>
+
+<p><img src="images/softSystem.png" alt="Software overview" />
+<br/>
+図: ソフトウェア概要</p>
+
+<h2>環境</h2>
+
+<p>サンプルプログラムの利用および、ソフトウェア開発に必要な環境は以下のとおりです。</p>
+
+<ul>
+<li>PC (Windows)</li>
+<li>無線LANアクセスポイント</li>
+<li>PC (Linux) : なくても可。エミュレータ環境でも可。</li>
+</ul>
+
+<p>RoboCarのソフトウェア操作、開発は、RoboCar内のLinuxにログインして
+操作する必要があります。SSH(Secure Shell)のクライアント
+が起動する、ネットワークにつながった端末(WindowsでもLinuxでも可)を
+用意してください。</p>
+
+<p>Windowsでしたら、以下のようなソフトウェアがFreewareとして公開されています。</p>
+
+<ul>
+<li>TeraTerm</li>
+<li>PuTTY</li>
+</ul>
+
+<p><img src="images/conect2.png" alt="Equipment2" />
+</br>
+図: 開発環境その1</p>
+
+<p>また、初期のネットワークの設定をするために、CPUボードにモニタ、キーボード、マウスを接続して
+LinuxのGUI環境(Ubuntu14.04 LTS)にログインします。
+RoboCarのLinuxアプリケーションは、RoboCarに搭載のLinux上で開発することができます。</p>
+
+<p><img src="images/conect1.png" alt="Equipment1" />
+</br>
+図: 開発環境その2</p>
+
+<h2>ログイン、シャットダウン</h2>
+
+<h3>CPUボードに直接ログイン</h3>
+
+<p>ネットワークを設定するために、CPUボードに直接ログインします。
+モニタ、キーボード、マウスをCPUボードに接続してください。</p>
+
+<p><img src="images/conect1.png" alt="Connect Serial cable" />
+</br>
+図: モニタ、キーボード、マウスの接続</p>
+
+<ul>
+<li>接続を確認して電源スイッチをONにします。</li>
+<li>Linuxシステムがロードされます。</li>
+<li><p>アカウントを選択してパスワードを入力します。出荷時にはzmpアカウントを使用して下さい。</p>
+
+<pre><code>アカウント: zmp
+パスワード: zmp
+</code></pre>
+
+<ul>
+<li>ログインが完了すると、GUIの使える環境になっています。</li>
+</ul></li>
+</ul>
+
+<h3>ネットワーク経由のログイン</h3>
+
+<ul>
+<li>sshでアクセスします。</li>
+<li>上記アカウントでログインします。</li>
+<li>ログインが完了すると、bashの使える環境になっています。</li>
+</ul>
+
+<p><img src="images/conect2.png" alt="Login" />
+</br>
+図: SSHでのログイン</p>
+
+<h3>シャットダウン</h3>
+
+<ul>
+<li>GUI環境にログインしている場合は、画面右上のメニューからシャットダウンを行います。</li>
+<li><p>ネットワーク経由でログインしている場合は、以下のコマンドを入力して、シャットダウン動作が終了したら、電源をOFFします。</p>
+
+<p>sudo shutdown -h now</p></li>
+</ul>
+
+<h2>アカウント・パスワード</h2>
+
+<p>出荷時のアカウントとパスワードは以下になっています。</p>
+
+<ul>
+<li><p>一般ユーザ</p>
+
+<pre><code>アカウント: zmp
+パスワード: zmp
+</code></pre></li>
+<li><p>管理者</p>
+
+<pre><code>アカウント: root
+パスワード: root254
+</code></pre></li>
+</ul>
+
+<h2>ネットワークの設定</h2>
+
+<p>出荷時の設定では、「有線ネットワーク(eht0)を使用」「DHCP」となっています。
+お使いの環境に合わせて設定しなおしてください。
+ネットワーク経由でCLIでの変更も可能ですが、設定を誤った時に繋がらなくなる可能性があるので
+GUI環境での設定変更をお勧めします。</p>
+
+<h3>セキュリティについて</h3>
+
+<p>RoboCarは、OSとしてLinuxを採用し、標準のネットワークプロトコルである
+TCP/IPを使用してネットワークに参加します。</p>
+
+<p>常時起動しているシステムではなく、
+ホストPCとの連携や、車車間通信などのネットワークを介したユーザのアプリケーション
+の構築しやすさを優先させているため、LinuxのセキュリティシステムをほぼOFFにしています。</p>
+
+<p>既存のネットワークやLANに接続する場合は十分にセキュリティ面で気をつけ設定を
+変更してから接続してください。RoboCar専用の閉じたネットワークを使用することを
+強く推奨いたします。</p>
+
+<h2>FTPによるログイン</h2>
+
+<p>RoboCarはFTPサーバとなっています。
+外部からftpによってファイルの送受信が可能です。アカウント名ftpとしてログインしてください。</p>
+
+<pre><code>    アカウント: zmp
+    パスワード: zmp
+</code></pre>
+
+<h4>手順</h4>
+
+<ul>
+<li><p>コマンドプロンプトを起動します。</p>
+
+<pre><code>C:\&gt;
+</code></pre></li>
+<li><p>ftpコマンドで、RoboCarのIPアドレスを指定して接続します。Userに'zmp'としてください。
+passは、任意の文字列でよいです、使われません。</p>
+
+<pre><code>C:\&gt; ftp 192.168.0.100
+Connected to 192.168.0.100
+220 FTP Server ready.
+User (192.168.0.100:(none)): zmp
+331 Please specify the password.
+Password: zmp
+230 Login successful.
+ftp&gt;
+</code></pre></li>
+<li><p>ファイルを取得する場合はgetコマンドを実行して下さい。</p>
+
+<pre><code>ftp&gt; get file.txt
+</code></pre></li>
+<li><p>ファイルを送信する場合はputコマンドを実行してください。</p>
+
+<pre><code>ftp&gt; put file.txt
+</code></pre></li>
+<li><p>バイナリファイルの場合は、忘れずにbinコマンドでバイナリモードにしてください。</p>
+
+<pre><code>ftp&gt; bin
+ftp&gt; put files.zip
+</code></pre></li>
+<li><p>終了は、byです。</p>
+
+<pre><code>ftp&gt; by
+</code></pre></li>
+</ul>
+
+<h4>ディレクトリ</h4>
+
+<p>上記方法でログインすると、以下のディレクトリが見えます。ファイルのやり取りをする場合、
+ftpコマンドでファイルを転送したあと、このディレクトリから、cpコマンドでコピーして
+希望の場所にファイルを移動してください。</p>
+
+<blockquote>
+  <p>/home/zmp</p>
+</blockquote>
+
+<h2>サンプルアプリケーション</h2>
+
+<p>いくつかのサンプルアプリケーションがインストールされています。
+そのまま実行することも出来ますし、また、ソースを参照することもできます。</p>
+
+<p>別章で詳しく説明しています。</p>
+
+<h2>環境</h2>
+
+<p>Linux内のファイルシステムで、RoboCarのシステムは以下のような場所に
+インストールされています。</p>
+
+<h3>ディレクトリ、ファイル</h3>
+
+<ul>
+<li>ライブラリ(zmpライブラリ、hokuyoレーザーレンジライブラリ、OpenCv)</li>
+</ul>
+
+<blockquote>
+  <p>/usr/local/lib/zmp/rc110_v2
+  /usr/local/lib/</p>
+</blockquote>
+
+<ul>
+<li>インクルードファイル(zmpライブラリ、hokuyoレーザーレンジライブラリ、OpenCv)</li>
+</ul>
+
+<blockquote>
+  <p>/usr/local/include/zmp/rc110<em>v2
+  /usr/local/include/opencv
+  /usr/local/include/opencv2
+  /usr/local/include/urg</em>c
+  /usr/local/include/urg_cpp</p>
+</blockquote>
+
+<ul>
+<li>サンプルコード</li>
+</ul>
+
+<blockquote>
+  <p>/home/zmp/proj/RoboCar110_2016/samples</p>
+</blockquote>
+
+<ul>
+<li>デモプログラム</li>
+</ul>
+
+<blockquote>
+  <p>/root/zmp/demos</p>
+</blockquote>
+
+<ul>
+<li>設定ファイル、データ</li>
+</ul>
+
+<blockquote>
+  <p>/root/zmp/config</p>
+</blockquote>
+
+<h3>環境変数</h3>
+
+<p>共有ライブラリ検索パスに上記のディレクトリを追加しています。
+/home/zmp/.bashrc</p>
+
+<blockquote>
+  <p>LD<em>LIBRARY</em>PATH=/usr/local/lib:/usr/local/lib/zmp/rc110<em>v2:$LD</em>LIBRARY<em>PATH<br/>
+  export LD</em>LIBRARY_PATH<br/></p>
+</blockquote>
+
+		</div>
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+	  </div>
+	  <div id="footer">
+		<span>Copyright&copy; 2016 ZMP Inc., All rights reserved.</span>
+	  </div>
+	</div>
+  </body>
+</html>

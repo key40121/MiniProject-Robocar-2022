@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="ja" />
+    <title>4. システム構成 : ZMP RoboCar 1/10 2016 Reference Manual</title>
+	<link type="text/css" rel="stylesheet" href="./css/base.css"/>
+  </head>
+  <body>
+	<div id="container">
+	  <div id="header">
+		<h1>ZMP RoboCar 1/10 2016 Reference Manual</h1>
+	  </div>
+	  <div id="contents">
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+		<div class="inner">
+		<h1>4. システム構成</h1>
+
+<h2>メカニズム</h2>
+
+<h3>概観</h3>
+
+<p><img src="images/robocarImg.jpg" alt="RoboCar overview" />
+</br>
+図: RoboCarの外観</p>
+
+<h3>外形</h3>
+
+<p><img src="images/roboCarSize.png" alt="RoboCar View" />
+</br>
+図: RoboCarの外形</p>
+
+<h2>エレキ</h2>
+
+<h3>ブロックダイアグラム</h3>
+
+<p>RoboCarエレキブロックダイアグラムを以下に示します。</p>
+
+<p><img src="images/e_block.png" alt="RoboCar Electric block diagram" />
+</br>
+図: RoboCar ブロック図</p>
+
+<h2>ソフトウェア</h2>
+
+<h3>概要</h3>
+
+<p>CPUボードにはRTパッチを適用したLinux(ubuntu14.04 LTS)が稼動しています。
+BASEボードはセンサなどの情報を取得して、</br>
+駆動用のモータをコントロールするファームウェアが動作しています。
+RoboCarは、ネットワーク越しにPCと通信して協調動作などを行うことができます。</p>
+
+<p><img src="images/softSystem.PNG" alt="Software block diagram" />
+</br>
+図: ソフトウェアブロック図</p>
+
+<h3>Linux RoboCarライブラリ</h3>
+
+<p>別章で詳しく説明します。また、APIリファレンスが参考になります。</p>
+
+<h3>BASEボードファームウェア</h3>
+
+<p>以下の処理を行います。CPUとの通信はシリアル(RS232C)で行われ、
+10[msec]毎にすべての情報をCPUに送信します。</p>
+
+<h4>DCモータドライブ</h4>
+
+<p>16bitPWMによりFETのH-Bridgeを介してDCモータを駆動します。</p>
+
+<h4>ロータリーエンコーダ</h4>
+
+<p>モータ軸1箇所と、ホイールの4つの回転をロータリーエンコーダで
+計測しています。カウント値は12bit分です。</p>
+
+<h4>ジャイロセンサ</h4>
+
+<p>ジャイロセンサ(yaw軸)からの入力をA/D変換で取得します。</p>
+
+<h4>加速度センサ</h4>
+
+<p>加速度センサ(xyz軸)からの入力をA/D変換で取得します。</p>
+
+<h4>赤外線測距センサ</h4>
+
+<p>赤外線測定距離センサ8個分の値をA/D変換で取得します。</p>
+
+<h4>速度制御</h4>
+
+<p>DCモータの回転速度をPID制御でコントロールします。</p>
+
+		</div>
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+	  </div>
+	  <div id="footer">
+		<span>Copyright&copy; 2016 ZMP Inc., All rights reserved.</span>
+	  </div>
+	</div>
+  </body>
+</html>

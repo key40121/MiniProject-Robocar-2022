@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="ja" />
+    <title>5. ソフトウェア開発 : ZMP RoboCar 1/10 2016 Reference Manual</title>
+	<link type="text/css" rel="stylesheet" href="./css/base.css"/>
+  </head>
+  <body>
+	<div id="container">
+	  <div id="header">
+		<h1>ZMP RoboCar 1/10 2016 Reference Manual</h1>
+	  </div>
+	  <div id="contents">
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+		<div class="inner">
+		<h1>5. ソフトウェア開発</h1>
+
+<h2>概要</h2>
+
+<p>Linux上のアプリケーションを作成する方法を説明します。</p>
+
+<p>RoboCarにログインして、RoboCar内のテキストエディタ(vi)、
+コンパイラ(g++)、デバッガ(gdb)を使用してプログラムの開発が
+できます。
+"Qt"や"eclipse"もインストール済みなので、CPUボードにモニタ、キーボード、マウスを繋いで
+GUI環境で開発することも可能です。
+RoboCar 1/10 2016ライブラリ及びhokuyoレーザーレンジセンサライブラリ(オプション)やOpenCV(3.0)も
+インストール済みです。</p>
+
+<p>また、別途用意していただくLinuxシステム(PC)で
+プログラムを開発することも可能です。
+その場合は、付属のCDからライブラリ、インクルードファイルを
+適当な場所に展開し、必要なパスを設定してお使いください。
+コンパイル、リンクまでが可能で、実行バイナリは、そのままRoboCar
+に転送して実行可能です。</p>
+
+<p>以下、主にRoboCar内での開発を前提に説明しますが、
+PC上での開発もディレクトリ構成やアカウント情報以外、
+まったく同様です。</p>
+
+<h2>ソフトウェア構成</h2>
+
+<p>ユーザアプリケーションは、Linuxのひとつのアプリケーションとして
+実行されます。
+RoboCarのハードウェアにアクセスするには、RoboCarSDKとして提供される
+3つの共有ライブラリを必要に応じて使います。</p>
+
+<p>ライブラリは、内部でシリアルポートや、USBポートを各種ドライバ経由で
+使用します。</p>
+
+<h3>ソフトウェア構成</h3>
+
+<p><img src="images/softSystem.PNG" alt="Software consititution" />
+</br>
+図: ソフトウェア構成図</p>
+
+<h2>ライブラリ </h2>
+
+<h3>libRcControl.so</h3>
+
+<p>Baseboardライブラリを介してRCの速度制御、ステアリング制御、センサ情報取得を行います。
+Baseboardライブラリから情報受信時にアプリケーションへコールバック関数を呼んでデータ送信を行います。</p>
+
+<h3>libBaseboard.so</h3>
+
+<p>Baseboard(RS232通信)やステアリングサーボ(RS485通信)とのデータ送受信を行います。
+Baseボード及びステアリングサーボから情報受信時にRcControlライブラリへコールバック関数を呼んで
+データの送信を行います。</p>
+
+<h3>libLaserRangeSensor.so</h3>
+
+<p>urg_cライブラリを介してhokuyoレーザーレンジセンサの情報取得を行います。(オプション)</p>
+
+<h3>libRczCommunication.so</h3>
+
+<p>ソケット通信を行いWindowsアプリとの通信を行います。</p>
+
+<h2>クラス</h2>
+
+<p>ここに主だったクラスを紹介します。
+詳細はAPIリファレンスを参照してください。</p>
+
+<h3>RcControlクラス</h3>
+
+<p>RCをコントロールするためにBaseboardクラスへアクセスします。</p>
+
+<h3>DataReceiveHandlerクラス</h3>
+
+<p>RcControlクラスからデータ受信時のコールバックメソッドを提供します。</p>
+
+<h3>Baseboardクラス</h3>
+
+<p>駆動速度の設定、ステアリング角度の設定、各種センサ情報取得を行うため
+RS232CommunicationクラスとRS485Communicationクラスへアクセスします。</p>
+
+<h3>SerialReceiveHandlerクラス</h3>
+
+<p>Baseboardクラスからシリアルデータ受信時のコールバックメソッドを提供します。</p>
+
+<h3>LeaserRangeSensorクラス</h3>
+
+<p>urg_cライブラリを介してレーザレンジセンサの情報取得を行います。</p>
+
+<h3>LaserRangeSensorReceiveHandlerクラス</h3>
+
+<p>レーザレンジセンサのデータ受信時のコールバックメソッドを提供します。</p>
+
+<h2>環境</h2>
+
+<p>Linux内のファイルシステムで、RoboCarのシステムは以下のような場所に
+インストールされています。
+アプリケーション開発の際にはMakefileに以下のパスを適宜含めてください。</p>
+
+<h3>ディレクトリ、ファイル</h3>
+
+<ul>
+<li><p>ライブラリ</p>
+
+<blockquote>
+  <p>/usr/local/lib</br>
+  /usr/local/lib/zmp/rc110_v2</br></p>
+</blockquote></li>
+<li><p>インクルードファイル</p>
+
+<blockquote>
+  <p>/usr/local/include/opencv</br>
+  /usr/local/include/opencv2</br>
+  /usr/local/include/urg<em>c</br>
+  /usr/local/include/urg</em>cpp</br>
+  /usr/local/include/zmp/rc110_v2</br></p>
+</blockquote></li>
+</ul>
+
+<h2>Linuxについて</h2>
+
+<p>インストールの元のディストリビューションはUbuntu14.04になります。
+(ubuntu-ja-14.04-desktop-amd64.iso)
+カーネルは、linux-3.18.21にRTパッチ(patch-3.18.21-rt19)を当てた物です。 </p>
+
+<h2>チュートリアル</h2>
+
+<p>RoboCar内で、プログラムを作成して、実行まで、簡単に流れを追ってみます。</p>
+
+<p>libRcControlを使用して、ステアリングのサーボをコントロールする
+簡単なアプリケーション、my_appを作成することにします。</p>
+
+<h3>準備</h3>
+
+<p>ログインして、これから作成するプログラムのために、適当な場所にディレクトリを
+作成します。</p>
+
+<pre><code># pwd
+/home/zmp/proj
+# mkdir MyProject
+# cd MyProject
+</code></pre>
+
+<h3>ソースファイルの編集</h3>
+
+<p>viを使って、ファイルを作成します。名前をここでは、main.cppとしておきます。</p>
+
+<pre><code># vi main.cpp
+</code></pre>
+
+<p>以下のプログラムを入力し、保存します。</p>
+
+<pre><code>#include &lt;unistd.h&gt;
+#include "RcControl.h"
+
+using namespace zmp::zrc;
+
+int main()
+{
+    RcControl rc;
+    rc.init();
+    rc.SetServoEnable(1);
+    rc.SetSteerAngle(30);
+    sleep(1);
+    rc.SetSteerAngle(0);
+    sleep(1);
+    rc.SetSteerAngle(-30);
+    sleep(1);
+    rc.SetSteerAngle(0);
+    sleep(1);
+    rc.SetServoEnable(0);
+}
+</code></pre>
+
+<h3>ビルドと実行</h3>
+
+<p>ビルドします。'-I'で、インクルードファイルのパスの指定と、'-L'で、ライブラリパスの指定、
+そして、'-l'で、リンクするライブラリを与えています。-oは出力ファイル名です。</p>
+
+<pre><code># g++ -o my_app main.cpp -I/usr/local/include/zmp/rc110_v2 -L/usr/local/lib/zmp/rc110_v2 -lRcControl
+</code></pre>
+
+<p>my_appが作成されますので、実行してみます。</p>
+
+<pre><code># ./my_app
+</code></pre>
+
+<p>ステアリングが指定した角度にうごくと成功です。</p>
+
+<h3>プログラムの解説</h3>
+
+<ul>
+<li>ライブラリlibRcControlを使用したいので、"RcControl.h"をインクルードします。</li>
+<li>RoboCarのライブラリ内のクラス等は、全てネームスペースzmp::zrc に属します。
+using namespaceは、ネームスペースzmp::zrc を使用するための宣言です。</li>
+<li>RcControl rc;でオブジェクトを作成して、init()で初期化します。</li>
+<li>SetServoEnable(1)でサーボがON。</li>
+<li>SetSteerAngle(30)で角度を30°に指定しています。</li>
+<li>sleep(1)で1秒スリープしてサーボが動くのを待ちます。</li>
+<li>SetServoEnable(0)でサーボをOFFにもどします。</li>
+</ul>
+
+<h3>ビルドの効率化のためのMakefile</h3>
+
+<p>ビルドには、コマンドラインからコンパイラを起動するよりMakefileを作成しておいたほうが
+作業効率がよいです。</p>
+
+<pre><code># vi Makefile
+</code></pre>
+
+<p>内容は以下になります。</p>
+
+<pre><code>CPP = g++
+CPPFLAGS = -fPIC -g
+INCLUDES = -I/usr/local/include/zmp/rc110_v2
+LIBS = -L/usr/local/lib/zmp/rc110_v2 -lRcControl
+
+TARGET = my_app
+OBJS = main.o
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+        $(CPP) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
+clean:
+        rm -rf $(OBJS) $(TARGET)
+
+.cpp.o: $*.h
+        $(CPP) $(CPPFLAGS) $(INCLUDES) -c $&lt;
+</code></pre>
+
+<p>makeコマンドでビルドが実行されます。</p>
+
+<pre><code># make
+</code></pre>
+
+<p>make cleanコマンドでビルドで生成されたファイルを消去します。</p>
+
+<pre><code># make clean
+</code></pre>
+
+		</div>
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+	  </div>
+	  <div id="footer">
+		<span>Copyright&copy; 2016 ZMP Inc., All rights reserved.</span>
+	  </div>
+	</div>
+  </body>
+</html>

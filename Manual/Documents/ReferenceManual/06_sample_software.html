@@ -1,0 +1,757 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="ja" />
+    <title>6. サンプルアプリケーション : ZMP RoboCar 1/10 2016 Reference Manual</title>
+	<link type="text/css" rel="stylesheet" href="./css/base.css"/>
+  </head>
+  <body>
+	<div id="container">
+	  <div id="header">
+		<h1>ZMP RoboCar 1/10 2016 Reference Manual</h1>
+	  </div>
+	  <div id="contents">
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+		<div class="inner">
+		<h1>6. サンプルアプリケーション</h1>
+
+<h2>概要</h2>
+
+<p>サンプルアプリケーションの機能及び実行方法を説明します。<br/>
+Linux側のサンプルはライブラリを使用して各種センサ情報の取得及び<br/>
+操舵角と走行速度の制御を行います。<br/>
+Windows側のサンプルはLANでRoboCar側のサーバーアプリと通信することで<br/>
+各種センサ情報の取得及び、操舵角と駆動速度の送信を行います。<br/>
+<br/></p>
+
+<h2>RoboCar本体側(Linux)のサンプル</h2>
+
+<h3>SampleDriveControl</h3>
+<p>駆動用モータとステアリングサーボモータをコンソールからのキー入力で操作します。</p>
+<h4>使用方法</h4>
+
+<pre><code>$ /home/zmp/proj/RoboCar110_Ver2/samples/SampleDriveControl/SampleDriveControl</code></pre>
+<p>キー入力によってRoboCarを操作</p>
+
+<pre><code>  r:ステアリングサーボを現在角度から右に3度切る(-30deg～30deg)
+  l:ステアリングサーボを現在角度から左に3度切る(-30deg～30deg)
+  f:駆動用モータを現在速度から前進方向に(+)100mm/s加速する(-2800mm/s～2800mm/s)
+  b:駆動用モータを現在速度から後退方向に(-)100mm/s加速する(-2800mm/s～2800mm/s)
+  s:駆動用モータの速度をゼロ、ステアリングサーボの角度をゼロに設定する
+  p:駆動用モータの状態をBRAKEにする
+  o:駆動用モータの状態をOFFにする
+  g:駆動用モータの状態をONにする
+  v:駆動用モータの速度を設定する(-2800mm/s～2800mm/s)
+   例1) "v300"と入力した場合、300mm/secで前進する
+   例2) "v-50"と入力した場青、(-)50mm/secで後退する
+  a:ステアリングサーボの角度を設定する(-30.0deg～30.0deg)
+   例1) "a15.2"と入力した場合、原点から15.2度右へ切る
+   例2) "a-5.6"と入力した場合、原点から-5.6度左へ切る
+  t:駆動用モータのトルク設定(0～255)
+   例1) "t0"と入力した場合、駆動用モータのトルクはゼロになる
+   例2) "t10"と入力した場合、駆動用モータのトルクは10になる
+  e:ステアリングサーボ、駆動用モータにゼロを設定して状態をOFFにする(ループから抜ける)</code></pre>
+<p>※ctrl+cでプログラム終了</p>
+
+<h3>SampleGetSensor</h3>
+<p>各種センサの情報を10ms毎に取得する</p>
+<h4>使用方法</h4>
+
+<pre><code>$ /home/zmp/proj/RoboCar110_Ver2/samples/SampleGetSensor/SampleGetSensr</code></pre>
+<p>以下のセンサ情報を10ms間隔で取得して表示します。<br/>
+  ステアリングサーボ情報<br/>
+   ・現在位置(deg)<br/>
+   ・現在電流(mA)<br/>
+   ・現在温度(℃)<br/>
+   ・現在電圧(mV)<br/>
+  RoboCar内部センサ<br/>
+   ・ジャイロセンサ(deg/sec)<br/>
+   ・加速度X軸(G)<br/>
+   ・加速度Y軸(G)<br/>
+   ・加速度Z軸(G)<br/>
+   ・モータエンコーダ(cycle/sec)<br/>
+   ・WHEELエンコーダ1(mm/sec)<br/>
+   ・WHEELエンコーダ2(mm/sec)<br/>
+   ・WHEELエンコーダ3(mm/sec)<br/>
+   ・WHEELエンコーダ4(mm/sec)<br/>
+  赤外線測距センサ<br/>
+   ・赤外線測距センサ0～7(mm)<br/>
+  電源情報<br/>
+   ・バッテリレベル(V)<br/>
+  ※ctrl+cでプログラム終了<br/>
+  <br/></p>
+
+<h3>SampleLRS(LaserRangeSensor接続時のみ実行可能)</h3>
+<p>FrontとRear両方のLaserRangeSensorの値を定期的に取得して、障害物までの距離を計測します。</p>
+<h4>使用方法</h4>
+<pre><code>$ /home/zmp/proj/RoboCar110_Ver2/samples/SampleLRS/SampleLRS</code></pre>
+<p>起動と同時に計測を開始し、FrontとRearのそれぞれで距離の最大値を出力します。<br/>
+  ※ctrl+cでプログラム終了<br/></p>
+
+<h3>SampleSocketCommunication</h3>
+<p>各種センサ情報を取得してLANで接続したWindowsアプリケーションへ送信します。<br/>
+Windowsアプリケーションから速度や操舵角を受信してRoboCarの制御を行います。</p>
+<h4>使用方法</h4>
+<pre><code>$ /home/zmp/proj/RoboCar110_Ver2/samples/SampleSocketCommunication/SampleSocketCommunication</code></pre>
+<p>WindowsアプリケーションでRoboCarのIPアドレスを指定して接続</p>
+
+<h3>SampleSocketCommunication2(LRFセンサ2個用)</h3>
+<p>各種センサ情報を取得してLANで接続したWindowsアプリケーションへ送信します。<br/>
+Windowsアプリケーションから速度や操舵角を受信してRoboCarの制御を行います。</p>
+<h4>使用方法</h4>
+<pre><code>$ /home/zmp/proj/RoboCar110_Ver2/samples/SampleSocketCommunication2/SampleSocketCommunication</code></pre>
+<p>WindowsアプリケーションでRoboCarのIPアドレスを指定して接続</p>
+
+<h3>mjpg_streamer</h3>
+<p>USBカメラのストリーミングサーバです。<br/>
+WindowsアプリケーションからIPを指定することで画像を表示出来ます。<br/>
+ブラウザからRoboCarのIPアドレスにアクセスすることでも画像の表示が可能です。<br/></p>
+<h4>使用方法</h4>
+<pre><code>$ /home/zmp/proj/tool/mjpg-streamer/startStream</code></pre>
+<p>※ パスワード入力を求められた場合はログインしているアカウントのパスワードを入力して下さい。<br/>
+  ※ デフォルトは"zmp"です。<br/>
+  WindowsアプリケーションでRoboCarのIPアドレスを指定して接続<br/>
+  またはブラウザからRoboCarのIPアドレスを指定して接続<br/>
+  http://xxx.xxx.xxx.xxx:8090<br/></p>
+
+<h2>OpenCVのサンプル</h2>
+<h3>capture</h3>
+<p>カメラから画像を取得し、画面に表示します。</p>
+<h4>使用方法</h4>
+<pre><code>$ /home/zmp/proj/RoboCar110_Ver2/OpenCV/Capture</code></pre>
+<p>起動と同時に2msおきにカメラから画像を取得し、画面に表示します。<br/>
+[esc]でプログラムが終了します。</p>
+<pre><code>cvSaveImage(fName, frame)</code></pre>
+<p>を有効化して、画像を保存することも可能です。</p>
+
+<h3>video</h3>
+<p>カメラから動画を取得し、画面に表示します。</p>
+<h4>使用方法</h4>
+<pre><code>$ /home/zmp/proj/RoboCar110_Ver2/OpenCV/video</code></pre>
+<p>起動と同時にカメラから動画を取得し、10msおきに画面が更新されます。<br/>
+動画はAVIファイルで保存されます。<br/>
+[esc]でプログラムが終了します。</p>
+
+<h3>hough</h3>
+<p>カメラから画像を取得し、画像内の直線を検出し、描画します。</p>
+<h4>使用方法</h4>
+<pre><code>$ /home/zmp/proj/RoboCar110_Ver2/OpenCV/hough</code></pre>
+<p>起動と同時にカメラから画像を取得します。</p>
+<pre><code>cvCanny (gray, gray, 50, 200, 3)</code></pre>
+<p>画像の輪郭部分を抽出します。</p>
+<pre><code>//標準的Hough変換
+hough_standard(gray,storage);
+//確率的Hough変換
+hough_probalistic(gray,storage);</code></pre>
+<p>標準的（または確率的）hough変換で、画像内の直線を検出し、描画します。<br/>
+任意のキー入力でプログラムが終了します。</p>
+
+
+<h2>Windowsサンプル </h2>
+
+<h3>ドライビングシミュレータ</h3>
+
+<p>USBカメラの画像を100ms毎に更新します。<br/>
+RoboCarのジャイロセンサ、加速度センサ(X軸/Y軸/Z軸)、赤外線測距センサ8個の値を受信毎に更新します。<br/>
+PCにUSBで接続したゲーム用ハンドル及びアクセルから値を取得してRoboCarを操作します。<br/>
+※ ゲーム用ハンドルはメーカーや型番によって出力される値が異なるのでサンプルプログラムの修正が必要になります。<br/></p>
+
+<h4>使用方法</h4>
+
+<h5>カメラサーバー(mjpgstreamer)を起動</h5>
+  <p>RoboCarにログインして以下のコマンドで実行ファイルのあるディレクトリに移動します。</p>
+  <pre><code>$ cd /home/zmp/tools/mjpg-streamer</code></pre>
+  <p>以下のコマンドでカメラサーバーを起動します。</p>
+  <pre><code>$ ./startStream</code></pre>
+  <p>※ パスワード入力を求められた場合はログインしているアカウントのパスワードを入力して下さい。<br/>
+  ※ デフォルトは"zmp"です。</p>
+
+<h5>RoboCar側のアプリケーションを起動</h5>
+  <pre><code>$ /home/zmp/proj/RoboCar110Ver2/samples/SampleSocketCommunication/</code></pre>
+  <p>以下のコマンドで通信アプリを起動します。</p>
+  <pre><code>$ ./SampleSocketCommunication</code></pre>
+
+<h5>PC側のアプリケーションを起動</h5>
+  <p>[スタート]→[すべてのプログラム]→[ZMP]→[RoboCar110_2016]→[ドライビングシミュレータ]を起動</p>
+　<img src="images/app_dsimCam.png" alt="Driving Simulator" />
+　<img src="images/app_dsimMain.png" alt="Driving Simulator" />
+<br/>
+　図: ドライビングシミュレータ　イメージ図<br/>
+<br/>
+<h5>ネットワーク接続</h5>
+　<img src="images/app_connect.png" alt="Driving Simulator connect" />
+<br/>
+<p>　メニューの[Connect]→[Open]を選択するとIPアドレス入力ウィンドウが表示されます。<br/>
+　RoboCarのIPアドレスを入力して"OK"ボタンを押します<br/>
+　接続に成功するとデータが更新されます。<br/>
+<br/>
+　<img src="images/app_dsimCam.png" alt="Driving Simulator camera" />
+<br/>
+　図：カメラ画像<br/>
+　USBカメラの画像を30fpsで更新します。<br/>
+　※　ネットワーク環境によって遅延にが発生する場合があります。<br/>
+<br/></p>
+<h5>駆動操作</h5>
+　　<img src="images/app_drv.png" alt="Driving Simulator drive" />
+<br/>
+<p>　RoboCarの走行速度を手動で操作します。<br/>
+　ONボタン：駆動用モータ状態をONにします。<br/>
+　OFFボタン：駆動用モータ状態をOFFにします。<br/>
+　setSpeedボタン："target"に入力された値をRoboCarに送信します。<br/>
+　target：RoboCarに送信する値を入力します。(-2800～2800)<br/>
+　スライダー：マウスでスライダーを移動させることでRoboCarに値を送信します。<br/>
+　Wheel Encoder FL：RoboCarから受信した左前輪エンコーダの回転速度を表示します。<br/>
+　Wheel Encoder FR：RoboCarから受信した右前輪エンコーダの回転速度を表示します。<br/>
+　Wheel Encoder RL：RoboCarから受信した左後輪エンコーダの回転速度を表示します。<br/>
+　Wheel Encoder RR：RoboCarから受信した右後輪エンコーダの回転速度を表示します。<br/>
+　Motor Encoder：RoboCarから受信したモーターエンコーダの回転速度を表示します。<br/>
+　※　ゲーム用ハンドルが接続されている場合は”target”の値が30ms毎に更新されます。<br/>
+<br/></p>
+<h5>操舵角操作</h5>
+　　<img src="images/app_str.png" alt="Driving Simulator steer" />
+<br/>
+<p>　RoboCarの操舵角を手動で操作します。<br/>
+　ONボタン：操舵用サーボ状態をONにします。<br/>
+　OFFボタン：操舵用サーボ状態をOFFにします。<br/>
+　setAngleボタン："target"に入力された値をRoboCarに送信します。<br/>
+　setZeroボタン：0度をRoboCarに送信します。<br/>
+　target：RoboCarに送信する値を入力します。(-30度～30度)<br/>
+　スライダー：マウスでスライダーを移動させることでRoboCarに値を送信します。<br/>
+　Servo angle：RoboCarから受信した操舵角を表示します。<br/>
+　Servo temp：RoboCarから受信した操舵用サーボの温度を表示します。<br/>
+　Servo current：RoboCarから受信した操舵用サーボの電流を表示します。<br/>
+　Servo voltage：RoboCarから受信した操舵用サーボの電圧を表示します。<br/>
+　setoffsetボタン："Servo angle"の値をサーボのゼロ位置に設定します。(調整用)<br/>
+　※　ゲーム用ハンドルが接続されている場合は"target"の値が30ms毎に更新されます。<br/>
+<br/></p>
+<h5>DirectInput</h5>
+　　<img src="images/app_input.png" alt="Driving Simulator handle" />
+<br/>
+<p>　PCにUSBで接続したゲーム用ハンドルの値を表示します。<br/>
+　ゲーム用ハンドルは別途用意する必要があります。<br/>
+　ゲーム用ハンドルはメーカー／型番によって出力値が異なるため、ハンドル操作を行う場合はサンプルプログラムの処理を用意したゲーム用ハンドルの出力値に合わせる必要があります。<br/>
+　※初期設定はLogicoolのDriving force GTを接続する想定としています。<br/>
+　Direct Input Enable:ゲームコントローラからの入力を有効にします。<br/>
+　str input：ゲームコントローラからのステアリング入力値を30ms毎に更新します。<br/>
+　acc input：ゲームコントローラからのアクセル入力値を30ms毎に更新します。<br/>
+　brk input：ゲームコントローラからのブレーキ入力値を30ms毎に更新します。<br/>
+　btn input：ゲームコントローラからのボタン入力値を30ms毎に更新します。<br/>
+　str target:str inputを-30～30[deg]に換算した値を30ms毎に更新します。<br/>
+　veloc target:acc inputとbrk inputから換算した速度を30ms毎に更新します。<br/>
+　max veloc：RoboCarに送信する最大速度を設定します。アクセルからの入力が速度リミットより大きい場合でも速度リミット以上の値は送信されません。速度リミットで設定出来る値は0～2800mm/sです。<br/>
+<br/></p>
+<h5>ジャイロ／加速度出力</h5>
+　　<img src="images/app_IMU.png" alt="Driving Simulator gyro" />
+<br/>
+<p>　RoboCarから受信したジャイロセンサと加速度センサ(X軸,Y軸,Z軸)の値を表示します。<br/>
+　Gyro：ジャイロセンサ値<br/>
+　AccX：X軸加速度センサ値<br/>
+　AccY：Y軸加速度センサ値<br/>
+　AccZ：Z軸加速度センサ値<br/>
+　GyroOffSetボタン：”Gyro”の値をGyroセンサのゼロ位置に設定します。(調整用)<br/>
+<br/></p>
+<h5>電源情報</h5>
+　　<img src="images/app_power.png" alt="Driving Simulator power" />
+<br/>
+<p>　RoboCarから受信した電源情報を表示します。<br/>
+　Battery Voltage：駆動用バッテリの電圧<br/>
+<br/></p>
+<h5>赤外線測距センサ</h5>
+　　<img src="images/app_IR.png" alt="Driving Simulator obstacle" />
+<br/>
+<p>　RoboCarから受信した赤外線測距センサの値を表示します。<br/>
+　障害物が10cm以内にある場合は"0"と表示されます。<br/>
+　障害物が75cm以内に無い場合は"4095"と表示されます。<br/>
+　障害物が10～75cmの間にある場合は障害物までの距離をmm単位で表示します。<br/>
+<br/></p>
+<h5>温度センサ</h5>
+　　<img src="images/app_thermo.png" alt="Driving Simulator thermo" />
+<br/>
+<p>　RoboCarから受信した温度センサの値を表示します。<br/>
+　 FET1：Baseボードに搭載したFET1の温度<br/>
+　FET2：Baseボードに搭載したFET2の温度<br/>
+<br/></p>
+
+<h3>レーザレンジセンサ(オプション)</h3>
+
+<p>RoboCarから受信したレーザレンジセンサの値を表示します。<br/>
+<br/></p>
+
+<h4>使用方法</h4>
+
+<p>RoboCar側のアプリケーションを起動
+　RoboCarにログインして以下のコマンドで実行ファイルのあるディレクトリに移動します。<br/></p>
+  <pre><code>$ cd /home/zmp/proj/RoboCar110Ver2/samples/SampleSocketCommunication/</code></pre>
+<p>以下のコマンドで通信アプリを起動します。</p>
+  <pre><code>$ ./SampleSocketCommunication</code></pre>
+<br/>
+<h5>PC側のアプリケーションを起動
+　[スタート]→[すべてのプログラム]→[ZMP]→[RoboCar1102016]→[レーザーレンジセンサ]</h5>
+<p>　<img src="images/LRFSample.png" alt="Laser Range Sensor" />
+<br/>
+　図: レーザレンジセンサ　イメージ図<br/>
+<br/>
+<h5>ネットワーク接続</h5>
+　<img src="images/app_connect.png" alt="LRS connect" />
+<br/>
+　メニューの[Connect]→[Open]を選択するとIPアドレス入力ウィンドウが表示されます。<br/>
+　RoboCarのIPアドレスを入力して"OK"ボタンを押します<br/>
+　接続に成功するとデータが更新されます。<br/>
+<br/>
+<h5>障害物表示</h5>
+　<img src="images/app_lrsmap.png" alt="LRS map" />
+<br/>
+　RoboCarから受信したレーザレンジセンサの値を表示します。<br/>
+　赤い部分が障害物が無いエリアです。<br/>
+　黒線の升目は一辺が100cmです。<br/>
+　LRFが2台接続されている場合は先に認識したセンサを表示します。<br/>
+　LRFが2台接続されている場合はChangeDevチェックボックスで使用するセンサを切替えます<br/>
+<br/>
+<br/></p>
+
+<h3>レーザレンジセンサ2(オプション)</h3>
+
+<p>RoboCarから受信した2台のレーザレンジセンサの値を表示します。<br/>
+<br/></p>
+
+<h4>使用方法</h4>
+
+<p>RoboCar側のアプリケーションを起動
+　RoboCarにログインして以下のコマンドで実行ファイルのあるディレクトリに移動します。<br/>
+  <pre><code>$ cd /home/zmp/proj/RoboCar110Ver2/samples/SampleSocketCommunication2/</code></pre>
+　以下のコマンドで通信アプリを起動します。<br/>
+  <pre><code>$ ./SampleSocketCommunication</code></pre>
+<br/>
+<h5>PC側のアプリケーションを起動
+　[スタート]→[すべてのプログラム]→[ZMP]→[RoboCar1102016]→[レーザーレンジセンサ2]を起動</h5>
+　<img src="images/LRFSample2.png" alt="Laser Range Sensor2" />
+<br/>
+　図: レーザレンジセンサ　イメージ図<br/>
+<br/>
+<h5>ネットワーク接続</h5>
+　<img src="images/app_connect.png" alt="LRS connect2" />
+<br/>
+　メニューの[Connect]→[Open]を選択するとIPアドレス入力ウィンドウが表示されます。<br/>
+　RoboCarのIPアドレスを入力して"OK"ボタンを押します<br/>
+　接続に成功するとデータが更新されます。<br/>
+<br/>
+<h5>障害物表示</h5>
+　<img src="images/app_lrs2map.png" alt="LRS map2" />
+<br/>
+　RoboCarから受信した2台レーザレンジセンサの値を表示します。<br/>
+　赤い部分が障害物が無いエリアです。<br/>
+　黒線の升目は一辺が100cmです。<br/>
+　先に認識したセンサを上に、後から認識したセンサを下に表示します。<br/>
+　ChangeDevチェックボックスでセンサの出力先を反転させます。<br/>
+<br/></p>
+
+<h3>センサ出力</h3>
+
+<p>RoboCarのジャイロセンサ、加速度センサ(X軸/Y軸/Z軸)、赤外線測距センサ8個の値を受信毎に更新します。<br/>
+キーボード入力及びスライダーのマウス操作によりRoboCarを操作します。<br/>
+<br/></p>
+
+<h4>使用方法</h4>
+
+<p>RoboCar側のアプリケーションを起動
+RoboCarにログインして以下のコマンドで実行ファイルのあるディレクトリに移動します。<br/>
+  <pre><code>$ cd /home/zmp/proj/RoboCar110Ver2/samples/SampleSocketCommunication/</code></pre>
+　以下のコマンドで通信アプリを起動します。<br/>
+<pre><code>$ ./SampleSocketCommunication</code></pre>
+<br/>
+<br/>
+<h5>PC側のアプリケーションを起動
+　[スタート]→[すべてのプログラム]→[ZMP]→[RoboCar1102016]→[センサ出力]を起動</h5>
+　<img src="images/sensorSample.png" alt="Sensor Output" />
+<br/>
+　図: センサ出力　イメージ図<br/>
+<br/>
+<h5>ネットワーク接続</h5>
+　<img src="images/app_connect.png" alt="SGS connect" />
+<br/>
+　メニューの[Connect]→[Open]を選択するとIPアドレス入力ウィンドウが表示されます。<br/>
+　RoboCarのIPアドレスを入力して"OK"ボタンを押します<br/>
+　接続に成功するとデータが更新されます。<br/>
+<br/>
+<h5>駆動操作</h5>
+　<img src="images/app_drv.png" alt="SGS drive" />
+<br/>
+　RoboCarの走行速度を手動で操作します。<br/>
+　ONボタン：駆動用モータ状態をONにします。<br/>
+　OFFボタン：駆動用モータ状態をOFFにします。<br/>
+　setSpeedボタン："target"に入力された値をRoboCarに送信します。<br/>
+　target：RoboCarに送信する値を入力します。(-2800～2800)<br/>
+　スライダー：マウスでスライダーを移動させることでRoboCarに値を送信します。<br/>
+　Wheel Encoder FL：RoboCarから受信した左前輪エンコーダの回転速度を表示します。<br/>
+　Wheel Encoder FR：RoboCarから受信した右前輪エンコーダの回転速度を表示します。<br/>
+　Wheel Encoder RL：RoboCarから受信した左後輪エンコーダの回転速度を表示します。<br/>
+　Wheel Encoder RR：RoboCarから受信した右後輪エンコーダの回転速度を表示します。<br/>
+　Motor Encoder：RoboCarから受信したモーターエンコーダの回転速度を表示します。<br/>
+<br/>
+<h5>操舵角操作</h5>
+　<img src="images/app_str.png" alt="SGS steer" />
+<br/>
+　RoboCarの操舵角を手動で操作します。<br/>
+　ONボタン：操舵用サーボ状態をONにします。<br/>
+　OFFボタン：操舵用サーボ状態をOFFにします。<br/>
+　setAngleボタン："target"に入力された値をRoboCarに送信します。<br/>
+　setZeroボタン：0度をRoboCarに送信します。
+　target：RoboCarに送信する値を入力します。(-30度～30度)<br/>
+　スライダー：マウスでスライダーを移動させることでRoboCarに値を送信します。<br/>
+　Servo angle：RoboCarから受信した操舵角を表示します。<br/>
+　Servo temp：RoboCarから受信した操舵用サーボの温度を表示します。<br/>
+　Servo current：RoboCarから受信した操舵用サーボの電流を表示します。<br/>
+　Servo voltage：RoboCarから受信した操舵用サーボの電圧を表示します。<br/>
+　setoffsetボタン："Servo angle"の値をサーボのゼロ位置に設定します。(調整用)<br/>
+　※　ゲーム用ハンドルが接続されている場合は"target"の値が30ms毎に更新されます。<br/>
+<br/>
+<h5>ジャイロ／加速度出力</h5>
+　<img src="images/app_IMU.png" alt="SGS gyro" />
+<br/>
+　RoboCarから受信したジャイロセンサと加速度センサ(X軸,Y軸,Z軸)の値を表示します。<br/>
+　Gyro：ジャイロセンサ値<br/>
+　AccX：X軸加速度センサ値<br/>
+　AccY：Y軸加速度センサ値<br/>
+　AccZ：Z軸加速度センサ値<br/>
+　GyroOffSetボタン：”Gyro”の値をGyroセンサのゼロ位置に設定します。(調整用)<br/>
+<br/>
+<h5>電源情報</h5>
+　<img src="images/app_power.png" alt="SGS power" />
+<br/>
+　RoboCarから受信した電源情報を表示します。<br/>
+　Battery Voltage：駆動用バッテリの電圧<br/>
+<br/>
+<h5>赤外線測距センサ</h5>
+　<img src="images/app_IR.png" alt="SGS obstacle" />
+<br/>
+　RoboCarから受信した赤外線測距センサの値を表示します。<br/>
+　障害物が10cm以内にある場合は"0"と表示されます。<br/>
+　障害物が75cm以内に無い場合は"4095"と表示されます。<br/>
+　障害物が10～75cmの間にある場合は障害物までの距離をmm単位で表示します。<br/>
+<br/>
+<h5>温度センサ</h5>
+　<img src="images/app_thermo.png" alt="SGS thermo" />
+<br/>
+　RoboCarから受信した温度センサの値を表示します。<br/>
+　FET1：Baseボードに搭載したFET1の温度<br/>
+　FET2：Baseボードに搭載したFET2の温度<br/>
+<br/>
+<br/></p>
+
+<h3>ゲームコントローラ設定</h3>
+
+<p>RoboCarに接続したゲームコントローラの出力設定を行います。<br/>
+<br/></p>
+
+<h4>使用方法</h4>
+
+<p><h5>PC側のアプリケーションを起動
+　[スタート]→[すべてのプログラム]→[ZMP]→[RoboCar110_2016]→[ゲームコントローラ設定]を起動</h5>
+　<img src="images/app_directx.png" alt="Game Controller" />
+<br/>
+　図: ゲームコントローラ設定　イメージ図<br/>
+<br/>
+<h5>入力表示</h5>
+　<img src="images/app_dxInput.png" alt="Game Control Input" />
+<br/>
+　ゲームコントローラからの入力をリアルタイムに表示します。<br/>
+　どのボタンが何処に割り当てられているかを確認する物です。<br/>
+<br/>
+<h5>出力設定</h5>
+　<img src="images/app_dxConfig.png" alt="Game Control config" />
+<br/></p>
+
+<blockquote><p> assing to steering:ステアリング操作をするためのボタンを割り当てます。<br/>
+　Min(Left):"assing to steering"で設定したボタンを操作した時の最小値(左端)を設定します。<br/>
+　Max(Right):"assing to steering"で設定したボタンを操作した時の最大値(右端)を設定します。<br/>
+　assing to accel:アクセル操作をするためのボタンを割り当てます。<br/>
+　Max:"assing to accel"で設定したボタンを操作した時の最大値を設定します。<br/>
+　assing to brake:ブレーキ操作をするためのボタンを割り当てます。<br/>
+　Max:"assing to brake"で設定したボタンを操作した時の最大値を設定します。<br/></p>
+</blockquote>
+
+<h3>カメラ画像表示</h3>
+
+<p>RoboCarのIPアドレスを指定してUSBカメラ画像を表示します。</p>
+
+<h4>使用方法</h4>
+
+<p>カメラサーバー(mjpgstreamer)を起動
+  RoboCarにログインして以下のコマンドで実行ファイルのあるディレクトリに移動します。<br/>
+  <pre><code>$ cd /home/zmp/tools/mjpg-streamer</code></pre>
+　以下のコマンドでカメラサーバーを起動します。<br/>
+  <pre><code>$ ./startStream</code></pre>
+　※ パスワード入力を求められた場合はログインしているアカウントのパスワードを入力して下さい。<br/>
+　※ デフォルトは"zmp"です。<br/>
+<br/>
+<h5>PC側のアプリケーションを起動
+　[スタート]→[すべてのプログラム]→[ZMP]→[RoboCar1102016]→[カメラ画像表示]を起動</h5>
+　<img src="images/app_mjpg.png" alt="Camera view" />
+<br/>
+　図: カメラ画像表示　イメージ図<br/>
+<br/>
+<h5>ネットワーク接続</h5>
+　<img src="images/app_connect.png" alt="Camera view connect" />
+<br/>
+　メニューの[Connect]→[Open]を選択するとIPアドレス入力ウィンドウが表示されます。<br/>
+　RoboCarのIPアドレスを入力して"OK"ボタンを押します<br/>
+　接続に成功するとデータが更新されます。<br/>
+<br/>
+<h5>カメラ画像</h5>
+　USBカメラの画像を30fpsで更新します。<br/>
+　※　ネットワーク環境によって遅延にが発生する場合があります。<br/>
+<br/></p>
+
+<h2>ZMPライブラリの使用方法 </h2>
+
+<h3>RcControlライブラリ</h3>
+
+<p>RcControlライブラリはRoboCarの駆動操作及び各種センサ情報の取得を行います。<br/>
+レーザレンジセンサの情報は別ライブラリを使用します。<br/>
+<h4>用途</h4>
+　・RoboCarの走行操作(-2800mm/s～2800mm/s)<br/>
+　・RoboCarの舵角操作(-30.0deg～30.0deg)<br/>
+　・センサ情報の取得(ジャイロ、加速度(X,Y,Z)、赤外線測距、モータ及びホイールエンコーダ、電源情報)<br/>
+<br/>
+<h4>使用準備</h4>
+<b>初期化　
+　init()</b><br/>
+　最初に初期化を行う必要があります。<br/>
+　初期化では各種デバイスの初期化とリソース確保を行います。<br/>
+<br/>
+<b>スタート　
+　Start()</b><br/>
+　初期化後にStart()で処理が開始します。<br/>
+　Start()を使わないとセンサ情報の取得が出来ません。<br/></p>
+<br/>
+<h5>RcControlの主なインタフェース</h5>
+<p><b>駆動用モータのON/OFF　
+　SetMotorEnableReq(char enable)</b><br/>
+　駆動用モータのON/OFF(0=OFF, 1=ON, 2=ブレーキ)を設定します。<br/>
+　初期化後に駆動速度を設定する場合は駆動用モータをONにしておく必要があります。<br/>
+<br/>
+<b>駆動速度の設定　
+　SetDriveSpeed(int speed)</b><br/>
+　RoboCarの駆動速度を(-2800mm/s～2800mm/s)で設定します。<br/>
+　駆動用モータがONになっていないと駆動速度を設定してもRoboCarは動きません。<br/>
+<br/>
+<b>操舵用サーボモータのON/OFF　
+　SetServoEnable(int enable)</b><br/>
+　操舵用サーボモータのON/OFF(0=OFF, 1=ON, 2=ブレーキ)を設定します。<br/>
+　初期化後に操舵角を設定する場合は操舵用サーボモータをONにしておく必要があります。<br/>
+<br/>
+<b>操舵角の設定　
+　SetSteerAngle(float angle)</b><br/>
+　RoboCarの操舵角を0.1deg単位(－30.0deg～30.0deg)で設定します。<br/>
+　操舵用サーボモータがONになっていないと操舵角を設定してもRoboCarは動きません。<br/>
+<br/>
+<b>操舵用サーボモータ情報の取得
+　GetServoInfoReq(int id, SERVO<em>INFO</em>ADR adr, int len, DRIVE_VALUE* value)</b><br/>
+　操舵用サーボモータの情報取得を行います。<br/>
+　情報取得の要求からサーボモータの応答を受信するまでの遅延が5ms程度あるのでそれより早い周期で情報取得を行っても値が更新されません。<br/></p>
+<br/>
+<h5>情報取得フラグ設定</h5>
+
+<p><b>ベースボードから取得するセンサ情報の設定
+　SetReportFlagReq(char flag)</b><br/>
+　ベースボードから取得するセンサ情報を設定します。<br/>
+　デフォルトでは全て(ジャイロ、加速度、エンコーダ、障害物センサ、電源情報)の情報を10ms毎に受信してlibRcControl内部保持します。<br/>
+　flag=0：何も受信しない。<br/>
+　flag=1：ジャイロ、加速度、エンコーダ<br/>
+　flag=2：障害物センサ<br/>
+　flag=3：ジャイロ、加速度、エンコーダ、障害物センサ<br/>
+　flag=4：電源情報<br/>
+　flag=5：ジャイロ、加速度、エンコーダ、電源情報<br/>
+　flag=6：障害物センサ、電源情報<br/>
+　flag=7：ジャイロ、加速度、エンコーダ、障害物センサ、電源情報<br/>
+<br/>
+<b>ジャイロ／加速度／エンコーダの情報の取得
+　GetSensorInfoReq(SENSORVALUE* value)</b><br/>
+　ジャイロ／加速度／エンコーダの情報を取得します。<br/>
+　10ms毎に値が更新されるのでそれより早い周期で情報取得を行っても値が更新されません。<br/>
+　情報取得フラグ設定でジャイロ、加速度、エンコーダを取得しない設定にしていると値は更新されません。<br/>
+<br/>
+<b>障害物センサ情報8個の情報の取得
+　GetObstacleSensorInfoReq(OBSTACLEVALUE* value)</b><br/>
+　障害物センサ情報8個の情報を取得します。<br/>
+　10ms毎に値が更新されるのでそれより早い周期で情報取得を行っても値が更新されません。<br/>
+　情報取得フラグで障害物センサの情報を取得しない設定にしていると値は更新されません。<br/>
+<br/>
+<b>電源情報の取得
+　GetPowerInfoReq(POWERVALUE* value)</b><br/>
+　電源情報を取得します。<br/>
+　10ms毎に値が更新されるのでそれより早い周期で情報取得を行っても値が更新されません。<br/>
+　情報取得フラグで電源情報を取得しない設定にしていると値は更新されません。<br/>
+<br/><h4>使用例</h4>
+<pre><code> int main() {
+    RcControl     _RcControl; // RoboCarコントロールクラス
+    DRIVEVALUE   drive;      // 操舵用サーボモータ情報構造体 
+    SENSORVALUE  sensor; // ジャイロ/加速度/エンコーダ構造体
+    OBSTACLEVALUE    obstacle;   // 障害物センサ構造体
+    POWER_VALUE   power;      // 電源情報構造体</p>
+
+    _RcControl.init();            // 初期化
+    _RcControl.Start();           // 処理開始
+    _RcControl.SetReportFlagReq(0x0f);    // 情報取得フラグ設定
+    _RcControl.SetMotorEnableReq(1);  // 駆動用モータON
+    _RcControl.SetServoEnable(1);     // 操舵用サーボモータON 
+
+    for(int i=0; i&lt;100; i++){
+      usleep(1000**100);
+      _RcControl.SetDriveSpeed(i**10);        // 速度設定
+      _RcControl.SetSteerAngle((float)i%30);  // 操舵角設定
+      _RcControl.GetServoInfoReq(1, 42, 12, &amp;drive); // 操舵用サーボ情報取得
+      _RcControl.GetSensorInfoReq(&amp;sensor);       // ジャイロ/加速度/エンコーダ情報取得
+      _RcControl.GetObstacleSensorInfoReq(&amp;obstacle);// 障害物センサ情報取得
+      _RcControl.GetPowerInfoReq(&amp;power);     // 電源情報取得
+    }
+
+    _RcControl.SetDriveSpeed(0);  // 速度設定
+    _RcControl.SetSteerAngle(0);  // 操舵角設定
+    _RcControl.SetMotorEnableReq(0);// 駆動用モータOFF
+    _RcControl.SetServoEnable(0); // 操舵用サーボモータOFF 
+    _RcControl.Stop();        // 処理の停止
+    _RcControl.Close();       // リソースの解放
+
+    return 0;
+}</code></pre>
+<br/>
+
+<h3>LaserRangeSensorライブラリ</h3>
+
+<p>LaserRangeSensorライブラリはレーザレンジセンサ情報の取得を行います。<br/>
+※レーザレンジセンサはオプションのため別途購入する必要があります。<br/>
+<h4>用途</h4>
+　・レーザレンジセンサ情報の取得<br/>
+<br/>
+<h4>使用準備</h4>
+<b>初期化
+　InitSerial()
+　InitSerial2()
+　InitEther(char* ip)</b><br/>
+　最初に初期化を行う必要があります。<br/>
+　初期化では各種デバイスの初期化とリソース確保を行います。<br/>
+　※USB接続(1個)の場合はInitSerial()を使用します。
+  USB接続(2個)の場合はInitSerial()とInitSerial2()を使用します。
+  Ether接続の場合はInitEther()を使用して、引数にレーザーレンジセンサのIPアドレスを指定します。<br/>
+　例：InitSerial();  // USB接続1個の初期化<br/>
+<br/>
+<b>パラメータ設定
+  SetScanParam(int firstAngle, int lastAngle, int skipStep, int skipScan)</b><br/>
+　出力範囲と周期を設定します。<br/>
+　firstAngle：出力開始角度<br/>
+　lastAngle：出力終了角度<br/>
+　skipStep：角度間引き数<br/>
+　skipScan：周期間引き数<br/>
+　例：SetScanParam(-120, 120, 0, 0);  // 開始角-120, 終了角120, 角度間引き0, 周期間引き0<br/></p>
+<br/>
+<p><b>コールバック関数の登録
+
+　SetReceiveHander(this)</b><br/>
+  コールバック関数の登録を行います。<br/>
+  センサーの出力周期毎にOnReceive()がコールされます。<br/>
+<br/>
+<b>スタート
+　Start()</b><br/>
+　センサ情報の取得を開始します。<br/>
+　センサ情報の取得を開始するには初期化が終了している必要があります。<br/>
+<br/>
+<h5>LaserRangeSensorの主なインタフェース</h5>
+<b>コールバック関数
+　OnReceive()</b><br/>
+　libLaserRangeSensorでセンサ情報を取得すると(100ms毎)ユーザアプリで定義したOnReceive()が呼ばれます。<br/>
+　OnReceive()でデータの処理を行います。</p>
+<br/>
+<b>データの取得
+　GetData(LrsResult *res)</b><br/>
+　libLaserRangeSensorのバッファに蓄積されたデータを取得します。<br/>
+　弊社オプションのレーザレンジセンサはデータ収集周期が100msなのでそれより早い周期でデータ取得を行っても値は更新されません。<br/>
+　OnReceive()はデータ収集完了時に呼ばれるのでOnReceive()の中でGetData()を呼ぶと収集周期毎にデータの取得が可能です。<br/></p>
+
+<h4>使用例</h4>
+
+<pre><code>// サンプルレーザレンジセンサクラス
+class SampleLRS :public LaserRangeSensorReceiveHandler {
+public:
+　　SampleLRS(){}; // コンストラクタ
+　　virtual ~SampleLRS(){}; // デストラクタ
+
+// 初期化
+　　bool Init() {
+　　　　bool res = lrs.Init(); // レーザレンジセンサの初期化
+　　　　return true;
+　　}
+
+　　void SetReceiveHandler() {
+　　　　lrs.SetReceiveHander(this); // コールバックハンドラの登録
+　　}
+
+　　bool Start(){
+　　　　bool res = lrs.Start(); // 処理開始
+　　　　return true;
+　　}
+
+　　bool Stop(){
+　　　　lrs.Stop(); // 処理終了
+　　　　return true;
+　　}
+
+private:
+// コールバック関数
+　　void OnReceive(){
+　　　　lrs.GetData(&amp;res); // レーザレンジセンサ情報の取得
+　　}
+　　LaserRangeSensor lrs; // レーザレンジセンサクラス
+　　LrsResult res; // 受信データ構造体
+};
+
+int main() {
+　　SampleLRS slrs;// サンプルLRSクラス
+　　system("ipm_serial S 4 0");// ベースボードのストップ
+　　sleep(1);
+　　system("ipm_serial S 4 1");// ベースボードのスタート
+
+　　signal(SIGINT, funcx);// "Ctrl"+"C"の処理を変更
+
+　　bool flg = 1;
+　　bool ires = slrs.Init(); // サンプルLRSクラスの初期化
+　　if(ires == false)
+　　　　flg = 0;
+　　slrs.SetReceiveHandler(); // コールバックハンドラの登録
+　　bool sres = slrs.Start(); // 受信処理開始
+　　if(sres == false)
+　　　　flg = 0;
+
+　　while (flg) {
+　　　　usleep(3000);
+　　}
+　　slrs.Stop(); // 受信処理終了
+　　return 0;
+}
+
+void funcx(int sig) {
+　　system("ipm_serial S 4 0"); // ベースボードのストップ
+　　sleep(1);
+　　system("ipm_serial S 4 1"); // ベースボードのスタート
+　　signal(SIGINT, SIG_DFL); // "Ctrl"+"C"の処理をデフォルトに戻す
+　　raise(SIGINT); // "Ctrl"+"C"を発生
+}
+</code></pre>
+
+		</div>
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+	  </div>
+	  <div id="footer">
+		<span>Copyright&copy; 2016 ZMP Inc., All rights reserved.</span>
+	  </div>
+	</div>
+  </body>
+</html>

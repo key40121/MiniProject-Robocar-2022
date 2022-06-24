@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>RoboCar110_2016: /home/zmp/tmp/BaseboardCom.h ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RoboCar110_2016
+   &#160;<span id="projectnumber">ver1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.6 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>総合概要</span></a></li>
+      <li><a href="annotated.html"><span>クラス</span></a></li>
+      <li class="current"><a href="files.html"><span>ファイル</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>ファイル一覧</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_8af83c0dc83a45a35ca6968cdc29a7af.html">tmp</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">クラス</a> &#124;
+<a href="#enum-members">列挙型</a>  </div>
+  <div class="headertitle">
+<div class="title">BaseboardCom.h ファイル</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Baseボード共通ヘッダ  
+<a href="#details">[詳解]</a></p>
+<div class="textblock"><code>#include &quot;RingBuffer.h&quot;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+</div>
+<p><a href="BaseboardCom_8h_source.html">[ソースコード]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+クラス</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzmp_1_1zrc_1_1SENSOR__VALUE.html">zmp::zrc::SENSOR_VALUE</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzmp_1_1zrc_1_1OBSTACLE__VALUE.html">zmp::zrc::OBSTACLE_VALUE</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzmp_1_1zrc_1_1POWER__VALUE.html">zmp::zrc::POWER_VALUE</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structzmp_1_1zrc_1_1DRIVE__VALUE.html">zmp::zrc::DRIVE_VALUE</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classzmp_1_1zrc_1_1SerialReceiveHandler.html">zmp::zrc::SerialReceiveHandler</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+列挙型</h2></td></tr>
+<tr class="memitem:a1548ccfa4f98a7de9bbc6f78c360fe1e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>HANDLER_KIND</b> { <br/>
+&#160;&#160;<b>zmp::zrc::H_STEER</b> = 1, 
+<b>zmp::zrc::H_POWER</b> = 2, 
+<b>zmp::zrc::H_SENSOR</b> = 3, 
+<b>zmp::zrc::H_DRIVE</b> = 4, 
+<br/>
+&#160;&#160;<b>zmp::zrc::H_OBSTACLE</b> = 5, 
+<b>zmp::zrc::H_OTHER</b> = 6, 
+<b>zmp::zrc::H_ALL</b> = 7
+<br/>
+ }</td></tr>
+<tr class="separator:a1548ccfa4f98a7de9bbc6f78c360fe1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69b803ac1eba7247350072cc8fafd762"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>RECEIVE_INFO_KIND</b> { <b>zmp::zrc::RS232</b>, 
+<b>zmp::zrc::RS485</b>
+ }</td></tr>
+<tr class="separator:a69b803ac1eba7247350072cc8fafd762"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae11476bf04b0de1b6bbba9559ca5c9ed"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>BASEBOARD_ERROR_KIND</b> { <br/>
+&#160;&#160;<b>zmp::zrc::BASE_OK</b>, 
+<b>zmp::zrc::BASE_NG</b>, 
+<b>zmp::zrc::BASE_RS232_PORT_OPEN_ERR</b>, 
+<b>zmp::zrc::BASE_RS232_THREAD_CREATE_ERR</b>, 
+<br/>
+&#160;&#160;<b>zmp::zrc::BASE_RS232_GET_DATA_ERR</b>, 
+<b>zmp::zrc::BASE_RS232_SET_HANDLE_ERR</b>, 
+<b>zmp::zrc::BASE_RS485_PORT_OPEN_ERR</b>, 
+<b>zmp::zrc::BASE_RS485_THREAD_CREATE_ERR</b>, 
+<br/>
+&#160;&#160;<b>zmp::zrc::BASE_RS485_GET_DATA_ERR</b>, 
+<b>zmp::zrc::BASE_RS485_SET_HANDLE_ERR</b>, 
+<b>zmp::zrc::BASE_RS485_CNG_RTSON_ERR</b>, 
+<b>zmp::zrc::BASE_RS485_CNG_RTSOFF_ERR</b>, 
+<br/>
+&#160;&#160;<b>zmp::zrc::BASE_RS485_CNG_RTSCONT_ERR</b>, 
+<b>zmp::zrc::BASE_STEER_SET_INFOREQ_ERR</b>, 
+<b>zmp::zrc::BASE_STEER_SEND_ROMOPERATREQ_ERR</b>, 
+<b>zmp::zrc::BASE_STEER_GET_INFOREQ_ERR</b>, 
+<br/>
+&#160;&#160;<b>zmp::zrc::BASE_POWER_GET_INFOREQ_ERR</b>, 
+<b>zmp::zrc::BASE_OBSTACLE_GET_INFOREQ_ERR</b>, 
+<b>zmp::zrc::BASE_SENSOR_GET_INFOREQ_ERR</b>, 
+<b>zmp::zrc::BASE_DRIVE_SET_VELOCITYREQ_ERR</b>, 
+<br/>
+&#160;&#160;<b>zmp::zrc::BASE_DRIVE_SET_ENABLEREQ_ERR</b>, 
+<b>zmp::zrc::BASE_DRIVE_SET_TORQUEREQ_ERR</b>
+<br/>
+ }</td></tr>
+<tr class="separator:ae11476bf04b0de1b6bbba9559ca5c9ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>Baseボード共通ヘッダ </p>
+<dl class="section author"><dt>著者</dt><dd>関口 浩司</dd></dl>
+<dl class="section date"><dt>日付</dt><dd>2009-04-01</dd></dl>
+<p>Copyright (c) 2009 ZMP Inc. All rights reserved. </p>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+2016年01月08日(金) 09時47分27秒作成 - RoboCar110_2016 / 構成:  &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>

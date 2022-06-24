@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>RoboCar110_2016: /home/zmp/tmp/Baseboard.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RoboCar110_2016
+   &#160;<span id="projectnumber">ver1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.6 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>総合概要</span></a></li>
+      <li><a href="annotated.html"><span>クラス</span></a></li>
+      <li class="current"><a href="files.html"><span>ファイル</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>ファイル一覧</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_8af83c0dc83a45a35ca6968cdc29a7af.html">tmp</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Baseboard.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="Baseboard_8h.html">[詳解]</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#ifndef BASEBOARD_H_</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BASEBOARD_H_</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;DriveMotor.h&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;InternalSensor.h&quot;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;IrObstacle.h&quot;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;PowerControl.h&quot;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;SteeringServoMotor.h&quot;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;RS232Communication.h&quot;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;RS485Communication.h&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="BaseboardCom_8h.html">BaseboardCom.h</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">namespace </span>zmp {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">namespace </span>zrc {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html">   42</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html">CPU_BASE_SET_FLG_REQ</a> {</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html#a225543891981778fa982eb6dc915216c">   47</a></span>&#160;        <span class="keywordtype">char</span> <a class="code" href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html#a225543891981778fa982eb6dc915216c">header</a>[2];</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html#a33e68f7ea9ebcf23e1699520ee47510b">   52</a></span>&#160;        <span class="keywordtype">char</span> <a class="code" href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html#a33e68f7ea9ebcf23e1699520ee47510b">len</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html#a80e73437063009aedd02ed208fdd295e">   57</a></span>&#160;        <span class="keywordtype">char</span> <a class="code" href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html#a80e73437063009aedd02ed208fdd295e">sym</a>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html#acee74353942bc331afd3bf847c8a5940">   62</a></span>&#160;        <span class="keywordtype">char</span> <a class="code" href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html#acee74353942bc331afd3bf847c8a5940">flg</a>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html#a2a880e592c3d154dafd1b08ef20515c1">   67</a></span>&#160;        <span class="keywordtype">char</span> <a class="code" href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html#a2a880e592c3d154dafd1b08ef20515c1">sum</a>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    };</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classzmp_1_1zrc_1_1Baseboard.html">   78</a></span>&#160;<span class="keyword">class </span><a class="code" href="classzmp_1_1zrc_1_1Baseboard.html">Baseboard</a> {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#a25a1f45f855df67361cc6a02a36a4604">Baseboard</a>();</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#a550ffab466d8e7644600dfae730959fc">~Baseboard</a>();</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#a3013577e98a28c2affa2822168230296">Init</a>();</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#a05d68a9fd247d43bcc74efc252bf1458">Start</a>();</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#a9db3a1989172905f89b8a7d2626fb39d">Stop</a>();</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#a4b460735ad6b981d3e5e6424f511376a">Close</a>();</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#a7af066c8cbd7bd58ac725c9c14c0f0e2">GetRS232Data</a>(<span class="keywordtype">char</span>* msg);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#abcff01b45f5d30dc4b3e5c9884942429">GetRS485Data</a>(<span class="keywordtype">char</span>* msg);</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#a11a810fb35c03a02ce6bc8d0ad821246">SetReceiveHandler</a>(<a class="code" href="classzmp_1_1zrc_1_1SerialReceiveHandler.html">SerialReceiveHandler</a>* handler);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#a6918b874a408c6fb6978546660774811">SetServoInfo</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, SERVO_INFO_ADR adr, <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>* msg, <span class="keywordtype">int</span> len);</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#abc566c65aa2be41dc2c8af777803545d">SendROMOperatReq</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, ROM_OPERAT_KIND kind);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#aa2d73ad216f68fddf1993b91cea8b2c1">GetServoInfoReq</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, SERVO_INFO_ADR adr, <span class="keywordtype">int</span> len);</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#a59fd76307b06a2b500f41d3420b2aa20">GetPowerInfoReq</a>();</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#abeecdc92e19983766e14c5c24a6c9b43">GetObstacleInfoReq</a>();</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#a9739c15c61c2e9181bcd46c87335e059">GetSensorInfoReq</a>();</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#aa219d70432c97fa66dc9d6e800acb787">SetMotorVelocityReq</a>(<span class="keywordtype">int</span> velocity);</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#abfa30daeb4adb58e71889c93e5c36fad">SetReportFlagReq</a>(<span class="keywordtype">char</span> flg);</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#ad9e70e90f5392c7793de71a669a7ef10">SetMotorEnableReq</a>(<span class="keywordtype">char</span> enable);</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    BASEBOARD_ERROR_KIND <a class="code" href="classzmp_1_1zrc_1_1Baseboard.html#a1f15881ec73b1c0e17f031a56057d325">SetMotorTorqueReq</a>(<span class="keywordtype">char</span> p, <span class="keywordtype">char</span> i, <span class="keywordtype">char</span> d, <span class="keywordtype">char</span> w);</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    SteeringServoMotor  _Steer;</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    PowerControl            _Power;</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    IrObstacle          _Obstacle;</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    InternalSensor      _Sensor;</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    DriveMotor          _Drive;</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    RS232Communication  _RS232;</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    RS485Communication  _RS485;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;};</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    }</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;}</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BASEBOARD_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ_html_a225543891981778fa982eb6dc915216c"><div class="ttname"><a href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html#a225543891981778fa982eb6dc915216c">zmp::zrc::CPU_BASE_SET_FLG_REQ::header</a></div><div class="ttdeci">char header[2]</div><div class="ttdef"><b>Definition:</b> Baseboard.h:47</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1SerialReceiveHandler_html"><div class="ttname"><a href="classzmp_1_1zrc_1_1SerialReceiveHandler.html">zmp::zrc::SerialReceiveHandler</a></div><div class="ttdef"><b>Definition:</b> BaseboardCom.h:532</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_a9739c15c61c2e9181bcd46c87335e059"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#a9739c15c61c2e9181bcd46c87335e059">zmp::zrc::Baseboard::GetSensorInfoReq</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND GetSensorInfoReq()</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_a05d68a9fd247d43bcc74efc252bf1458"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#a05d68a9fd247d43bcc74efc252bf1458">zmp::zrc::Baseboard::Start</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND Start()</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_abcff01b45f5d30dc4b3e5c9884942429"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#abcff01b45f5d30dc4b3e5c9884942429">zmp::zrc::Baseboard::GetRS485Data</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND GetRS485Data(char *msg)</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_a4b460735ad6b981d3e5e6424f511376a"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#a4b460735ad6b981d3e5e6424f511376a">zmp::zrc::Baseboard::Close</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND Close()</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_a550ffab466d8e7644600dfae730959fc"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#a550ffab466d8e7644600dfae730959fc">zmp::zrc::Baseboard::~Baseboard</a></div><div class="ttdeci">virtual ~Baseboard()</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_ad9e70e90f5392c7793de71a669a7ef10"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#ad9e70e90f5392c7793de71a669a7ef10">zmp::zrc::Baseboard::SetMotorEnableReq</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND SetMotorEnableReq(char enable)</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_abc566c65aa2be41dc2c8af777803545d"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#abc566c65aa2be41dc2c8af777803545d">zmp::zrc::Baseboard::SendROMOperatReq</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND SendROMOperatReq(int id, ROM_OPERAT_KIND kind)</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_a7af066c8cbd7bd58ac725c9c14c0f0e2"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#a7af066c8cbd7bd58ac725c9c14c0f0e2">zmp::zrc::Baseboard::GetRS232Data</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND GetRS232Data(char *msg)</div></div>
+<div class="ttc" id="BaseboardCom_8h_html"><div class="ttname"><a href="BaseboardCom_8h.html">BaseboardCom.h</a></div><div class="ttdoc">Baseボード共通ヘッダ </div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_a3013577e98a28c2affa2822168230296"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#a3013577e98a28c2affa2822168230296">zmp::zrc::Baseboard::Init</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND Init()</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_abeecdc92e19983766e14c5c24a6c9b43"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#abeecdc92e19983766e14c5c24a6c9b43">zmp::zrc::Baseboard::GetObstacleInfoReq</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND GetObstacleInfoReq()</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_abfa30daeb4adb58e71889c93e5c36fad"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#abfa30daeb4adb58e71889c93e5c36fad">zmp::zrc::Baseboard::SetReportFlagReq</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND SetReportFlagReq(char flg)</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_aa219d70432c97fa66dc9d6e800acb787"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#aa219d70432c97fa66dc9d6e800acb787">zmp::zrc::Baseboard::SetMotorVelocityReq</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND SetMotorVelocityReq(int velocity)</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_a25a1f45f855df67361cc6a02a36a4604"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#a25a1f45f855df67361cc6a02a36a4604">zmp::zrc::Baseboard::Baseboard</a></div><div class="ttdeci">Baseboard()</div></div>
+<div class="ttc" id="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ_html_a2a880e592c3d154dafd1b08ef20515c1"><div class="ttname"><a href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html#a2a880e592c3d154dafd1b08ef20515c1">zmp::zrc::CPU_BASE_SET_FLG_REQ::sum</a></div><div class="ttdeci">char sum</div><div class="ttdef"><b>Definition:</b> Baseboard.h:67</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_a1f15881ec73b1c0e17f031a56057d325"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#a1f15881ec73b1c0e17f031a56057d325">zmp::zrc::Baseboard::SetMotorTorqueReq</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND SetMotorTorqueReq(char p, char i, char d, char w)</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html">zmp::zrc::Baseboard</a></div><div class="ttdef"><b>Definition:</b> Baseboard.h:78</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_aa2d73ad216f68fddf1993b91cea8b2c1"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#aa2d73ad216f68fddf1993b91cea8b2c1">zmp::zrc::Baseboard::GetServoInfoReq</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND GetServoInfoReq(int id, SERVO_INFO_ADR adr, int len)</div></div>
+<div class="ttc" id="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ_html"><div class="ttname"><a href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html">zmp::zrc::CPU_BASE_SET_FLG_REQ</a></div><div class="ttdef"><b>Definition:</b> Baseboard.h:42</div></div>
+<div class="ttc" id="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ_html_a80e73437063009aedd02ed208fdd295e"><div class="ttname"><a href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html#a80e73437063009aedd02ed208fdd295e">zmp::zrc::CPU_BASE_SET_FLG_REQ::sym</a></div><div class="ttdeci">char sym</div><div class="ttdef"><b>Definition:</b> Baseboard.h:57</div></div>
+<div class="ttc" id="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ_html_a33e68f7ea9ebcf23e1699520ee47510b"><div class="ttname"><a href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html#a33e68f7ea9ebcf23e1699520ee47510b">zmp::zrc::CPU_BASE_SET_FLG_REQ::len</a></div><div class="ttdeci">char len</div><div class="ttdef"><b>Definition:</b> Baseboard.h:52</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_a59fd76307b06a2b500f41d3420b2aa20"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#a59fd76307b06a2b500f41d3420b2aa20">zmp::zrc::Baseboard::GetPowerInfoReq</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND GetPowerInfoReq()</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_a11a810fb35c03a02ce6bc8d0ad821246"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#a11a810fb35c03a02ce6bc8d0ad821246">zmp::zrc::Baseboard::SetReceiveHandler</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND SetReceiveHandler(SerialReceiveHandler *handler)</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_a6918b874a408c6fb6978546660774811"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#a6918b874a408c6fb6978546660774811">zmp::zrc::Baseboard::SetServoInfo</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND SetServoInfo(int id, SERVO_INFO_ADR adr, unsigned char *msg, int len)</div></div>
+<div class="ttc" id="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ_html_acee74353942bc331afd3bf847c8a5940"><div class="ttname"><a href="structzmp_1_1zrc_1_1CPU__BASE__SET__FLG__REQ.html#acee74353942bc331afd3bf847c8a5940">zmp::zrc::CPU_BASE_SET_FLG_REQ::flg</a></div><div class="ttdeci">char flg</div><div class="ttdef"><b>Definition:</b> Baseboard.h:62</div></div>
+<div class="ttc" id="classzmp_1_1zrc_1_1Baseboard_html_a9db3a1989172905f89b8a7d2626fb39d"><div class="ttname"><a href="classzmp_1_1zrc_1_1Baseboard.html#a9db3a1989172905f89b8a7d2626fb39d">zmp::zrc::Baseboard::Stop</a></div><div class="ttdeci">BASEBOARD_ERROR_KIND Stop()</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+2016年01月08日(金) 09時47分27秒作成 - RoboCar110_2016 / 構成:  &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>

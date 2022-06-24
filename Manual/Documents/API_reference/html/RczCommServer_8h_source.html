@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>RoboCar110_2016: /home/zmp/tmp/RczCommServer.h ソースファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RoboCar110_2016
+   &#160;<span id="projectnumber">ver1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.6 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>総合概要</span></a></li>
+      <li><a href="annotated.html"><span>クラス</span></a></li>
+      <li class="current"><a href="files.html"><span>ファイル</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>ファイル一覧</span></a></li>
+    </ul>
+  </div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_8af83c0dc83a45a35ca6968cdc29a7af.html">tmp</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">RczCommServer.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="RczCommServer_8h.html">[詳解]</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#ifndef RCZCOMMSERVER_H_</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define RCZCOMMSERVER_H_</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &quot;socket.h&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">//#include &quot;DataCollector.h&quot;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;RczHMsg.h&quot;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">//class TCPSocket;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">//class SocketEventHandlerInterface;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classRczCommServerStatusHandler.html">   41</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRczCommServerStatusHandler.html">RczCommServerStatusHandler</a></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRczCommServerStatusHandler.html#a2be59f9785799895ff8602fb3c5fea4b">onOpen</a>();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRczCommServerStatusHandler.html#a9a349929a909efeb42a22dd98008d685">onClose</a>();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;};</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classRczCommServerMessageHandler.html">   66</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRczCommServerMessageHandler.html">RczCommServerMessageHandler</a></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;{</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRczCommServerMessageHandler.html#a0cd1106d2fd738e8d9c831ebb068b3c9">onLoadProgram</a>(<span class="keyword">const</span> RczHMsgLoadProgram *msg) = 0;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRczCommServerMessageHandler.html#adba22b36dc1337975f8ef8f3708d727c">onSetImageReportFlag</a>(<span class="keyword">const</span> RczHMsgSetImageReportFlag *msg) = 0;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRczCommServerMessageHandler.html#aa7dd92e7fce8b4718793b7391c8eb31e">onSetResultReportFlag</a>(<span class="keyword">const</span> RczHMsgSetResultReportFlag *msg) = 0;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRczCommServerMessageHandler.html#a968688bbad323e205c24b826c740c7e6">onSetIpmStereoParam</a>(<span class="keyword">const</span> RczHMsgSetIpmStereoParam *msg) = 0;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRczCommServerMessageHandler.html#ac25847c107b2b6345c1d6a9a0de0dfe6">onUpdateDatafile</a>(<span class="keyword">const</span> RczHMsgUpdateDatafile *msg) = 0;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRczCommServerMessageHandler.html#ac1e888a4679bf9de80534cfbadfef447">onSetIntInterval</a>(<span class="keyword">const</span> RczHMsgSetIntInterval *msg) = 0;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;};</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="classRczCommServerMessageAdapter.html">  115</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRczCommServerMessageAdapter.html">RczCommServerMessageAdapter</a> : <span class="keyword">public</span> <a class="code" href="classRczCommServerMessageHandler.html">RczCommServerMessageHandler</a></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;{</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="classRczCommServerMessageAdapter.html#a92c5f24f26cde98d863f1dde4869f3a9">  118</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRczCommServerMessageAdapter.html#a92c5f24f26cde98d863f1dde4869f3a9">onLoadProgram</a>(<span class="keyword">const</span> RczHMsgLoadProgram *msg) {};</div>
+<div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="classRczCommServerMessageAdapter.html#a88f2a7aad9e5f1ba773d511e7442accc">  119</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRczCommServerMessageAdapter.html#a88f2a7aad9e5f1ba773d511e7442accc">onSetImageReportFlag</a>(<span class="keyword">const</span> RczHMsgSetImageReportFlag *msg) {};</div>
+<div class="line"><a name="l00120"></a><span class="lineno"><a class="line" href="classRczCommServerMessageAdapter.html#a93dbe8f576736dc56985a611d27c16e3">  120</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRczCommServerMessageAdapter.html#a93dbe8f576736dc56985a611d27c16e3">onSetResultReportFlag</a>(<span class="keyword">const</span> RczHMsgSetResultReportFlag *msg) {};</div>
+<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="classRczCommServerMessageAdapter.html#aad0ba0355ed2db9d5590d5ae3bdd37dd">  121</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRczCommServerMessageAdapter.html#aad0ba0355ed2db9d5590d5ae3bdd37dd">onSetIpmStereoParam</a>(<span class="keyword">const</span> RczHMsgSetIpmStereoParam *msg) {};</div>
+<div class="line"><a name="l00122"></a><span class="lineno"><a class="line" href="classRczCommServerMessageAdapter.html#a3ad27e56c358eb76b528e6a49b7c83d9">  122</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRczCommServerMessageAdapter.html#a3ad27e56c358eb76b528e6a49b7c83d9">onUpdateDatafile</a>(<span class="keyword">const</span> RczHMsgUpdateDatafile *msg) {};</div>
+<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="classRczCommServerMessageAdapter.html#a902de609ca1d8b4389ab6a77c17e4706">  123</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRczCommServerMessageAdapter.html#a902de609ca1d8b4389ab6a77c17e4706">onSetIntInterval</a>(<span class="keyword">const</span> RczHMsgSetIntInterval *msg) {};</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;};</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
+<div class="line"><a name="l00134"></a><span class="lineno"><a class="line" href="classRcControlCommandHandler.html">  134</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRcControlCommandHandler.html">RcControlCommandHandler</a></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;{</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRcControlCommandHandler.html#a5809774fd2d53842671306c966bedb04">onSetServoOnOff</a>(<span class="keyword">const</span> RczHMsgSetServoOnOff *msg) = 0;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRcControlCommandHandler.html#a6e03e53c49687edf2af0d30bd3077d82">onSetSteerAngle</a>(<span class="keyword">const</span> RczHMsgSetSteerAngle *msg) = 0;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRcControlCommandHandler.html#a4b81c81d6cb51d07c16a54d79e49e176">onSetMotorOnOff</a>(<span class="keyword">const</span> RczHMsgSetMotorOnOff *msg) = 0;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRcControlCommandHandler.html#ad61b4f1fd2ca08bf30aaeb50b88590d1">onSetDriveSpeed</a>(<span class="keyword">const</span> RczHMsgSetDriveSpeed *msg) = 0;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRcControlCommandHandler.html#ac055719580337fc51784f7897777b135">onSetGyroOffset</a>(<span class="keyword">const</span> RczHMsgSetGyroOffset *msg) = 0;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRcControlCommandHandler.html#a272cbb1be2eea1a331544bb66dc3ef3c">onSetCurrentOffset</a>(<span class="keyword">const</span> RczHMsgSetCurrentOffset *msg) = 0;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRcControlCommandHandler.html#ac8f5b575e6092e2f927da17946a8c532">onSetSteerOffset</a>(<span class="keyword">const</span> RczHMsgSetSteerOffset *msg) = 0;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetAngleZeroOffset(<span class="keyword">const</span> RczHMsgSetAngleZeroOffset *msg) = 0;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetCamberOffset(<span class="keyword">const</span> RczHMsgSetCamberOffset *msg) = 0;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetCamberOnOff(<span class="keyword">const</span> RczHMsgSetCamberOnOff *msg) = 0;</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetCamberAngle(<span class="keyword">const</span> RczHMsgSetCamberAngle *msg) = 0;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetControlMode(<span class="keyword">const</span> RczHMsgSetControlMode *msg) = 0;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetLaneKeepingParam(<span class="keyword">const</span> RczHMsgSetLaneKeepingParam *msg) = 0;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetTorqueEnable(<span class="keyword">const</span> RczHMsgSetTorqueEnable *msg) = 0;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetServoTorqueEnable(<span class="keyword">const</span> RczHMsgSetTorqueEnable *msg) = 0;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onBeginMotion(<span class="keyword">const</span> RczHMsgBeginMotion *msg) = 0;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetObstacleAvoidanceParam(<span class="keyword">const</span> RczHMsgSetObstacleAvoidanceParam *msg) = 0;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;};</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
+<div class="line"><a name="l00207"></a><span class="lineno"><a class="line" href="classRcControlCommandAdapter.html">  207</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRcControlCommandAdapter.html">RcControlCommandAdapter</a> : <span class="keyword">public</span> <a class="code" href="classRcControlCommandHandler.html">RcControlCommandHandler</a></div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;{</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetTorqueEnable(<span class="keyword">const</span> RczHMsgSetTorqueEnable *msg) {};</div>
+<div class="line"><a name="l00211"></a><span class="lineno"><a class="line" href="classRcControlCommandAdapter.html#a33af16c922062af48fc7c8cdb8eb11ee">  211</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRcControlCommandAdapter.html#a33af16c922062af48fc7c8cdb8eb11ee">onSetDriveSpeed</a>(<span class="keyword">const</span> RczHMsgSetDriveSpeed *msg) {};</div>
+<div class="line"><a name="l00212"></a><span class="lineno"><a class="line" href="classRcControlCommandAdapter.html#a777bd8ee48b47c98fd592beb9c9e0c50">  212</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRcControlCommandAdapter.html#a777bd8ee48b47c98fd592beb9c9e0c50">onSetSteerAngle</a>(<span class="keyword">const</span> RczHMsgSetSteerAngle *msg) {};</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetControlMode(<span class="keyword">const</span> RczHMsgSetControlMode *msg) {};</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetAngleZeroOffset(<span class="keyword">const</span> RczHMsgSetAngleZeroOffset *msg) {};</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetLaneKeepingParam(<span class="keyword">const</span> RczHMsgSetLaneKeepingParam *msg) {};</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetServoTorqueEnable(<span class="keyword">const</span> RczHMsgSetTorqueEnable *msg) {};</div>
+<div class="line"><a name="l00217"></a><span class="lineno"><a class="line" href="classRcControlCommandAdapter.html#aa39c0522bdba5d3810829e77220fdfce">  217</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRcControlCommandAdapter.html#aa39c0522bdba5d3810829e77220fdfce">onSetServoOnOff</a>(<span class="keyword">const</span> RczHMsgSetServoOnOff *msg) {};</div>
+<div class="line"><a name="l00218"></a><span class="lineno"><a class="line" href="classRcControlCommandAdapter.html#ae5143327a1230ec8bdedcdf101c81679">  218</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRcControlCommandAdapter.html#ae5143327a1230ec8bdedcdf101c81679">onSetMotorOnOff</a>(<span class="keyword">const</span> RczHMsgSetMotorOnOff *msg) {};</div>
+<div class="line"><a name="l00219"></a><span class="lineno"><a class="line" href="classRcControlCommandAdapter.html#a976b0dac3a1db12801eacf10f882827e">  219</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRcControlCommandAdapter.html#a976b0dac3a1db12801eacf10f882827e">onSetGyroOffset</a>(<span class="keyword">const</span> RczHMsgSetGyroOffset *msg) {};</div>
+<div class="line"><a name="l00220"></a><span class="lineno"><a class="line" href="classRcControlCommandAdapter.html#a55f234bcdfae1bdc9f74a5e471ce626c">  220</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRcControlCommandAdapter.html#a55f234bcdfae1bdc9f74a5e471ce626c">onSetCurrentOffset</a>(<span class="keyword">const</span> RczHMsgSetCurrentOffset *msg) {};</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetCamberOnOff(<span class="keyword">const</span> RczHMsgSetCamberOnOff *msg) {};</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetCamberAngle(<span class="keyword">const</span> RczHMsgSetCamberAngle *msg) {};</div>
+<div class="line"><a name="l00223"></a><span class="lineno"><a class="line" href="classRcControlCommandAdapter.html#aa5364b8a970407e823f55600d378938f">  223</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classRcControlCommandAdapter.html#aa5364b8a970407e823f55600d378938f">onSetSteerOffset</a>(<span class="keyword">const</span> RczHMsgSetSteerOffset *msg) {};</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetCamberOffset(<span class="keyword">const</span> RczHMsgSetCamberOffset *msg) {};</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onBeginMotion(<span class="keyword">const</span> RczHMsgBeginMotion *msg) {}; </div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSetObstacleAvoidanceParam(<span class="keyword">const</span> RczHMsgSetObstacleAvoidanceParam *msg) {};</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;};</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;</div>
+<div class="line"><a name="l00240"></a><span class="lineno"><a class="line" href="classRczCommServer.html">  240</a></span>&#160;<span class="keyword">class </span><a class="code" href="classRczCommServer.html">RczCommServer</a> : <span class="keyword">public</span> SocketEventHandlerInterface</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;{</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <a class="code" href="classRczCommServer.html#aecc2d449da508fd7b661c58fa359f3e8">RczCommServer</a>();</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classRczCommServer.html#a1212858cf663ab767b05180ce92bd276">~RczCommServer</a>();</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classRczCommServer.html#ae031dad19ede9d17f196a9a37da8ddf4">Init</a>(<span class="keywordtype">int</span> port_no);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classRczCommServer.html#a698c379c62cdaab5354e3d9361bdee37">SetReceiveHandler</a>(<a class="code" href="classRczCommServerMessageHandler.html">RczCommServerMessageHandler</a> *handler);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classRczCommServer.html#a698c379c62cdaab5354e3d9361bdee37">SetReceiveHandler</a>(<a class="code" href="classRczCommServerMessageHandler.html">RczCommServerMessageHandler</a> *handler, <a class="code" href="classRcControlCommandHandler.html">RcControlCommandHandler</a> *handler_rc);</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classRczCommServer.html#a698c379c62cdaab5354e3d9361bdee37">SetReceiveHandler</a>(<a class="code" href="classRcControlCommandHandler.html">RcControlCommandHandler</a> *handler_rc);</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classRczCommServer.html#ae6165ba4485d50e5b1695dc79d37e122">SetStatusHandler</a>(<a class="code" href="classRczCommServerStatusHandler.html">RczCommServerStatusHandler</a> *handler);</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classRczCommServer.html#a0d276e57afc11fda2bc8ae648d436e7a">Start</a>();</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classRczCommServer.html#a90eda9afbaa97ddda6a142b95666a460">Send</a>(<span class="keyword">const</span> uchar *msg, <span class="keywordtype">int</span> len);</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classRczCommServer.html#aba588081bc9fc82d454fbe352acbf615">IsReceiveMessage</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    <span class="comment">/*</span></div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="comment">     * @~english</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;<span class="comment">     * @~japanese</span></div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="comment">     * 受信メッセージのコールバック呼び出し処理。</span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;<span class="comment">     * フレームワークからこれを呼び出すことで、ハンドラ関数が実行される。</span></div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;<span class="comment">     * @return  成功したかどうかを返す。</span></div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    <span class="keywordtype">bool</span> KickCallback();</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    <span class="comment">/*</span></div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    <span class="keywordtype">bool</span> GetMessage(RczHMsg *msg);</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    <span class="keywordtype">bool</span> GetClientName(<span class="keywordtype">char</span> *name);</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    <span class="keywordtype">bool</span> IsConnect();</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    <span class="comment">// overrides SocketEventHandlerInterface</span></div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> ReceiveProc(RingBuffer* receive_buf);</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> InitStatus() {};</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> OnConnectionOpen(std::string info) {};</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> OnConnectionAccept(std::string info) {};</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> OnConnectionClose(std::string info) {};</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> OnConnectionDisconnect(std::string info) {};</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="keywordtype">bool</span> OnBody();</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <span class="keywordtype">bool</span> QueueMessage(<span class="keyword">const</span> RczHMsg* msg, <span class="keywordtype">int</span> len);</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    <span class="keywordtype">bool</span> FetchMessage(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *msg_buff, RCZHMSG_ID *msg_id, <span class="keywordtype">int</span> *length);</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <span class="keywordtype">bool</span> ProcCallback(RCZHMSG_ID msg_id, RczHMsg *msg);</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    <span class="keyword">enum</span> EN_SOCKET_RECEIVE_STAT {</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;        RSTAT_SOP,</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;        RSTAT_HEADER,</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;        RSTAT_BODY,</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;        RSTAT_RECOVER,</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;        RSTAT_RECOVER_STEP2,</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    };</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    SocketServer *_sock;</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;    <span class="comment">//DataCollector *_collector;</span></div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="keywordtype">int</span> _port_no;</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    <a class="code" href="classRczCommServerStatusHandler.html">RczCommServerStatusHandler</a> *_status_handler;</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <a class="code" href="classRczCommServerMessageHandler.html">RczCommServerMessageHandler</a> *_callback_handler;</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    <a class="code" href="classRcControlCommandHandler.html">RcControlCommandHandler</a> *_callback_handler_rc;</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    EN_SOCKET_RECEIVE_STAT _sock_receive_stat;</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    RczHMsg _msg_header;</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    uchar _report_image_id;</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    uchar *_build_buff;</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    RingBuffer *_msg_buffer;</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    uchar *_msg_get_buff;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;};</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* RCZ_COMM_SERVER_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;</div>
+<div class="ttc" id="classRczCommServer_html_ae6165ba4485d50e5b1695dc79d37e122"><div class="ttname"><a href="classRczCommServer.html#ae6165ba4485d50e5b1695dc79d37e122">RczCommServer::SetStatusHandler</a></div><div class="ttdeci">bool SetStatusHandler(RczCommServerStatusHandler *handler)</div></div>
+<div class="ttc" id="classRczCommServerMessageHandler_html_adba22b36dc1337975f8ef8f3708d727c"><div class="ttname"><a href="classRczCommServerMessageHandler.html#adba22b36dc1337975f8ef8f3708d727c">RczCommServerMessageHandler::onSetImageReportFlag</a></div><div class="ttdeci">virtual void onSetImageReportFlag(const RczHMsgSetImageReportFlag *msg)=0</div></div>
+<div class="ttc" id="classRcControlCommandAdapter_html_a777bd8ee48b47c98fd592beb9c9e0c50"><div class="ttname"><a href="classRcControlCommandAdapter.html#a777bd8ee48b47c98fd592beb9c9e0c50">RcControlCommandAdapter::onSetSteerAngle</a></div><div class="ttdeci">virtual void onSetSteerAngle(const RczHMsgSetSteerAngle *msg)</div><div class="ttdef"><b>Definition:</b> RczCommServer.h:212</div></div>
+<div class="ttc" id="classRcControlCommandHandler_html_a6e03e53c49687edf2af0d30bd3077d82"><div class="ttname"><a href="classRcControlCommandHandler.html#a6e03e53c49687edf2af0d30bd3077d82">RcControlCommandHandler::onSetSteerAngle</a></div><div class="ttdeci">virtual void onSetSteerAngle(const RczHMsgSetSteerAngle *msg)=0</div></div>
+<div class="ttc" id="classRczCommServerMessageAdapter_html_a88f2a7aad9e5f1ba773d511e7442accc"><div class="ttname"><a href="classRczCommServerMessageAdapter.html#a88f2a7aad9e5f1ba773d511e7442accc">RczCommServerMessageAdapter::onSetImageReportFlag</a></div><div class="ttdeci">virtual void onSetImageReportFlag(const RczHMsgSetImageReportFlag *msg)</div><div class="ttdef"><b>Definition:</b> RczCommServer.h:119</div></div>
+<div class="ttc" id="classRczCommServerMessageHandler_html_ac1e888a4679bf9de80534cfbadfef447"><div class="ttname"><a href="classRczCommServerMessageHandler.html#ac1e888a4679bf9de80534cfbadfef447">RczCommServerMessageHandler::onSetIntInterval</a></div><div class="ttdeci">virtual void onSetIntInterval(const RczHMsgSetIntInterval *msg)=0</div></div>
+<div class="ttc" id="classRcControlCommandHandler_html_ad61b4f1fd2ca08bf30aaeb50b88590d1"><div class="ttname"><a href="classRcControlCommandHandler.html#ad61b4f1fd2ca08bf30aaeb50b88590d1">RcControlCommandHandler::onSetDriveSpeed</a></div><div class="ttdeci">virtual void onSetDriveSpeed(const RczHMsgSetDriveSpeed *msg)=0</div></div>
+<div class="ttc" id="classRczCommServerMessageAdapter_html_aad0ba0355ed2db9d5590d5ae3bdd37dd"><div class="ttname"><a href="classRczCommServerMessageAdapter.html#aad0ba0355ed2db9d5590d5ae3bdd37dd">RczCommServerMessageAdapter::onSetIpmStereoParam</a></div><div class="ttdeci">virtual void onSetIpmStereoParam(const RczHMsgSetIpmStereoParam *msg)</div><div class="ttdef"><b>Definition:</b> RczCommServer.h:121</div></div>
+<div class="ttc" id="classRczCommServerMessageHandler_html_a0cd1106d2fd738e8d9c831ebb068b3c9"><div class="ttname"><a href="classRczCommServerMessageHandler.html#a0cd1106d2fd738e8d9c831ebb068b3c9">RczCommServerMessageHandler::onLoadProgram</a></div><div class="ttdeci">virtual void onLoadProgram(const RczHMsgLoadProgram *msg)=0</div></div>
+<div class="ttc" id="classRczCommServer_html"><div class="ttname"><a href="classRczCommServer.html">RczCommServer</a></div><div class="ttdef"><b>Definition:</b> RczCommServer.h:240</div></div>
+<div class="ttc" id="classRcControlCommandAdapter_html_a976b0dac3a1db12801eacf10f882827e"><div class="ttname"><a href="classRcControlCommandAdapter.html#a976b0dac3a1db12801eacf10f882827e">RcControlCommandAdapter::onSetGyroOffset</a></div><div class="ttdeci">virtual void onSetGyroOffset(const RczHMsgSetGyroOffset *msg)</div><div class="ttdef"><b>Definition:</b> RczCommServer.h:219</div></div>
+<div class="ttc" id="classRcControlCommandAdapter_html_ae5143327a1230ec8bdedcdf101c81679"><div class="ttname"><a href="classRcControlCommandAdapter.html#ae5143327a1230ec8bdedcdf101c81679">RcControlCommandAdapter::onSetMotorOnOff</a></div><div class="ttdeci">virtual void onSetMotorOnOff(const RczHMsgSetMotorOnOff *msg)</div><div class="ttdef"><b>Definition:</b> RczCommServer.h:218</div></div>
+<div class="ttc" id="classRcControlCommandHandler_html_a272cbb1be2eea1a331544bb66dc3ef3c"><div class="ttname"><a href="classRcControlCommandHandler.html#a272cbb1be2eea1a331544bb66dc3ef3c">RcControlCommandHandler::onSetCurrentOffset</a></div><div class="ttdeci">virtual void onSetCurrentOffset(const RczHMsgSetCurrentOffset *msg)=0</div></div>
+<div class="ttc" id="classRczCommServer_html_aba588081bc9fc82d454fbe352acbf615"><div class="ttname"><a href="classRczCommServer.html#aba588081bc9fc82d454fbe352acbf615">RczCommServer::IsReceiveMessage</a></div><div class="ttdeci">bool IsReceiveMessage() const </div></div>
+<div class="ttc" id="classRczCommServerMessageAdapter_html_a902de609ca1d8b4389ab6a77c17e4706"><div class="ttname"><a href="classRczCommServerMessageAdapter.html#a902de609ca1d8b4389ab6a77c17e4706">RczCommServerMessageAdapter::onSetIntInterval</a></div><div class="ttdeci">virtual void onSetIntInterval(const RczHMsgSetIntInterval *msg)</div><div class="ttdef"><b>Definition:</b> RczCommServer.h:123</div></div>
+<div class="ttc" id="classRczCommServerStatusHandler_html_a9a349929a909efeb42a22dd98008d685"><div class="ttname"><a href="classRczCommServerStatusHandler.html#a9a349929a909efeb42a22dd98008d685">RczCommServerStatusHandler::onClose</a></div><div class="ttdeci">virtual void onClose()</div></div>
+<div class="ttc" id="classRczCommServer_html_a90eda9afbaa97ddda6a142b95666a460"><div class="ttname"><a href="classRczCommServer.html#a90eda9afbaa97ddda6a142b95666a460">RczCommServer::Send</a></div><div class="ttdeci">bool Send(const uchar *msg, int len)</div></div>
+<div class="ttc" id="classRczCommServerStatusHandler_html"><div class="ttname"><a href="classRczCommServerStatusHandler.html">RczCommServerStatusHandler</a></div><div class="ttdef"><b>Definition:</b> RczCommServer.h:41</div></div>
+<div class="ttc" id="classRcControlCommandAdapter_html_aa5364b8a970407e823f55600d378938f"><div class="ttname"><a href="classRcControlCommandAdapter.html#aa5364b8a970407e823f55600d378938f">RcControlCommandAdapter::onSetSteerOffset</a></div><div class="ttdeci">virtual void onSetSteerOffset(const RczHMsgSetSteerOffset *msg)</div><div class="ttdef"><b>Definition:</b> RczCommServer.h:223</div></div>
+<div class="ttc" id="classRcControlCommandHandler_html"><div class="ttname"><a href="classRcControlCommandHandler.html">RcControlCommandHandler</a></div><div class="ttdef"><b>Definition:</b> RczCommServer.h:134</div></div>
+<div class="ttc" id="classRcControlCommandHandler_html_ac055719580337fc51784f7897777b135"><div class="ttname"><a href="classRcControlCommandHandler.html#ac055719580337fc51784f7897777b135">RcControlCommandHandler::onSetGyroOffset</a></div><div class="ttdeci">virtual void onSetGyroOffset(const RczHMsgSetGyroOffset *msg)=0</div></div>
+<div class="ttc" id="classRczCommServer_html_ae031dad19ede9d17f196a9a37da8ddf4"><div class="ttname"><a href="classRczCommServer.html#ae031dad19ede9d17f196a9a37da8ddf4">RczCommServer::Init</a></div><div class="ttdeci">bool Init(int port_no)</div></div>
+<div class="ttc" id="classRczCommServer_html_a698c379c62cdaab5354e3d9361bdee37"><div class="ttname"><a href="classRczCommServer.html#a698c379c62cdaab5354e3d9361bdee37">RczCommServer::SetReceiveHandler</a></div><div class="ttdeci">bool SetReceiveHandler(RczCommServerMessageHandler *handler)</div></div>
+<div class="ttc" id="classRcControlCommandAdapter_html_a55f234bcdfae1bdc9f74a5e471ce626c"><div class="ttname"><a href="classRcControlCommandAdapter.html#a55f234bcdfae1bdc9f74a5e471ce626c">RcControlCommandAdapter::onSetCurrentOffset</a></div><div class="ttdeci">virtual void onSetCurrentOffset(const RczHMsgSetCurrentOffset *msg)</div><div class="ttdef"><b>Definition:</b> RczCommServer.h:220</div></div>
+<div class="ttc" id="classRczCommServerMessageHandler_html_ac25847c107b2b6345c1d6a9a0de0dfe6"><div class="ttname"><a href="classRczCommServerMessageHandler.html#ac25847c107b2b6345c1d6a9a0de0dfe6">RczCommServerMessageHandler::onUpdateDatafile</a></div><div class="ttdeci">virtual void onUpdateDatafile(const RczHMsgUpdateDatafile *msg)=0</div></div>
+<div class="ttc" id="classRczCommServerMessageHandler_html_aa7dd92e7fce8b4718793b7391c8eb31e"><div class="ttname"><a href="classRczCommServerMessageHandler.html#aa7dd92e7fce8b4718793b7391c8eb31e">RczCommServerMessageHandler::onSetResultReportFlag</a></div><div class="ttdeci">virtual void onSetResultReportFlag(const RczHMsgSetResultReportFlag *msg)=0</div></div>
+<div class="ttc" id="classRczCommServerMessageAdapter_html_a3ad27e56c358eb76b528e6a49b7c83d9"><div class="ttname"><a href="classRczCommServerMessageAdapter.html#a3ad27e56c358eb76b528e6a49b7c83d9">RczCommServerMessageAdapter::onUpdateDatafile</a></div><div class="ttdeci">virtual void onUpdateDatafile(const RczHMsgUpdateDatafile *msg)</div><div class="ttdef"><b>Definition:</b> RczCommServer.h:122</div></div>
+<div class="ttc" id="classRcControlCommandAdapter_html_a33af16c922062af48fc7c8cdb8eb11ee"><div class="ttname"><a href="classRcControlCommandAdapter.html#a33af16c922062af48fc7c8cdb8eb11ee">RcControlCommandAdapter::onSetDriveSpeed</a></div><div class="ttdeci">virtual void onSetDriveSpeed(const RczHMsgSetDriveSpeed *msg)</div><div class="ttdef"><b>Definition:</b> RczCommServer.h:211</div></div>
+<div class="ttc" id="classRcControlCommandHandler_html_a4b81c81d6cb51d07c16a54d79e49e176"><div class="ttname"><a href="classRcControlCommandHandler.html#a4b81c81d6cb51d07c16a54d79e49e176">RcControlCommandHandler::onSetMotorOnOff</a></div><div class="ttdeci">virtual void onSetMotorOnOff(const RczHMsgSetMotorOnOff *msg)=0</div></div>
+<div class="ttc" id="classRczCommServerMessageHandler_html_a968688bbad323e205c24b826c740c7e6"><div class="ttname"><a href="classRczCommServerMessageHandler.html#a968688bbad323e205c24b826c740c7e6">RczCommServerMessageHandler::onSetIpmStereoParam</a></div><div class="ttdeci">virtual void onSetIpmStereoParam(const RczHMsgSetIpmStereoParam *msg)=0</div></div>
+<div class="ttc" id="classRczCommServerMessageAdapter_html"><div class="ttname"><a href="classRczCommServerMessageAdapter.html">RczCommServerMessageAdapter</a></div><div class="ttdef"><b>Definition:</b> RczCommServer.h:115</div></div>
+<div class="ttc" id="classRczCommServer_html_aecc2d449da508fd7b661c58fa359f3e8"><div class="ttname"><a href="classRczCommServer.html#aecc2d449da508fd7b661c58fa359f3e8">RczCommServer::RczCommServer</a></div><div class="ttdeci">RczCommServer()</div></div>
+<div class="ttc" id="classRczCommServerMessageAdapter_html_a92c5f24f26cde98d863f1dde4869f3a9"><div class="ttname"><a href="classRczCommServerMessageAdapter.html#a92c5f24f26cde98d863f1dde4869f3a9">RczCommServerMessageAdapter::onLoadProgram</a></div><div class="ttdeci">virtual void onLoadProgram(const RczHMsgLoadProgram *msg)</div><div class="ttdef"><b>Definition:</b> RczCommServer.h:118</div></div>
+<div class="ttc" id="classRcControlCommandHandler_html_ac8f5b575e6092e2f927da17946a8c532"><div class="ttname"><a href="classRcControlCommandHandler.html#ac8f5b575e6092e2f927da17946a8c532">RcControlCommandHandler::onSetSteerOffset</a></div><div class="ttdeci">virtual void onSetSteerOffset(const RczHMsgSetSteerOffset *msg)=0</div></div>
+<div class="ttc" id="classRczCommServer_html_a0d276e57afc11fda2bc8ae648d436e7a"><div class="ttname"><a href="classRczCommServer.html#a0d276e57afc11fda2bc8ae648d436e7a">RczCommServer::Start</a></div><div class="ttdeci">bool Start()</div></div>
+<div class="ttc" id="classRczCommServerStatusHandler_html_a2be59f9785799895ff8602fb3c5fea4b"><div class="ttname"><a href="classRczCommServerStatusHandler.html#a2be59f9785799895ff8602fb3c5fea4b">RczCommServerStatusHandler::onOpen</a></div><div class="ttdeci">virtual void onOpen()</div></div>
+<div class="ttc" id="classRcControlCommandHandler_html_a5809774fd2d53842671306c966bedb04"><div class="ttname"><a href="classRcControlCommandHandler.html#a5809774fd2d53842671306c966bedb04">RcControlCommandHandler::onSetServoOnOff</a></div><div class="ttdeci">virtual void onSetServoOnOff(const RczHMsgSetServoOnOff *msg)=0</div></div>
+<div class="ttc" id="classRczCommServer_html_a1212858cf663ab767b05180ce92bd276"><div class="ttname"><a href="classRczCommServer.html#a1212858cf663ab767b05180ce92bd276">RczCommServer::~RczCommServer</a></div><div class="ttdeci">virtual ~RczCommServer()</div></div>
+<div class="ttc" id="classRczCommServerMessageHandler_html"><div class="ttname"><a href="classRczCommServerMessageHandler.html">RczCommServerMessageHandler</a></div><div class="ttdef"><b>Definition:</b> RczCommServer.h:66</div></div>
+<div class="ttc" id="classRcControlCommandAdapter_html_aa39c0522bdba5d3810829e77220fdfce"><div class="ttname"><a href="classRcControlCommandAdapter.html#aa39c0522bdba5d3810829e77220fdfce">RcControlCommandAdapter::onSetServoOnOff</a></div><div class="ttdeci">virtual void onSetServoOnOff(const RczHMsgSetServoOnOff *msg)</div><div class="ttdef"><b>Definition:</b> RczCommServer.h:217</div></div>
+<div class="ttc" id="classRcControlCommandAdapter_html"><div class="ttname"><a href="classRcControlCommandAdapter.html">RcControlCommandAdapter</a></div><div class="ttdef"><b>Definition:</b> RczCommServer.h:207</div></div>
+<div class="ttc" id="classRczCommServerMessageAdapter_html_a93dbe8f576736dc56985a611d27c16e3"><div class="ttname"><a href="classRczCommServerMessageAdapter.html#a93dbe8f576736dc56985a611d27c16e3">RczCommServerMessageAdapter::onSetResultReportFlag</a></div><div class="ttdeci">virtual void onSetResultReportFlag(const RczHMsgSetResultReportFlag *msg)</div><div class="ttdef"><b>Definition:</b> RczCommServer.h:120</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+2016年01月08日(金) 09時47分27秒作成 - RoboCar110_2016 / 構成:  &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>

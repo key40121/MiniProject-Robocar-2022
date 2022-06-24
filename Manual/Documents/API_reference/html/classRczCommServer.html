@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>RoboCar110_2016: RczCommServer クラス</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RoboCar110_2016
+   &#160;<span id="projectnumber">ver1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.6 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>総合概要</span></a></li>
+      <li class="current"><a href="annotated.html"><span>クラス</span></a></li>
+      <li><a href="files.html"><span>ファイル</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>クラス一覧</span></a></li>
+      <li><a href="classes.html"><span>クラス索引</span></a></li>
+      <li><a href="hierarchy.html"><span>クラス階層</span></a></li>
+      <li><a href="functions.html"><span>クラスメンバ</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">公開メンバ関数</a> &#124;
+<a href="classRczCommServer-members.html">全メンバ一覧</a>  </div>
+  <div class="headertitle">
+<div class="title">RczCommServer クラス</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="RczCommServer_8h_source.html">RczCommServer.h</a>&gt;</code></p>
+
+<p>SocketEventHandlerInterfaceを継承しています。</p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+公開メンバ関数</h2></td></tr>
+<tr class="memitem:aecc2d449da508fd7b661c58fa359f3e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRczCommServer.html#aecc2d449da508fd7b661c58fa359f3e8">RczCommServer</a> ()</td></tr>
+<tr class="separator:aecc2d449da508fd7b661c58fa359f3e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1212858cf663ab767b05180ce92bd276"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRczCommServer.html#a1212858cf663ab767b05180ce92bd276">~RczCommServer</a> ()</td></tr>
+<tr class="separator:a1212858cf663ab767b05180ce92bd276"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae031dad19ede9d17f196a9a37da8ddf4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRczCommServer.html#ae031dad19ede9d17f196a9a37da8ddf4">Init</a> (int port_no)</td></tr>
+<tr class="separator:ae031dad19ede9d17f196a9a37da8ddf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a698c379c62cdaab5354e3d9361bdee37"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRczCommServer.html#a698c379c62cdaab5354e3d9361bdee37">SetReceiveHandler</a> (<a class="el" href="classRczCommServerMessageHandler.html">RczCommServerMessageHandler</a> *handler)</td></tr>
+<tr class="separator:a698c379c62cdaab5354e3d9361bdee37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf1dc3e76398803aac923585e68f372c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRczCommServer.html#acf1dc3e76398803aac923585e68f372c">SetReceiveHandler</a> (<a class="el" href="classRczCommServerMessageHandler.html">RczCommServerMessageHandler</a> *handler, <a class="el" href="classRcControlCommandHandler.html">RcControlCommandHandler</a> *handler_rc)</td></tr>
+<tr class="separator:acf1dc3e76398803aac923585e68f372c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6165ba4485d50e5b1695dc79d37e122"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRczCommServer.html#ae6165ba4485d50e5b1695dc79d37e122">SetStatusHandler</a> (<a class="el" href="classRczCommServerStatusHandler.html">RczCommServerStatusHandler</a> *handler)</td></tr>
+<tr class="separator:ae6165ba4485d50e5b1695dc79d37e122"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d276e57afc11fda2bc8ae648d436e7a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRczCommServer.html#a0d276e57afc11fda2bc8ae648d436e7a">Start</a> ()</td></tr>
+<tr class="separator:a0d276e57afc11fda2bc8ae648d436e7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90eda9afbaa97ddda6a142b95666a460"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRczCommServer.html#a90eda9afbaa97ddda6a142b95666a460">Send</a> (const uchar *msg, int len)</td></tr>
+<tr class="separator:a90eda9afbaa97ddda6a142b95666a460"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba588081bc9fc82d454fbe352acbf615"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRczCommServer.html#aba588081bc9fc82d454fbe352acbf615">IsReceiveMessage</a> () const </td></tr>
+<tr class="separator:aba588081bc9fc82d454fbe352acbf615"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">詳解</h2>
+<div class="textblock"><p>ソケット通信のサーバクラス. PCと通信するためのソケット通信を行うクラス。WindowsDLLのRczCommunication.dllと通信を行う、 　画像処理用と、RoboCarのコントロール用にいくつかメッセージを実装している。 </p>
+</div><h2 class="groupheader">構築子と解体子</h2>
+<a class="anchor" id="aecc2d449da508fd7b661c58fa359f3e8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RczCommServer::RczCommServer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Constructor. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1212858cf663ab767b05180ce92bd276"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual RczCommServer::~RczCommServer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Destructor. </p>
+
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a class="anchor" id="ae031dad19ede9d17f196a9a37da8ddf4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RczCommServer::Init </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>port_no</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>初期化. </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port_no</td><td>使用するポート番号を指定する。 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>成功したかどうかを返す。 </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aba588081bc9fc82d454fbe352acbf615"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RczCommServer::IsReceiveMessage </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>メッセージの受信確認. メッセージの受信バッファを調査して、メッセージが届いているかどうかを返す。 </p>
+<dl class="retval"><dt>戻り値</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true　メッセージあり。</td><td></td></tr>
+    <tr><td class="paramname">false</td><td>メッセージなし。 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a90eda9afbaa97ddda6a142b95666a460"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RczCommServer::Send </td>
+          <td>(</td>
+          <td class="paramtype">const uchar *&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>メッセージの送信. メッセージオブジェクトを作成して、長さといっしょに渡す。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>メッセージ </td></tr>
+    <tr><td class="paramname">len</td><td>メッセージ長さ[byte] </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>成功したかどうかを返す。 </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a698c379c62cdaab5354e3d9361bdee37"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RczCommServer::SetReceiveHandler </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classRczCommServerMessageHandler.html">RczCommServerMessageHandler</a> *&#160;</td>
+          <td class="paramname"><em>handler</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>メッセージハンドラの登録. RczCommServerMessageAdapterで、登録されたメッセージを受け取るハンドラオブジェクトを登録する。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handler</td><td>ハンドラオブジェクトへのポインタ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>成功したかどうかを返す。 </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="acf1dc3e76398803aac923585e68f372c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RczCommServer::SetReceiveHandler </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classRczCommServerMessageHandler.html">RczCommServerMessageHandler</a> *&#160;</td>
+          <td class="paramname"><em>handler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classRcControlCommandHandler.html">RcControlCommandHandler</a> *&#160;</td>
+          <td class="paramname"><em>handler_rc</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>メッセージハンドラの登録. メッセージを受け取るハンドラオブジェクトを登録する。 コントロール系のメッセージのハンドラも同時に登録する。 </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handler</td><td>ハンドラオブジェクトへのポインタ </td></tr>
+    <tr><td class="paramname">handler_rc</td><td>コントロール系ハンドラオブジェクトへのポインタ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>成功したかどうかを返す。 </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae6165ba4485d50e5b1695dc79d37e122"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RczCommServer::SetStatusHandler </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classRczCommServerStatusHandler.html">RczCommServerStatusHandler</a> *&#160;</td>
+          <td class="paramname"><em>handler</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ステータスハンドラの登録. </p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handler</td><td>ハンドラオブジェクトへのポインタ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>成功したかどうかを返す。 </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a0d276e57afc11fda2bc8ae648d436e7a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool RczCommServer::Start </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>サーバの開始. サーバ動作を開始する。コネクションの待機状態となる。 </p>
+<dl class="section return"><dt>戻り値</dt><dd>成功したかどうかを返す。 </dd></dl>
+
+</div>
+</div>
+<hr/>このクラス詳解は次のファイルから抽出されました:<ul>
+<li>/home/zmp/tmp/<a class="el" href="RczCommServer_8h_source.html">RczCommServer.h</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+2016年01月08日(金) 09時47分27秒作成 - RoboCar110_2016 / 構成:  &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>

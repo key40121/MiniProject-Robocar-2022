@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="ja" />
+    <title>3. ハードウェア構成 : ZMP RoboCar Reference Manual</title>
+	<link type="text/css" rel="stylesheet" href="./css/base.css"/>
+  </head>
+  <body>
+	<div id="container">
+	  <div id="header">
+		<h1>ZMP RoboCar Reference Manual</h1>
+	  </div>
+	  <div id="contents">
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+		<div class="inner">
+		<h1>3. ハードウェア構成</h1>
+
+<h2>はじめに</h2>
+
+<p>RoboCarは、アッパーシャーシ（情報系）と、ローワーシャーシ（駆動系）とに分かれます。
+それぞれの系統に合わせ、2種類のバッテリーを使用します。</p>
+
+<p>電池の交換などの際は、アッパーシャーシを開けます。</p>
+
+<p>スイッチは電源スイッチのみが搭載されています。
+駆動系の電源ON/OFF、移動などの操作は、すべてソフトウェアから行います。</p>
+
+<h2>バッテリーの種類</h2>
+
+<p>情報系と駆動系とで使用するバッテリーが分かれています。</p>
+
+<h3>駆動系用バッテリー</h3>
+
+<p>バッテリー、充電機ともに付属しています。専用のものを使用してください。</p>
+
+<ul>
+<li>RoboCar本体の電源スイッチがOFFになっていること確認します。</li>
+<li>情報系バッテリーのコネクタをはずします。</li>
+<li>アッパーシャーシを開け、RoboCar本体から取り外します。</li>
+<li>付属の充電器に接続し、AC電源に接続して待機します。</li>
+</ul>
+
+<h3>情報系用バッテリー</h3>
+
+<p>市販の乾電池（単三）を12本用意してください(別売です)。
+SANYO ENELOOP を推奨します。
+充電式の電池の場合、あらかじめ充電しておいてください。</p>
+
+<h2>バッテリー使用時の注意</h2>
+
+<p>長時間使用しないときはバッテリーを抜いておいてください。バッテリー寿命の低下や故障の原因となります。</p>
+
+<h2>各部の名称、働き</h2>
+
+<p><img src="images/h_sw_led.jpeg" alt="Switch" /></p>
+
+<p>図: スイッチ</p>
+
+<h3>電源スイッチ</h3>
+
+<p>RoboCarの電源を、ONまたはOFFにします。
+情報系、駆動系ともに共通です。</p>
+
+<h3>インジケータLED</h3>
+
+<p>情報系のバッテリー状態を表示します。
+緑以外の状態になったら、バッテリーを新しい（または充電済みの）ものに交換してください。</p>
+
+<ul>
+<li>緑 ： 正常</li>
+<li>緑・赤点滅 ： バッテリー減少</li>
+<li>赤点滅(遅) ： ビデオ系電源切断</li>
+<li>赤点滅(速) ： PC,IMAP系電源切断</li>
+<li>赤点灯 ： 6.5[V]以下</li>
+</ul>
+
+<h3>個別電源状態表示LED</h3>
+
+<p>RoboCarは、ソフトウェアにより内部の回路やデバイスへの
+電源供給を個別に切り替えられます。
+このLEDは電源の状態を表します。</p>
+
+<h3>CPUボード</h3>
+
+<p>RoboCarの制御をするためのCPUです。
+PCアーキテクチャの小型ボードで、Linuxが動作します。</p>
+
+<p><img src="images/h_cpu_board.jpeg" alt="Cpu board" /></p>
+
+<p>図: CPUボード</p>
+
+<h3>IMAPボード (画像認識ボード)</h3>
+
+<p>超並列画像処理プロセッサIMAPCARを搭載する
+画像認識ボードです。
+RoboCarすべての電源管理機能も持ちます。</p>
+
+<p><img src="images/h_imap_board.jpeg" alt="IMAP board" /></p>
+
+<p>図: IMAPボード (画像認識ボード)</p>
+
+<h3>BASEボード</h3>
+
+<p>ジャイロ、加速度センサ、ロータリーエンコーダ、赤外線測距センサなどセンサ情報の取得、</p>
+
+<p>およびDCモータの回転、ステアリングなどの駆動制御を行います。</p>
+
+<h3>CF (コンパクトフラッシュ)</h3>
+
+<p>Linuxがbootします。
+ユーザアプリケーション、RoboCarライブラリなどが、CF上のファイルシステムの上におかれます。</p>
+
+<h3>シリアルコンソール(COM1,ttyS0)と、COM2,ttyS1</h3>
+
+<p>RoboCar搭載のLinuxにシリアルコンソールからログインすることができます。
+ttyS0をシリアルコンソールに使用できます。</p>
+
+<p>ttyS1は、RS485として、ステアリング用のサーボのコントロールに使用しています。
+(CPUのジャンパ切り替えによって、ステアリングを使用しないときに、RS232Cポートとして
+使用することもできます。)</p>
+
+<p><img src="images/h_comm.jpeg" alt="Comm port" /></p>
+
+<p>図: COM port (RS232C)</p>
+
+<h3>無線LANアダプタ(USB)</h3>
+
+<p>無線通信ができます。無線通信を使用する場合、付属の無線LANアダプタを
+あらかじめ装着しておきます。</p>
+
+<h3>有線LANコネクタ</h3>
+
+<p>付属のコネクタにより、LANケーブルを接続することができます。</p>
+
+<h3>USBコネクタ</h3>
+
+<p>4つのUSBコネクタがあります。
+無線LAN、
+レーザーレンジファインダを使用する場合はこれを1つずつ利用します。</p>
+
+		</div>
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+	  </div>
+	  <div id="footer">
+		<span>Copyright&copy; 2009-2011 ZMP Inc., Alright resereved.</span>
+	  </div>
+	</div>
+  </body>
+</html>

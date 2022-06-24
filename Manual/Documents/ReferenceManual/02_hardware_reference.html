@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-language" content="ja" />
+    <title>2. ハードウェアマニュアル : ZMP RoboCar 1/10 2016 Reference Manual</title>
+	<link type="text/css" rel="stylesheet" href="./css/base.css"/>
+  </head>
+  <body>
+	<div id="container">
+	  <div id="header">
+		<h1>ZMP RoboCar 1/10 2016 Reference Manual</h1>
+	  </div>
+	  <div id="contents">
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+		<div class="inner">
+		<h1>2. ハードウェアマニュアル</h1>
+
+<h2>はじめに</h2>
+
+<p>RoboCar 1/10 2016は、2系統のバッテリーを使用します。</p>
+
+<p>電源スイッチにより、システムが起動します。駆動系の電源のON/OFFは、ソフトウェアから行います。</p>
+
+<p>移動などの操作は、すべてソフトウェアから行います。
+<br/>
+<br/></p>
+
+<p>以下にシステム結線図を示します。<br/>
+<img src="images/connection_diagram.png" alt="Connection_diagram" />
+<br/>
+図: 結線図</p>
+
+<h2>外観</h2>
+
+<p>以下に各パーツ名称を示します。
+各パーツの仕様、寸法、ボードコネクタの詳細情報は、<br/>
+CD\Documents\Hardwareフォルダ内を参照してください。</p>
+
+<p><img src="images/overview_hw.png" alt="Overview_hw" />
+<br/>
+図: パーツ名称</p>
+
+<p><img src="images/overview_lside.png" alt="Overview_lside" />
+<br/>
+図: パーツ名称(左側面）</p>
+
+<p><img src="images/overview_rside.png" alt="Overview_rside" />
+<br/>
+図: パーツ名称(右側面）</p>
+
+<h2>CPUボードへのアクセス</h2>
+
+<p>CPUボードへのアクセスには、トッププレートを外します。<br/></p>
+
+<p><img src="images/top_open.png" alt="Top_open" />
+<br/>
+図: トッププレートの取り外し<br/>
+ネジを8か所外すと、トッププレートが外れます。
+<br/>
+<img src="images/cpuboard.png" alt="Cpuboard" />
+<br/>
+図: CPUボード<br/>
+カメラ、ケーブルに気を付けながら外します。<br/>
+取り付ける時は、トッププレートの向きに注意してください。<br/></p>
+
+<h2>ボトムプレートへのアクセス</h2>
+
+<p>ボトムプレートには、BASEボード、PWボードが設置されています。<br/>
+オプションセンサ電源用端子台、IRセンサコネクタ、ヒューズなどへアクセスできます。<br/></p>
+
+<p><img src="images/btm_open1.png" alt="Btm_open1" />
+<br/>
+図: ミドルプレート開閉用ネジ<br/></p>
+
+<p>電源を切り、バッテリーを外し、2か所のネジを外します。<br/></p>
+
+<p><img src="images/btm_open2.png" alt="Btm_open2" />
+<br/>
+図: ミドルプレートオープン<br/></p>
+
+<p>ミドルプレートを傾けるようにして開けます。<br/>
+ケーブルを挟んだり、引っ張ったりしないように気を付けてください。<br/>
+閉じる時も同様に、ケーブルに十分注意して閉じてください。<br/></p>
+
+<h2>CPUボード</h2>
+
+<p>RoboCarの制御をするためのCPUです。
+PCアーキテクチャの小型ボードで、Linuxが動作します。</p>
+
+<p><img src="images/cpuBoard.jpg" alt="Cpu board" />
+<br/>
+図: CPUボード<br/></p>
+
+<p>RoboCarの制御をするためのCPUです。<br/>
+PCアーキテクチャの小型ボードで、Linuxが動作します。<br/>
+モニタ、キーボード、マウスを接続することでLinuxにログインが可能です。<br/></p>
+
+<h2>BASEボード</h2>
+
+<p><img src="images/baseBoard.jpg" alt="Base board" />
+<br/>
+図: BASEボード<br/></p>
+
+<p>駆動用DCモータを駆動させ、速度制御を行います。<br/>
+ジャイロセンサ、加速度センサ、エンコーダ、IRセンサ、など
+センサ情報を取得します。<br/>
+<br/></p>
+
+<p><img src="images/fuse.png" alt="Fuse" />
+<br/>
+図: ヒューズ<br/></p>
+
+<p>モータ保護の為、ATCヒューズ(15A)が付いています。<br/>
+駆動系システムが動作しない場合など、確認してください。<br/></p>
+
+<h2>PWボード</h2>
+
+<p><img src="images/pwboard.png" alt="Pwboard" />
+<br/>
+図: PWボード<br/></p>
+
+<p>電源管理ボードです。端子台から、ＬＲＦなど、オプションセンサへも電源を供給できます。<br/>
+端子台からは、最大12Ｖ/3Ａ、5Ｖ/3Ａを供給できます。<br/></p>
+
+<h2>カメラボード</h2>
+
+<p><img src="images/camera.png" alt="Camera" />
+<br/>
+図: カメラボード<br/></p>
+
+<p>カメラボードです。取り外して、前後左右のいずれかへ付け替える事もできます。<br/>
+使用時には、レンズカバーを外してください。<br/></p>
+
+<h2>IRセンサ</h2>
+
+<p><img src="images/ir.png" alt="Ir" />
+<br/>
+図: IRセンサ取付け<br/></p>
+
+<p>IRセンサは、前後のIRブラケットに取り付けます。<br/>
+各ブラケットには、30°の角度で最大7か所に、センサの取り付けができます。<br/></p>
+
+<h2>バッテリの準備</h2>
+
+<p>はじめに2系統のバッテリーを、それぞれ充電してください。</p>
+
+<h3>駆動用バッテリー</h3>
+
+<p>バッテリー、充電器ともに付属しています。専用のものを使ってください。</p>
+
+<ul>
+<li>RoboCar 1/10 2016本体から取り外します。</li>
+<li>付属の充電器に接続し、AC電源に接続し、充電完了を待ちます。</li>
+</ul>
+
+<h3>情報系バッテリー</h3>
+
+<p>市販の単三形の乾電池を12本用意してください。
+NiH充電池を推奨します。<br/>
+充電式の電池の場合、あらかじめ充電しておいてください。<br/>
+※ACアダプタを使用することにより、継続してCPUボードを使用することもできます。<br/>
+※ACアダプタにより、情報系バッテリーの充電はできません。<br/></p>
+
+<h2>バッテリーの接続方法</h2>
+
+<p>以下のようにバッテリーを接続します。</p>
+
+<h3>駆動用バッテリー</h3>
+
+<ul>
+<li>BASEボードのコネクタと接続します。</li>
+</ul>
+
+<p><img src="images/install_batt2.jpg" alt="RoboCar install lower battery 2" />
+<br/>
+図: 接続</p>
+
+<ul>
+<li>バッテリ－は、車体下部(右側)のマジックテープにあわせて置き、固定します。</li>
+</ul>
+
+<p><img src="images/install_batt3.jpg" alt="RoboCar install lower battery 3" />
+<br/>
+図: 固定</p>
+
+<h3>情報系バッテリー</h3>
+
+<ul>
+<li>電池ボックスに単三形乾電池を12本入れます。極性を間違えないように注意してください。</li>
+</ul>
+
+<p><img src="images/install_batt4.jpg" alt="RoboCar install upper battery 1" />
+<br/>
+図: 電池ボックスに電池を装着</p>
+
+<ul>
+<li>バッテリのコネクタを本体に接続します。</li>
+</ul>
+
+<p><img src="images/install_batt5.jpg" alt="RoboCar install upper battery 2" />
+<br/>
+図: コネクタの接続</p>
+
+<h2>バッテリー取扱いの注意</h2>
+
+<p>長時間使用しないときはバッテリーを抜いておいてください。バッテリーの過放電や故障の原因となります。</p>
+
+<h2>電源廻りの各部名称、働き</h2>
+
+<p><img src="images/powerParts.png" alt="Switch" />
+<br/></p>
+
+<p>入力は②、③のいずれか、または両方に入力しても動作します。<br/>
+両方の電源に入力してCPUボードのプログラミングを行い、<br/>
+ACアダプタを外して走行実験を行うなど、スムーズな実験が行えます。<br/></p>
+
+<h3>電源スイッチ</h3>
+
+<p>RoboCarの電源をON/OFFします。
+情報系、駆動系の両方とも、ON/OFFされます。<br/>
+スイッチONにするとLEDの(緑)が点灯します。</p>
+
+<h3>インジケータLED</h3>
+
+<p>③に入力された電源の電圧残量がLED１～４に表示されます。<br/>
+(左からLED1,2,3,4の順番)<br/>
+LED1:11.7V以上<br/>
+LED2:12.6V以上<br/>
+LED3:14.5V以上<br/>
+LED4:15.2V以上<br/>
+電圧異常時(低電圧、高電圧)にはLEDは全消灯します。</p>
+
+		</div>
+		<p>
+		  <a href="index.html">^Back to index</a>
+		</p>
+	  </div>
+	  <div id="footer">
+		<span>Copyright&copy; 2016 ZMP Inc., All rights reserved.</span>
+	  </div>
+	</div>
+  </body>
+</html>
