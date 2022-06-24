@@ -1,6 +1,8 @@
 #include <cv.h>
 #include <highgui.h>
 #include <ctype.h>
+
+// for line detecton and image processing
 #include <iostream>
 #include <tuple>
 #include <string>
@@ -10,10 +12,17 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/imgcodecs.hpp>
 
-//ver2
-//double ymm_per_pix = 200 / 240;
-//double xmm_per_pix = 375 / 160;
+// robocar dynamics
+#include <iostream>
+#include <sched.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <memory.h>
+#include "RcControl.h"
 
+using namespace zmp::zrc;
 
 //ver3
 double ymm_per_pix = 300 / 240;
@@ -34,7 +43,31 @@ cv::Mat ImageProcessing(cv::Mat img);
 void test_for_robocar();
 
 int main() {
+
+	// Robocar dynamics
+    char buf[20];
+    float angle = 0;
+    int speed = 0;
+    int set_v = 0;
+    int set_t = 0;
+    bool sign = false;
+    float set_a = 0;
+    bool period = false;
+    bool loop = true;
+    RcControl  _RcControl;
+    _RcControl.init();
+    _RcControl.Start();
+
+	_RcControl.SetReportFlagReq(0x0f);
+    _RcControl.SetServoEnable(1);
+    _RcControl.SetMotorEnableReq(1);
+    _RcControl.SetDriveSpeed(0);
+    _RcControl.SetSteerAngle(0);
+
+
 	
+
+	// Image processing and line detection
 	cv::VideoCapture cap(0);
 	
 	const int HEIGHT = 240;
@@ -98,8 +131,10 @@ int main() {
 		std::cout << "Steering angle is " << steering_angle << std::endl;
 		std::cout << "-------------------------------" << std::endl;
 	
-	
-	
+		/*--------------------------------------------------------------------*/	
+		// vechile dynamics
+		_RcControl.SetSteerAngle(steering_angle);
+		/*--------------------------------------------------------------------*/
 	
 	    cv::imshow("win", frame);//画像を表示．
 	    const int key = cv::waitKey(1);
@@ -405,6 +440,11 @@ double SteerAngle(double radius_of_curvature)
 	else
 	{
 		steer_angle = std::asin(ROBOCAR_WIDTH / radius_of_curvature) * 360 / 2 / PI;
+	}
+
+	if (steer_angle >= 30)
+	{
+		steer_angle = 30;
 	}
 	
 	return steer_angle;
