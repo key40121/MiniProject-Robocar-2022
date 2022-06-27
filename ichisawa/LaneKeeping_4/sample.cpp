@@ -61,6 +61,7 @@ int main() {
     _RcControl.SetDriveSpeed(0);
     _RcControl.SetSteerAngle(0);
 	
+	_RcControl.SetDriveSpeed(300);
 
 	
 
@@ -74,6 +75,9 @@ int main() {
 	cap.set(CV_CAP_PROP_FRAME_HEIGHT, HEIGHT);
 	cap.set(CV_CAP_PROP_FRAME_WIDTH, WIDTH);
 	cap.set(CV_CAP_PROP_FPS, FPS);
+
+	// if radius of curvature is less than the height of robocar, it would be nan.
+	int steering_angle_restore;
 
 	// make sure camera is loaded
 	if(!cap.isOpened())
@@ -122,7 +126,16 @@ int main() {
 	
 		// steering angle
 		double steering_angle;
-		steering_angle = std::round(SteerAngle(radius_of_curvature));
+
+		if (radius_of_curvature <= 429 && radius_of_curvature >= -429)
+		{
+			steering_angle = steering_angle_restore;
+		}
+		else
+		{
+			steering_angle = std::round(SteerAngle(radius_of_curvature));
+			steering_angle_restore = steering_angle;
+		}
 	
 		std::cout << "Steering angle is " << steering_angle << std::endl;
 		std::cout << "-------------------------------" << std::endl;
@@ -132,7 +145,7 @@ int main() {
 		_RcControl.SetSteerAngle(steering_angle);
 		/*--------------------------------------------------------------------*/
 	
-		cv::imshow("win", frame);//画像を表示．
+		//cv::imshow("win", frame);//画像を表示．
 		const int key = cv::waitKey(1);
 		if(key == 'q'/*113*/)//qボタンが押されたとき
 		{
@@ -433,11 +446,11 @@ double SteerAngle(double radius_of_curvature)
 	const double PI = 3.141592;
 
 	// calculate steer angle using radius of curvature and the width of robocar.
-	if (radius_of_curvature > 5000)
+	if (radius_of_curvature > 50000)
 	{
 		steer_angle = 0;
 	}
-	else if (radius_of_curvature < 5000)
+	else if (radius_of_curvature < -50000)
 	{
 		steer_angle = 0;
 	}
