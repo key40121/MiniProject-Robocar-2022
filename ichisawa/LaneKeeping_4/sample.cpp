@@ -136,6 +136,17 @@ int main() {
 			steering_angle = std::round(SteerAngle(radius_of_curvature));
 			steering_angle_restore = steering_angle;
 		}
+
+		// lane centering (needs to do test to set proper amount of the number)
+		// the center would be 53?
+		if (pts[0].x >= 58)
+		{
+			steering_angle = steering_angle - 3;
+		}
+		else if (pts[0].x <= 48)
+		{
+			steering_angle = steering_angle + 3;
+		}
 	
 		std::cout << "Steering angle is " << steering_angle << std::endl;
 		std::cout << "-------------------------------" << std::endl;
