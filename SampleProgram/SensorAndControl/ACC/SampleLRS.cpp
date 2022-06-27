@@ -1,11 +1,3 @@
-//============================================================================
-// Name        : SampleLRS.cpp
-// Author      : Tetsuya Azuma
-// Version     : 1.0.0
-// Copyright   :
-// Description : Acquiring data from Laser Range sensor
-//============================================================================
-
 #include "LaserRangeSensor.h"
 #include "RcControl.h"
 #include <iostream>
@@ -27,9 +19,6 @@ using namespace qrk;
 using namespace std;
 
 RcControl  _RcControl;
-////////////
-//test
-//test
 
 class SampleLRS :public LaserRangeSensorReceiveHandler {
 public:
@@ -39,7 +28,6 @@ public:
 	bool Init() {
 		bool res = _lrs[0].InitSerial();
 		if(res != true){
-			//printf("[LRS info] Front LRS : Initialize error\n");
 			_lrsFlg[0] = false;
 			return false;
 		}
@@ -48,40 +36,30 @@ public:
 
 		res = _lrs[1].InitSerial2();
 		if(res != true){
-			//printf("[LRS info] Rear LRS : Initialize error\n");
 			_lrsFlg[1] = false;
 			return false;
 		}
 		_lrsFlg[1] = true;
 		_lrs[1].SetScanParam(-120, 120, 0, 0);
-		//printf("[LRS info] Initialized\n");
 
-		if(rrc.init()){
-		    //printf("[rrc info] Initialized\n");
-		    return true;
-		}else{
-		    return false;
-		}
+		if(rrc.init())
+			return true;
+		else
+			return false;
 	}
 
 	bool Start(){
 		if(_lrsFlg[0] == true){
 			_lrs[0].SetReceiveHander(this);
 			bool res = _lrs[0].Start();
-			if(res != true){
-				//printf("[LRS info] Front LRS : Failed to start\n");
-			return false;
-			};
-			//printf("[LRS info] Front LRS : Success to start\n");
+			if(res != true)
+				return false;
 		}
 		if(_lrsFlg[1] == true){
 			_lrs[1].SetReceiveHander(this);
 			bool res = _lrs[1].Start();
-			if(res != true){
-				//printf("[LRS info] Rear LRS : Failed to start\n");
+			if(res != true)
 				return false;
-			};
-			//printf("[LRS info] Rear LRS : Success to start\n");
 		}
 		return true;
 	}
@@ -92,7 +70,6 @@ public:
 			ret[0] = _lrs[0].Stop();
 			ret[1] = _lrs[1].Stop();
 		}while(ret[0] && ret[1]);
-		//printf("[LRS info] both LRS : Success to stop\n");
 		rrc.Stop();
 		return true;
 	}
@@ -101,9 +78,6 @@ private:
 
 	//_/_/_/_/_/ / Read Point cloud data_/_ /_/_/_/_/_//
 	void storeLRF(LrsResult res, int dev){
-
-		
-	
 
 		if(dev == 1){
 			num = 0;
@@ -125,49 +99,26 @@ private:
 			}
 			//printf("%d\n",res.data_length);
 			printf("min = %d, angle = %f\n",min_dist[0], angle);
-			printf("send steer angle = %2.1f\n", angle);
 			_RcControl.SetSteerAngle(angle);
 
 			if((min_dist[0] >= 200) && (min_dist[0] < 1200))
 				_RcControl.SetDriveSpeed((min_dist[0]-200)*3/5);
 			else
 				_RcControl.SetDriveSpeed(0);
-			
-			
-		} /*else {
-			num = 0;
-			max_dist[1] = 0;
-			min_dist[1] = 4000;
-			for( int j= 44; j< res.data_length; j ++){
-				if( MIN_LENGTH < res.data[j] && res.data[j] < MAX_LENGTH){
-				dist[1][num] = res.data[j];
-					num ++;
-					if(max_dist[1] < res.data[j])
-						max_dist[1] = res.data[j];
-					if(min_dist[1] > res.data[j])
-						min_dist[1] = res.data[j];
-				}
-			}
-			printf("[rear data info] max = %d, min = %d, count = %d\n",max_dist[1],min_dist[1],num);
-		}*/
+		} 
 	}
 
 	//_/_/_/_/_/ Callback function_/_/_/_/_/_/_//
 	void OnReceive(int dev){
-	    LrsResult lrs;
+		LrsResult lrs;
 
-	    if(dev == 1){
-	    	if(_lrs[0].GetData(&lrs)){
+		if(dev == 1){
+			if(_lrs[0].GetData(&lrs))
+				storeLRF(lrs, dev);
+		} else {
+		if(_lrs[1].GetData(&lrs))
 			storeLRF(lrs, dev);
-
-			//printf("recieve front data\n");
 		}
-	    } else {
-		if(_lrs[1].GetData(&lrs)){
-			storeLRF(lrs, dev);
-			//printf("recieve rear data\n");
-		}
-	    }
 	}
 
 	//_/_/_/_/_/ Variable declaration_/_ /_/_/_/_/_//
@@ -181,8 +132,6 @@ private:
 	int num;
 	float angle;
 	char buf[20];
-	////////
-
 };
 
 void funcx(int sig);
@@ -192,7 +141,7 @@ int main() {
 
     _RcControl.init();
     _RcControl.Start();
- 
+
     _RcControl.SetReportFlagReq(0x0f);
     _RcControl.SetServoEnable(1);
     _RcControl.SetMotorEnableReq(1);
@@ -201,14 +150,14 @@ int main() {
 	bool flg = 1;
 	bool ires = slrs.Init();
 	if(ires != true)
-	    flg = 0;
+		flg = 0;
 
 	bool sres = slrs.Start();
 	if(sres != true)
-	    flg = 0;
+		flg = 0;
 
 	while (flg) {
-	    usleep(30000);
+		usleep(30000);
 	}
 	slrs.Stop(); // Stop the device and receive thread.
 	return 0;
