@@ -1,10 +1,3 @@
-//============================================================================
-// Name        : SampleLRS.cpp
-// Author      : Tetsuya Azuma
-// Version     : 1.0.0
-// Copyright   :
-// Description : Acquiring data from Laser Range sensor
-//============================================================================
 
 #include "LaserRangeSensor.h"
 #include "RcControl.h"
