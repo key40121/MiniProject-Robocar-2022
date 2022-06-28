@@ -31,6 +31,8 @@ double xmm_per_pix = 365 / 220;
 std::vector<cv::Point2f> SlidingWindow(cv::Mat, cv::Rect);
 std::tuple<double, double> Polynomial(std::vector<cv::Point2f>);
 double SteerAngle(double);
+bool white_lane_detection(cv::Mat);
+
 // functions for image processing
 cv::Mat ImageCalibration(cv::Mat);
 cv::Mat ImageBirdsEyeProcess(cv::Mat);
@@ -78,6 +80,7 @@ int main() {
 
 	// if radius of curvature is less than the height of robocar, it would be nan.
 	int steering_angle_restore;
+	std::vector<int> steering_angle_list;
 
 	// make sure camera is loaded
 	if(!cap.isOpened())
@@ -146,6 +149,14 @@ int main() {
 		else if (pts[0].x <= 48)
 		{
 			steering_angle = steering_angle + 3;
+		}
+
+		bool white_existance;
+		white_existance = white_existance(processed);
+
+		if (white_existance == false)
+		{
+			steering_angle = steering_angle - 5;
 		}
 	
 		std::cout << "Steering angle is " << steering_angle << std::endl;
@@ -482,5 +493,22 @@ double SteerAngle(double radius_of_curvature)
 	return steer_angle;
 }
 
+bool white_lane_detection(cv::Mat img)
+{
+	// to see if the car is out of the center or not.
+	// if the car is out of the center, the camera would not capture the lane at (x, y) = (50, 230) [px].
+	bool white_existance = false;
 
+	for (int i = 20; i < 80; i++)
+	{
+		int intensity = img.at<unsigned char>(230, i);
+		if (intensity == 255)
+		{
+			white_existance = true;
+			break;
+		}
+	}
+
+	return white_existance;
+}
 
