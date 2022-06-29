@@ -144,19 +144,19 @@ int main() {
 		// the center would be 53?
 		if (pts[0].x >= 58)
 		{
-			steering_angle = steering_angle - 3;
+			steering_angle = steering_angle - 2;
 		}
 		else if (pts[0].x <= 48)
 		{
-			steering_angle = steering_angle + 3;
+			steering_angle = steering_angle + 2;
 		}
 
 		bool white_existance;
-		white_existance = white_existance(processed);
+		white_existance = white_lane_detection(processed);
 
 		if (white_existance == false)
 		{
-			steering_angle = steering_angle - 5;
+			steering_angle = steering_angle - 2;
 		}
 	
 		std::cout << "Steering angle is " << steering_angle << std::endl;
