@@ -175,6 +175,10 @@ int main() {
 		{
 			steering_angle = steering_angle - 3;
 		}
+		else if(loc_white_pix = 0)
+		{
+			steering_angle = steering_angle - 5;
+		}
 
 		/*
 		if (white_existance == false)
