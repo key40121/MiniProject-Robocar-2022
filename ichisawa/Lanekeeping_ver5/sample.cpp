@@ -33,6 +33,7 @@ std::vector<cv::Point2f> SlidingWindow(cv::Mat, cv::Rect);
 std::tuple<double, double> Polynomial(std::vector<cv::Point2f>);
 double SteerAngle(double);
 bool white_lane_detection(cv::Mat);
+int white_lane_detection_pix(cv::Mat);
 
 // functions for image processing
 cv::Mat ImageCalibration(cv::Mat);
@@ -144,6 +145,7 @@ int main() {
 
 		// lane centering (needs to do test to set proper amount of the number)
 		// the center would be 53?
+		/*
 		if (pts[0].x >= 116)
 		{
 			steering_angle = steering_angle + 2;
@@ -152,19 +154,43 @@ int main() {
 		{
 			steering_angle = steering_angle - 2;
 		}
+		*/
+		int loc_white_pix;
+		loc_white_pix = white_lane_detection_pix(processed);
+
+		if (loc_white_pix = 0)
+		{
+			steering_angle = steer_angle - 5;
+		}
+		else if (82 <= loc_white_pix <= 96)
+		{
+			steering_angle = steering_angle - 2;
+		}
+		else if (116 <= loc_white_pix <= 136)
+		{
+			steering_angle = steering_angle + 3;
+		}
+		else if (136 < steer_angle < 151)
+		{
+			steering_angle = steering_angle + 5;
+		}
 
 		bool white_existance;
 		white_existance = white_lane_detection(processed);
 
+		/*
 		if (white_existance == false)
 		{
 			steering_angle = steering_angle - 3;
 		}
+		*/
 
 		if (steering_angle >= 30)
 		{
 			steering_angle = 30;
 		}
+
+		steering_angle = steering_angle * 0.9;
 	
 		std::cout << "Steering angle is " << steering_angle << std::endl;
 		std::cout << "-------------------------------" << std::endl;
@@ -493,7 +519,7 @@ bool white_lane_detection(cv::Mat img)
 	// if the car is out of the center, the camera would not capture the lane at (x, y) = (50, 230) [px].
 	bool white_existance = false;
 
-	for (int i = 20; i < 80; i++)
+	for (int i = 20; i < 159; i++)
 	{
 		int intensity = img.at<unsigned char>(230, i);
 		if (intensity == 255)

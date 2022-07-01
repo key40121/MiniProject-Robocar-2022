@@ -32,6 +32,7 @@ std::vector<cv::Point2f> SlidingWindow(cv::Mat, cv::Rect);
 std::tuple<double, double> Polynomial(std::vector<cv::Point2f>);
 double SteerAngle(double);
 bool white_lane_detection(cv::Mat);
+int white_lane_detection_pix(cv::Mat);
 
 // functions for image processing
 cv::Mat ImageCalibration(cv::Mat);
@@ -142,6 +143,7 @@ int main() {
 
 		// lane centering (needs to do test to set proper amount of the number)
 		// the center would be 53?
+		/*
 		if (pts[0].x >= 58)
 		{
 			steering_angle = steering_angle + 2;
@@ -150,15 +152,39 @@ int main() {
 		{
 			steering_angle = steering_angle - 2;
 		}
+		*/
 
 		bool white_existance;
 		white_existance = white_lane_detection(processed);
 
+		int loc_white_pix;
+		loc_white_pix = white_lane_detection_pix(processed);
+		if (60 <= loc_white_pix <= 70)
+		{
+			steering_angle = steering_angle + 3;
+		}
+		else if (71 <= loc_white_pix <= 80)
+		{
+			steering_angle = steering_angle + 5;
+		}
+		else if (loc_white_pix > 81)
+		{
+			steer_angle = steering_angle + 7;
+		}
+		else if (loc_white_pix <= 50)
+		{
+			steering_angle = steering_angle - 3;
+		}
+
+		/*
 		if (white_existance == false)
 		{
 			steering_angle = steering_angle - 2;
 		}
-	
+		*/
+
+		steering_angle = steering_angle * 0.9;
+
 		std::cout << "Steering angle is " << steering_angle << std::endl;
 		std::cout << "-------------------------------" << std::endl;
 	
@@ -512,3 +538,17 @@ bool white_lane_detection(cv::Mat img)
 	return white_existance;
 }
 
+int white_lane_detection_pix(cv::Mat img)
+{
+	int flag = 0;
+	for (int i = 40; i < 150; i++)
+	{
+		int intensity = img.at<unsigned char>(230, i);
+		if (intensity == 255)
+		{
+			flag = i;
+			break;
+		}
+	}
+	return flag;
+}
