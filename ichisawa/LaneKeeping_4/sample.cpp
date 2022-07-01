@@ -27,6 +27,9 @@ using namespace zmp::zrc;
 double ymm_per_pix = 300 / 240;
 double xmm_per_pix = 365 / 220;
 
+// test vector
+std::vector<double>steering_angle_list(15, 0);
+
 // functions for calculation
 std::vector<cv::Point2f> SlidingWindow(cv::Mat, cv::Rect);
 std::tuple<double, double> Polynomial(std::vector<cv::Point2f>);
@@ -173,11 +176,11 @@ int main() {
 		}
 		else if (loc_white_pix <= 50)
 		{
-			steering_angle = steering_angle - 3;
+			steering_angle = steering_angle - 5;
 		}
 		else if(loc_white_pix = 0)
 		{
-			steering_angle = steering_angle - 5;
+			steering_angle = steering_angle - 7;
 		}
 
 		/*
@@ -187,14 +190,15 @@ int main() {
 		}
 		*/
 
-		steering_angle = steering_angle * 0.9;
+		steering_angle = steering_angle * 0.7;
+		steering_angle_list.push_back(steering_angle);
 
 		std::cout << "Steering angle is " << steering_angle << std::endl;
 		std::cout << "-------------------------------" << std::endl;
 	
 		/*--------------------------------------------------------------------*/	
 		// vechile dynamics
-		_RcControl.SetSteerAngle(steering_angle);
+		_RcControl.SetSteerAngle(steering_angle_list.back());
 		/*--------------------------------------------------------------------*/
 	
 		//cv::imshow("win", frame);//画像を表示?�?
@@ -545,7 +549,7 @@ bool white_lane_detection(cv::Mat img)
 int white_lane_detection_pix(cv::Mat img)
 {
 	int flag = 0;
-	for (int i = 40; i < 150; i++)
+	for (int i = 40; i < 120; i++)
 	{
 		int intensity = img.at<unsigned char>(230, i);
 		if (intensity == 255)
