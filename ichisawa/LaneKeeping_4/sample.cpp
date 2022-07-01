@@ -126,7 +126,7 @@ int main() {
 
 		// have to think about the width of the car and the lane.
 		// radius_of_curvature = radius_of_curvature - 182.5;
-		radius_of_curvature = radius_of_curvature - 182.5;
+		radius_of_curvature = radius_of_curvature - 277.5;
 	
 		// steering angle
 		double steering_angle;
