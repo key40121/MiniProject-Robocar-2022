@@ -23,9 +23,10 @@
 
 using namespace zmp::zrc;
 
-//ver3
-double ymm_per_pix = 300 / 240;
-double xmm_per_pix = 365 / 220;
+
+// ver5
+double ymm_per_pix = 310 / 240;
+double xmm_per_pix = 580 / 160;
 
 // functions for calculation
 std::vector<cv::Point2f> SlidingWindow(cv::Mat, cv::Rect);
@@ -109,8 +110,9 @@ int main() {
 		processed = ImageProcessing(processed);
 
 		// sliding window algorithm
-		// ver3
-		std::vector<cv::Point2f> pts = SlidingWindow(processed, cv::Rect(50, 210, 60, 30));
+		// ver5 the center is 106
+		std::vector<cv::Point2f> pts = SlidingWindow(processed, cv::Rect(76, 210, 60, 30));
+
 
 		// Polynomial fitting
 		double poly_co, lin_co;
@@ -142,11 +144,11 @@ int main() {
 
 		// lane centering (needs to do test to set proper amount of the number)
 		// the center would be 53?
-		if (pts[0].x >= 58)
+		if (pts[0].x >= 116)
 		{
 			steering_angle = steering_angle + 2;
 		}
-		else if (pts[0].x <= 48)
+		else if (pts[0].x <= 96)
 		{
 			steering_angle = steering_angle - 2;
 		}
@@ -156,7 +158,12 @@ int main() {
 
 		if (white_existance == false)
 		{
-			steering_angle = steering_angle - 2;
+			steering_angle = steering_angle - 3;
+		}
+
+		if (steering_angle >= 30)
+		{
+			steering_angle = 30;
 		}
 	
 		std::cout << "Steering angle is " << steering_angle << std::endl;
@@ -167,15 +174,15 @@ int main() {
 		_RcControl.SetSteerAngle(steering_angle);
 		/*--------------------------------------------------------------------*/
 	
-		//cv::imshow("win", frame);//画像を表示?�?
+		//cv::imshow("win", frame);//画僝を表示?�?
 		const int key = cv::waitKey(1);
-		if(key == 'q'/*113*/)//qボタンが押されたと�?
+		if(key == 'q'/*113*/)//qボタン㝌押㝕れ㝟㝨�?
 		{
-			break;//whileループから抜ける?�?
+			break;//whileループ㝋ら抜㝑る?�?
 		}
-		else if(key == 's'/*115*/)//sが押されたと�?
+		else if(key == 's'/*115*/)//s㝌押㝕れ㝟㝨�?
 		{
-	        //フレー�?画像を保存する�?
+	        //フレー�?画僝を保存㝙る�?
 			cv::imwrite("img.png", frame);
 		}
 	}
@@ -409,32 +416,19 @@ cv::Mat ImageCalibration(cv::Mat img)
 
 cv::Mat ImageBirdsEyeProcess(cv::Mat img)
 {
-	// ver2
-	//cv::Point2f srcVertices[4];
-	//srcVertices[0] = cv::Point(80,79);
-	//srcVertices[1] = cv::Point(233, 79);
-	//srcVertices[2] = cv::Point(320, 137);
-	//srcVertices[3] = cv::Point(0, 137);
-
-	//cv::Point2f dstVertices[4];
-	//dstVertices[0] = cv::Point(80, 0);
-	//dstVertices[1] = cv::Point(240, 0);
-	//dstVertices[2] = cv::Point(240, 240);
-	//dstVertices[3] = cv::Point(80, 240);
-
-
-	//// rectangles ver3
+	// rectangles ver5
 	cv::Point2f srcVertices[4];
-	srcVertices[0] = cv::Point(100, 65);
-	srcVertices[1] = cv::Point(214, 65);
-	srcVertices[2] = cv::Point(320, 137);
-	srcVertices[3] = cv::Point(0, 137);
+	srcVertices[0] = cv::Point(77, 63);
+	srcVertices[1] = cv::Point(236, 63);
+	srcVertices[2] = cv::Point(318, 100);
+	srcVertices[3] = cv::Point(0, 100);
 
 	cv::Point2f dstVertices[4];
-	dstVertices[0] = cv::Point(50, 0);
-	dstVertices[1] = cv::Point(270, 0);
-	dstVertices[2] = cv::Point(270, 240);
-	dstVertices[3] = cv::Point(50, 240);
+	dstVertices[0] = cv::Point(80, 0);
+	dstVertices[1] = cv::Point(240, 0);
+	dstVertices[2] = cv::Point(240, 240);
+	dstVertices[3] = cv::Point(80, 240);
+
 
 	// Prepare matrix for transform and get the warped image
 	cv::Mat perspectiveMatrix = cv::getPerspectiveTransform(srcVertices, dstVertices);
