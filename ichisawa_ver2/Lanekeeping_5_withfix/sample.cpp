@@ -154,14 +154,26 @@ int main() {
 		{
 			steering_angle = steering_angle - 2;
 		}
+		else if (pts[0].x <= 60)
+		{
+			steering_angle = steering_angle + 5;
+		}
 		
 
 		if (steering_angle >= 30)
 		{
 			steering_angle = 30;
-		} else if (steering_angle <= -30)
+		} 
+		else if (steering_angle <= -30)
 		{
 			steering_angle = -30;
+		}
+
+		// lane centering for straight line.
+		bool white_existance = white_lane_detection(processed);
+		if (white_existance == false)
+		{
+			steering_angle = steering_angle + 8;
 		}
 
 		steering_angle = steering_angle * 0.9;
@@ -493,7 +505,7 @@ bool white_lane_detection(cv::Mat img)
 	// if the car is out of the center, the camera would not capture the lane at (x, y) = (50, 230) [px].
 	bool white_existance = false;
 
-	for (int i = 20; i < 159; i++)
+	for (int i = 20; i < 140; i++)
 	{
 		int intensity = img.at<unsigned char>(230, i);
 		if (intensity == 255)
