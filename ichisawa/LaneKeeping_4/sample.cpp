@@ -134,19 +134,29 @@ int main() {
 		// steering angle
 		double steering_angle;
 
+		// if (radius_of_curvature <= 429 && radius_of_curvature >= -429)
+		// {
+		// 	steering_angle = steering_angle_restore;
+		// }
+		// else
+		// {
+		// 	steering_angle = std::round(SteerAngle(radius_of_curvature));
+		// 	steering_angle_restore = steering_angle;
+		// }
+
+		// test version
+
 		if (radius_of_curvature <= 429 && radius_of_curvature >= -429)
 		{
-			steering_angle = steering_angle_restore;
+			steering_angle = 0;
 		}
 		else
 		{
 			steering_angle = std::round(SteerAngle(radius_of_curvature));
-			steering_angle_restore = steering_angle;
 		}
 
 		// lane centering (needs to do test to set proper amount of the number)
 		// the center would be 53?
-		/*
 		if (pts[0].x >= 58)
 		{
 			steering_angle = steering_angle + 2;
@@ -155,33 +165,33 @@ int main() {
 		{
 			steering_angle = steering_angle - 2;
 		}
-		*/
+		
 
-		bool white_existance;
-		white_existance = white_lane_detection(processed);
+		// bool white_existance;
+		// white_existance = white_lane_detection(processed);
 
-		int loc_white_pix;
-		loc_white_pix = white_lane_detection_pix(processed);
-		if (60 <= loc_white_pix <= 70)
-		{
-			steering_angle = steering_angle + 3;
-		}
-		else if (71 <= loc_white_pix <= 80)
-		{
-			steering_angle = steering_angle + 5;
-		}
-		else if (loc_white_pix > 81)
-		{
-			steer_angle = steering_angle + 7;
-		}
-		else if (loc_white_pix <= 50)
-		{
-			steering_angle = steering_angle - 5;
-		}
-		else if(loc_white_pix = 0)
-		{
-			steering_angle = steering_angle - 7;
-		}
+		// int loc_white_pix;
+		// loc_white_pix = white_lane_detection_pix(processed);
+		// if (60 <= loc_white_pix <= 70)
+		// {
+		// 	steering_angle = steering_angle + 3;
+		// }
+		// else if (71 <= loc_white_pix <= 80)
+		// {
+		// 	steering_angle = steering_angle + 5;
+		// }
+		// else if (loc_white_pix > 81)
+		// {
+		// 	steer_angle = steering_angle + 7;
+		// }
+		// else if (loc_white_pix <= 50)
+		// {
+		// 	steering_angle = steering_angle - 5;
+		// }
+		// else if(loc_white_pix = 0)
+		// {
+		// 	steering_angle = steering_angle - 7;
+		// }
 
 		/*
 		if (white_existance == false)
