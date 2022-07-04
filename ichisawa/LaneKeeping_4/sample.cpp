@@ -500,7 +500,7 @@ cv::Mat ImageProcessing(cv::Mat img)
 	
 	// just thresholding
 	cv::Mat processed;
-	const int THRESHOLD_VAL = 180;
+	const int THRESHOLD_VAL = 190;
 	cv::threshold(img, processed, THRESHOLD_VAL, 255, cv::THRESH_BINARY);
 
 	return processed;
