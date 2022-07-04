@@ -23,12 +23,10 @@
 
 using namespace zmp::zrc;
 
-//ver3
-double ymm_per_pix = 300 / 240;
-double xmm_per_pix = 365 / 220;
 
-// test vector
-std::vector<double>steering_angle_list(15, 0);
+// ver5
+double ymm_per_pix = 310 / 240;
+double xmm_per_pix = 580 / 160;
 
 // functions for calculation
 std::vector<cv::Point2f> SlidingWindow(cv::Mat, cv::Rect);
@@ -113,8 +111,9 @@ int main() {
 		processed = ImageProcessing(processed);
 
 		// sliding window algorithm
-		// ver3
-		std::vector<cv::Point2f> pts = SlidingWindow(processed, cv::Rect(50, 210, 60, 30));
+		// ver5 the center is 106
+		std::vector<cv::Point2f> pts = SlidingWindow(processed, cv::Rect(50, 210, 100, 30));
+
 
 		// Polynomial fitting
 		double poly_co, lin_co;
@@ -122,7 +121,7 @@ int main() {
 
 		// Radius of curvature
 		double radius_of_curvature;
-		radius_of_curvature = std::pow((1 + std::pow(2 * poly_co * pts[3].x * xmm_per_pix + lin_co, 2)), 1.5) / std::abs(2 * poly_co);
+		radius_of_curvature = std::pow((1 + std::pow(2 * poly_co * pts[1].x * xmm_per_pix + lin_co, 2)), 1.5) / std::abs(2 * poly_co);
 
 		std::cout << "--------------------------------" << std::endl;
 		std::cout << "Radius of curvature is " << radius_of_curvature << std::endl;
@@ -146,65 +145,38 @@ int main() {
 
 		// lane centering (needs to do test to set proper amount of the number)
 		// the center would be 53?
-		/*
-		if (pts[0].x >= 58)
+		
+		if (pts[0].x >= 116)
 		{
 			steering_angle = steering_angle + 2;
 		}
-		else if (pts[0].x <= 48)
+		else if (pts[0].x <= 96)
 		{
 			steering_angle = steering_angle - 2;
 		}
-		*/
+		
 
-		bool white_existance;
-		white_existance = white_lane_detection(processed);
-
-		int loc_white_pix;
-		loc_white_pix = white_lane_detection_pix(processed);
-		if (60 <= loc_white_pix <= 70)
+		if (steering_angle >= 30)
 		{
-			steering_angle = steering_angle + 3;
-		}
-		else if (71 <= loc_white_pix <= 80)
+			steering_angle = 30;
+		} else if (steering_angle <= -30)
 		{
-			steering_angle = steering_angle + 5;
+			steering_angle = -30;
 		}
-		else if (loc_white_pix > 81)
-		{
-			steer_angle = steering_angle + 7;
-		}
-		else if (loc_white_pix <= 50)
-		{
-			steering_angle = steering_angle - 5;
-		}
-		else if(loc_white_pix = 0)
-		{
-			steering_angle = steering_angle - 7;
-		}
-
-		/*
-		if (white_existance == false)
-		{
-			steering_angle = steering_angle - 2;
-		}
-		*/
 
 		steering_angle = steering_angle * 0.9;
-		// steering_angle_list.push_back(steering_angle);
-
+	
 		std::cout << "Steering angle is " << steering_angle << std::endl;
 		std::cout << "-------------------------------" << std::endl;
 	
 		/*--------------------------------------------------------------------*/	
 		// vechile dynamics
-		// _RcControl.SetSteerAngle(steering_angle_list.back());
 		_RcControl.SetSteerAngle(steering_angle);
 		/*--------------------------------------------------------------------*/
 	
-		//cv::imshow("win", frame);//画僝を表示?�?
+		//cv::imshow("win", frame);
 		const int key = cv::waitKey(1);
-		if(key == 'q'/*113*/)//qボタン㝌押㝕れ㝟㝨�?
+		if(key == 'q'/*113*/)
 		{
 			break;//whileループ㝋ら抜㝑る?�?
 		}
@@ -444,32 +416,19 @@ cv::Mat ImageCalibration(cv::Mat img)
 
 cv::Mat ImageBirdsEyeProcess(cv::Mat img)
 {
-	// ver2
-	//cv::Point2f srcVertices[4];
-	//srcVertices[0] = cv::Point(80,79);
-	//srcVertices[1] = cv::Point(233, 79);
-	//srcVertices[2] = cv::Point(320, 137);
-	//srcVertices[3] = cv::Point(0, 137);
-
-	//cv::Point2f dstVertices[4];
-	//dstVertices[0] = cv::Point(80, 0);
-	//dstVertices[1] = cv::Point(240, 0);
-	//dstVertices[2] = cv::Point(240, 240);
-	//dstVertices[3] = cv::Point(80, 240);
-
-
-	//// rectangles ver3
+	// rectangles ver5
 	cv::Point2f srcVertices[4];
-	srcVertices[0] = cv::Point(100, 65);
-	srcVertices[1] = cv::Point(214, 65);
-	srcVertices[2] = cv::Point(320, 137);
-	srcVertices[3] = cv::Point(0, 137);
+	srcVertices[0] = cv::Point(77, 63);
+	srcVertices[1] = cv::Point(236, 63);
+	srcVertices[2] = cv::Point(318, 100);
+	srcVertices[3] = cv::Point(0, 100);
 
 	cv::Point2f dstVertices[4];
-	dstVertices[0] = cv::Point(50, 0);
-	dstVertices[1] = cv::Point(270, 0);
-	dstVertices[2] = cv::Point(270, 240);
-	dstVertices[3] = cv::Point(50, 240);
+	dstVertices[0] = cv::Point(80, 0);
+	dstVertices[1] = cv::Point(240, 0);
+	dstVertices[2] = cv::Point(240, 240);
+	dstVertices[3] = cv::Point(80, 240);
+
 
 	// Prepare matrix for transform and get the warped image
 	cv::Mat perspectiveMatrix = cv::getPerspectiveTransform(srcVertices, dstVertices);
@@ -490,7 +449,7 @@ cv::Mat ImageProcessing(cv::Mat img)
 	
 	// just thresholding
 	cv::Mat processed;
-	const int THRESHOLD_VAL = 180;
+	const int THRESHOLD_VAL = 190;
 	cv::threshold(img, processed, THRESHOLD_VAL, 255, cv::THRESH_BINARY);
 
 	return processed;
@@ -534,7 +493,7 @@ bool white_lane_detection(cv::Mat img)
 	// if the car is out of the center, the camera would not capture the lane at (x, y) = (50, 230) [px].
 	bool white_existance = false;
 
-	for (int i = 20; i < 80; i++)
+	for (int i = 20; i < 159; i++)
 	{
 		int intensity = img.at<unsigned char>(230, i);
 		if (intensity == 255)
@@ -547,17 +506,3 @@ bool white_lane_detection(cv::Mat img)
 	return white_existance;
 }
 
-int white_lane_detection_pix(cv::Mat img)
-{
-	int flag = 0;
-	for (int i = 40; i < 120; i++)
-	{
-		int intensity = img.at<unsigned char>(230, i);
-		if (intensity == 255)
-		{
-			flag = i;
-			break;
-		}
-	}
-	return flag;
-}

@@ -27,9 +27,6 @@ using namespace zmp::zrc;
 double ymm_per_pix = 300 / 240;
 double xmm_per_pix = 365 / 220;
 
-// test vector
-std::vector<double>steering_angle_list(15, 0);
-
 // functions for calculation
 std::vector<cv::Point2f> SlidingWindow(cv::Mat, cv::Rect);
 std::tuple<double, double> Polynomial(std::vector<cv::Point2f>);
@@ -114,7 +111,7 @@ int main() {
 
 		// sliding window algorithm
 		// ver3
-		std::vector<cv::Point2f> pts = SlidingWindow(processed, cv::Rect(50, 210, 60, 30));
+		std::vector<cv::Point2f> pts = SlidingWindow(processed, cv::Rect(20, 140, 120, 20));
 
 		// Polynomial fitting
 		double poly_co, lin_co;
@@ -191,7 +188,6 @@ int main() {
 		*/
 
 		steering_angle = steering_angle * 0.9;
-		// steering_angle_list.push_back(steering_angle);
 
 		std::cout << "Steering angle is " << steering_angle << std::endl;
 		std::cout << "-------------------------------" << std::endl;
@@ -490,7 +486,7 @@ cv::Mat ImageProcessing(cv::Mat img)
 	
 	// just thresholding
 	cv::Mat processed;
-	const int THRESHOLD_VAL = 180;
+	const int THRESHOLD_VAL = 190;
 	cv::threshold(img, processed, THRESHOLD_VAL, 255, cv::THRESH_BINARY);
 
 	return processed;

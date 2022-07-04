@@ -1,8 +1,6 @@
 #include <cv.h>
 #include <highgui.h>
 #include <ctype.h>
-
-// for line detecton and image processing
 #include <iostream>
 #include <tuple>
 #include <string>
@@ -12,66 +10,31 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/imgcodecs.hpp>
 
-// robocar dynamics
-#include <sched.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <memory.h>
-#include "RcControl.h"
+//ver2
+//double ymm_per_pix = 200 / 240;
+//double xmm_per_pix = 375 / 160;
 
-using namespace zmp::zrc;
 
 //ver3
 double ymm_per_pix = 300 / 240;
 double xmm_per_pix = 365 / 220;
 
-// test vector
-std::vector<double>steering_angle_list(15, 0);
-
-// functions for calculation
-std::vector<cv::Point2f> SlidingWindow(cv::Mat, cv::Rect);
+std::vector<cv::Point2f> SlidingWindow(cv::Mat image, cv::Rect);
 std::tuple<double, double> Polynomial(std::vector<cv::Point2f>);
-double SteerAngle(double);
-bool white_lane_detection(cv::Mat);
-int white_lane_detection_pix(cv::Mat);
-
-// functions for image processing
-cv::Mat ImageCalibration(cv::Mat);
-cv::Mat ImageBirdsEyeProcess(cv::Mat);
-cv::Mat ImageProcessing(cv::Mat);
 std::tuple<cv::Mat, cv::Mat> CalibMatrix();
-std::vector<cv::Point2f> FindNonZero(cv::Mat);
+std::vector<cv::Point2f> FindNonZero(cv::Mat img);
+double SteerAngle(double);
 
+cv::Mat ImageCalibration(cv::Mat img);
+cv::Mat ImageBirdsEyeProcess(cv::Mat img);
+cv::Mat ImageProcessing(cv::Mat img);
+
+
+// test 
+void test_for_robocar();
 
 int main() {
-
-	// Robocar dynamics
-    char buf[20];
-    float angle = 0;
-    int speed = 0;
-    int set_v = 0;
-    int set_t = 0;
-    bool sign = false;
-    float set_a = 0;
-    bool period = false;
-    bool loop = true;
-    RcControl  _RcControl;
-    _RcControl.init();
-    _RcControl.Start();
-
-	_RcControl.SetReportFlagReq(0x0f);
-    _RcControl.SetServoEnable(1);
-    _RcControl.SetMotorEnableReq(1);
-    _RcControl.SetDriveSpeed(0);
-    _RcControl.SetSteerAngle(0);
 	
-	_RcControl.SetDriveSpeed(300);
-
-	
-
-	// Image processing and line detection
 	cv::VideoCapture cap(0);
 	
 	const int HEIGHT = 240;
@@ -81,15 +44,12 @@ int main() {
 	cap.set(CV_CAP_PROP_FRAME_HEIGHT, HEIGHT);
 	cap.set(CV_CAP_PROP_FRAME_WIDTH, WIDTH);
 	cap.set(CV_CAP_PROP_FPS, FPS);
-
-	// if radius of curvature is less than the height of robocar, it would be nan.
-	int steering_angle_restore;
-	std::vector<int> steering_angle_list;
-
+	    
 	// make sure camera is loaded
 	if(!cap.isOpened())
 	{
-		return -1;
+	        
+	    return -1;
 	}
 	
 	cv::Mat frame; 
@@ -101,7 +61,7 @@ int main() {
 		cv::Mat img;
 		cv::Mat processed;
 
-		img = frame;
+		img = cv::imread("image/test_4.jpg");
 
 		// calibration
 		processed = ImageCalibration(img);
@@ -129,93 +89,30 @@ int main() {
 
 		// have to think about the width of the car and the lane.
 		// radius_of_curvature = radius_of_curvature - 182.5;
-		radius_of_curvature = radius_of_curvature - 277.5;
+		radius_of_curvature = radius_of_curvature - 182.5;
 	
 		// steering angle
 		double steering_angle;
-
-		if (radius_of_curvature <= 429 && radius_of_curvature >= -429)
-		{
-			steering_angle = steering_angle_restore;
-		}
-		else
-		{
-			steering_angle = std::round(SteerAngle(radius_of_curvature));
-			steering_angle_restore = steering_angle;
-		}
-
-		// lane centering (needs to do test to set proper amount of the number)
-		// the center would be 53?
-		/*
-		if (pts[0].x >= 58)
-		{
-			steering_angle = steering_angle + 2;
-		}
-		else if (pts[0].x <= 48)
-		{
-			steering_angle = steering_angle - 2;
-		}
-		*/
-
-		bool white_existance;
-		white_existance = white_lane_detection(processed);
-
-		int loc_white_pix;
-		loc_white_pix = white_lane_detection_pix(processed);
-		if (60 <= loc_white_pix <= 70)
-		{
-			steering_angle = steering_angle + 3;
-		}
-		else if (71 <= loc_white_pix <= 80)
-		{
-			steering_angle = steering_angle + 5;
-		}
-		else if (loc_white_pix > 81)
-		{
-			steer_angle = steering_angle + 7;
-		}
-		else if (loc_white_pix <= 50)
-		{
-			steering_angle = steering_angle - 5;
-		}
-		else if(loc_white_pix = 0)
-		{
-			steering_angle = steering_angle - 7;
-		}
-
-		/*
-		if (white_existance == false)
-		{
-			steering_angle = steering_angle - 2;
-		}
-		*/
-
-		steering_angle = steering_angle * 0.9;
-		// steering_angle_list.push_back(steering_angle);
-
+		steering_angle = std::round(SteerAngle(radius_of_curvature));
+	
 		std::cout << "Steering angle is " << steering_angle << std::endl;
 		std::cout << "-------------------------------" << std::endl;
 	
-		/*--------------------------------------------------------------------*/	
-		// vechile dynamics
-		// _RcControl.SetSteerAngle(steering_angle_list.back());
-		_RcControl.SetSteerAngle(steering_angle);
-		/*--------------------------------------------------------------------*/
 	
-		//cv::imshow("win", frame);//画僝を表示?�?
-		const int key = cv::waitKey(1);
-		if(key == 'q'/*113*/)//qボタン㝌押㝕れ㝟㝨�?
-		{
-			break;//whileループ㝋ら抜㝑る?�?
-		}
-		else if(key == 's'/*115*/)//s㝌押㝕れ㝟㝨�?
-		{
-	        //フレー�?画僝を保存㝙る�?
-			cv::imwrite("img.png", frame);
-		}
+	
+	
+	    cv::imshow("win", frame);//画像を表示．
+	    const int key = cv::waitKey(1);
+	    if(key == 'q'/*113*/)//qボタンが押されたとき
+	    {
+	        break;//whileループから抜ける．
+	    }
+	    else if(key == 's'/*115*/)//sが押されたとき
+	    {
+	        //フレーム画像を保存する．
+	        cv::imwrite("img.png", frame);
+	    }
 	}
-
-
 	cv::destroyAllWindows();
 	return 0;
 }
@@ -262,10 +159,9 @@ std::vector<cv::Point2f> SlidingWindow(cv::Mat image, cv::Rect window) {
 
 		//--------------------------------------------------------------------//
 		// Get all non-black pixels. All pixels are white in our case.
-		// cannot use cv::findNonzero on robocar so I made FindNonZero by myself.
-		// cv::findNonZero(roi, locations);
+		//cv::findNonZero(roi, locations);
 		locations = FindNonZero(roi);
-		// ------------------------------------------------//
+	// ------------------------------------------------//
 
 		float avgX = 0.0f;
 
@@ -488,9 +384,9 @@ cv::Mat ImageProcessing(cv::Mat img)
 {
 	cv::cvtColor(img, img, cv::COLOR_RGB2GRAY);
 	
-	// just thresholding
+	// thresholding
 	cv::Mat processed;
-	const int THRESHOLD_VAL = 180;
+	const int THRESHOLD_VAL = 150;
 	cv::threshold(img, processed, THRESHOLD_VAL, 255, cv::THRESH_BINARY);
 
 	return processed;
@@ -502,62 +398,146 @@ double SteerAngle(double radius_of_curvature)
 	const double ROBOCAR_WIDTH = 429;
 	const double PI = 3.141592;
 
-	// calculate steer angle using radius of curvature and the width of robocar.
-	if (radius_of_curvature > 50000)
+	if (radius_of_curvature > 5000)
 	{
 		steer_angle = 0;
 	}
-	else if (radius_of_curvature < -50000)
-	{
-		steer_angle = 0;
-	}
-	else 
+	else
 	{
 		steer_angle = std::asin(ROBOCAR_WIDTH / radius_of_curvature) * 360 / 2 / PI;
-	}
-
-	if (steer_angle >= 30)
-	{
-		steer_angle = 30;
-	}
-	else if (steer_angle <= -30)
-	{
-		steer_angle = -30;
 	}
 	
 	return steer_angle;
 }
 
-bool white_lane_detection(cv::Mat img)
+void test_1()
 {
-	// to see if the car is out of the center or not.
-	// if the car is out of the center, the camera would not capture the lane at (x, y) = (50, 230) [px].
-	bool white_existance = false;
+	cv::Mat img;
+	cv::Mat processed;
+	cv::Mat processed_2;
 
-	for (int i = 20; i < 80; i++)
-	{
-		int intensity = img.at<unsigned char>(230, i);
-		if (intensity == 255)
-		{
-			white_existance = true;
-			break;
-		}
-	}
+	img = cv::imread("image/test_1.jpg");
 
-	return white_existance;
+	// calibration
+	processed = ImageCalibration(img);
+
+	// perspectice matrix transformation
+	processed_2 = ImageBirdsEyeProcess(processed);
+
+	// sliding window algorithm
+	std::vector<cv::Point2f> pts = SlidingWindow(processed_2, cv::Rect(20, 210, 60, 30));
+
+	// Polynomial fitting
+	double poly_co, lin_co;
+	std::tie(poly_co, lin_co) = Polynomial(pts);
+
+	// Radius of curvature
+	double radius_of_curvature;
+	radius_of_curvature = std::pow((1 + std::pow(2 * poly_co * pts[2].x * xmm_per_pix + lin_co, 2)), 1.5) / abs(2 * poly_co);
+
+	std::cout << radius_of_curvature << std::endl;
+
+
+	cv::imshow("test", processed_2);
+	cv::waitKey(0);
 }
 
-int white_lane_detection_pix(cv::Mat img)
+void test_2()
 {
-	int flag = 0;
-	for (int i = 40; i < 120; i++)
-	{
-		int intensity = img.at<unsigned char>(230, i);
-		if (intensity == 255)
-		{
-			flag = i;
-			break;
-		}
-	}
-	return flag;
+	cv::Mat img;
+	cv::Mat processed;
+
+	img = cv::imread("image/test_4.jpg");
+
+	// calibration
+	processed = ImageCalibration(img);
+
+	// Perspective
+	processed = ImageBirdsEyeProcess(processed);
+
+	// Image processing
+	processed = ImageProcessing(processed);
+
+	// sliding window algorithm
+	// ver2
+	//std::vector<cv::Point2f> pts = SlidingWindow(processed, cv::Rect(80, 210, 60, 30));
+	// ver3
+	std::vector<cv::Point2f> pts = SlidingWindow(processed, cv::Rect(50, 210, 60, 30));
+
+	// ver3 sliding window 16
+	//std::vector<cv::Point2f> pts = SlidingWindow(processed, cv::Rect(50, 225, 60, 15));
+
+	// Polynomial fitting
+	double poly_co, lin_co;
+	std::tie(poly_co, lin_co) = Polynomial(pts);
+
+	// Radius of curvature
+	double radius_of_curvature;
+	radius_of_curvature = std::pow((1 + std::pow(2 * poly_co * pts[3].x * xmm_per_pix + lin_co, 2)), 1.5) / abs(2 * poly_co);
+
+	std::cout << radius_of_curvature << std::endl;
+
+	// have to think about the width of the car and the lane.
+	radius_of_curvature = radius_of_curvature - 270;
+
+	// steering angle
+	double steering_angle;
+	steering_angle = SteerAngle(radius_of_curvature);
+
+	std::cout << steering_angle << std::endl;
+
+
+	// show test image
+	cv::imshow("test", processed);
+	cv::waitKey(0);
 }
+
+void test_for_robocar()
+{
+	cv::Mat img;
+	cv::Mat processed;
+
+	img = cv::imread("image/test_4.jpg");
+
+	// calibration
+	processed = ImageCalibration(img);
+
+	// Perspective
+	processed = ImageBirdsEyeProcess(processed);
+
+	// Image processing
+	processed = ImageProcessing(processed);
+
+	// sliding window algorithm
+	// ver3
+	std::vector<cv::Point2f> pts = SlidingWindow(processed, cv::Rect(50, 210, 60, 30));
+
+	// Polynomial fitting
+	double poly_co, lin_co;
+	std::tie(poly_co, lin_co) = Polynomial(pts);
+
+	// Radius of curvature
+	double radius_of_curvature;
+	radius_of_curvature = std::pow((1 + std::pow(2 * poly_co * pts[3].x * xmm_per_pix + lin_co, 2)), 1.5) / std::abs(2 * poly_co);
+
+	std::cout << "--------------------------------" << std::endl;
+	std::cout << "Radius of curvature is " << radius_of_curvature << std::endl;
+
+	// have to think about the width of the car and the lane.
+	// radius_of_curvature = radius_of_curvature - 182.5;
+	radius_of_curvature = radius_of_curvature - 182.5;
+
+	// steering angle
+	double steering_angle;
+	steering_angle = std::round(SteerAngle(radius_of_curvature));
+
+	std::cout << "Steering angle is " << steering_angle << std::endl;
+	std::cout << "-------------------------------" << std::endl;
+		
+
+	// show test image
+	cv::imshow("test", processed);
+	cv::waitKey(0);
+}
+
+
