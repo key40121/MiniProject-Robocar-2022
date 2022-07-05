@@ -32,7 +32,7 @@ double xmm_per_pix = 580 / 160;
 std::vector<cv::Point2f> SlidingWindow(cv::Mat, cv::Rect);
 std::tuple<double, double> Polynomial(std::vector<cv::Point2f>);
 double SteerAngle(double);
-bool white_lane_detection(cv::Mat);
+bool WhiteLaneDetection(cv::Mat);
 int white_lane_detection_pix(cv::Mat);
 
 // functions for image processing
@@ -44,7 +44,6 @@ std::vector<cv::Point2f> FindNonZero(cv::Mat);
 
 
 int main() {
-
 	// Robocar dynamics
     char buf[20];
     float angle = 0;
@@ -59,15 +58,14 @@ int main() {
     _RcControl.init();
     _RcControl.Start();
 
-	_RcControl.SetReportFlagReq(0x0f);
+    _RcControl.SetReportFlagReq(0x0f);
     _RcControl.SetServoEnable(1);
     _RcControl.SetMotorEnableReq(1);
     _RcControl.SetDriveSpeed(0);
     _RcControl.SetSteerAngle(0);
 	
-	_RcControl.SetDriveSpeed(300);
+    _RcControl.SetDriveSpeed(300);
 
-	
 
 	// Image processing and line detection
 	cv::VideoCapture cap(0);
@@ -170,7 +168,7 @@ int main() {
 		}
 
 		// lane centering for straight line.
-		bool white_existance = white_lane_detection(processed);
+		bool white_existance = WhiteLaneDetection(processed);
 		if (white_existance == false)
 		{
 			steering_angle = steering_angle + 8;
@@ -190,11 +188,10 @@ int main() {
 		const int key = cv::waitKey(1);
 		if(key == 'q'/*113*/)
 		{
-			break;//whileループ㝋ら抜㝑る?�?
+			break;
 		}
-		else if(key == 's'/*115*/)//s㝌押㝕れ㝟㝨�?
+		else if(key == 's'/*115*/)
 		{
-	        //フレー�?画僝を保存㝙る�?
 			cv::imwrite("img.png", frame);
 		}
 	}
@@ -499,7 +496,7 @@ double SteerAngle(double radius_of_curvature)
 	return steer_angle;
 }
 
-bool white_lane_detection(cv::Mat img)
+bool WhiteLaneDetection(cv::Mat img)
 {
 	// to see if the car is out of the center or not.
 	// if the car is out of the center, the camera would not capture the lane at (x, y) = (50, 230) [px].
