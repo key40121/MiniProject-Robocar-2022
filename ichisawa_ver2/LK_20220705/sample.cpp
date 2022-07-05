@@ -34,6 +34,7 @@ std::tuple<double, double> Polynomial(std::vector<cv::Point2f>);
 double SteerAngle(double);
 bool WhiteLaneDetectionLeft(cv::Mat);
 bool WhiteLaneDetectionRight(cv::Mat);
+bool WhiteLaneDetectionBoth(cv::Mat);
 int white_lane_detection_pix(cv::Mat);
 
 // functions for image processing
@@ -113,7 +114,7 @@ int main() {
 
 		// sliding window algorithm
 		// ver5 the center is 106
-		std::vector<cv::Point2f> pts = SlidingWindow(processed, cv::Rect(50, 210, 100, 30));
+		std::vector<cv::Point2f> pts = SlidingWindow(processed, cv::Rect(170, 210, 100, 30));
 
 
 		// Polynomial fitting
@@ -145,8 +146,42 @@ int main() {
 		}
 
 		// lane centering (needs to do test to set proper amount of the number)
-		// the center would be 53?
+		// the center would be 214?
+		
+		if (pts[0].x >= 224)
+		{
+			steering_angle = steering_angle - 2;
+		}
+		else if (pts[0].x <= 204)
+		{
+			steering_angle = steering_angle + 2;
+		}
+		else if (pts[0].x <= 260)
+		{
+			steering_angle = steering_angle - 5;
+		}
+		
+		// lane centering for straight line.
 
+		bool white_existance_right = WhiteLaneDetectionRight(processed);
+		if (white_existance_right == true)
+		{
+			// steering_angle = steering_angle - 6; worked with test 1
+			steering_angle = steering_angle + 3;
+		}
+
+		bool white_existance_left = WhiteLaneDetectionLeft(processed);
+		if (white_existance_left == false)
+		{
+			// steering_angle = steering_angle + 3; worked with test 1
+			steering_angle = steering_angle - 6;
+		}
+
+		bool white_existance_both = WhiteLaneDetectionBoth(processed);
+		if (white_existance_both == false)
+		{
+			steering_angle = steering_angle - 15;
+		}
 
 		if (steering_angle >= 30)
 		{
@@ -156,21 +191,6 @@ int main() {
 		{
 			steering_angle = -30;
 		}
-
-		// lane centering for straight line.
-		bool white_existance_left = WhiteLaneDetectionLeft(processed);
-		if (white_existance_left == false)
-		{
-			steering_angle = steering_angle + 2;
-		}
-
-		bool white_existance_right = WhiteLaneDetectionRight(processed);
-		if (white_existance_right == true)
-		{
-			steering_angle = steering_angle - 4;
-		}
-
-		steering_angle = steering_angle;
 	
 		std::cout << "Steering angle is " << steering_angle << std::endl;
 		std::cout << "-------------------------------" << std::endl;
@@ -454,6 +474,14 @@ cv::Mat ImageProcessing(cv::Mat img)
 	
 	// just thresholding
 	cv::Mat processed;
+
+	const cv::Size kernelSize = cv::Size(9, 9);
+	cv::GaussianBlur(img, processed, kernelSize, 0);
+
+	cv::Mat kernel = cv::Mat::ones(15, 15, CV_8U);
+	cv::dilate(processed, processed, kernel);
+	cv::erode(processed, processed, kernel);
+
 	const int THRESHOLD_VAL = 190;
 	cv::threshold(img, processed, THRESHOLD_VAL, 255, cv::THRESH_BINARY);
 
@@ -517,7 +545,8 @@ bool WhiteLaneDetectionLeft(cv::Mat img)
 	// if the car is out of the center, the camera would not capture the lane at (x, y) = (50, 230) [px].
 	bool white_existance_left = false;
 
-	for (int i = 150; i < 180; i++)
+	//for (int i = 150; i < 180; i++) // second test
+	for (int i = 150; i < 200; i++) // it almost worked!
 	{
 		int intensity = img.at<unsigned char>(235, i);
 		if (intensity == 255)
@@ -528,4 +557,21 @@ bool WhiteLaneDetectionLeft(cv::Mat img)
 	}
 
 	return white_existance_left;
+}
+
+bool WhiteLaneDetectionBoth(cv::Mat img)
+{
+	bool white_existance_both = false;
+
+	for (int i = 0; i < 160; i++)
+	{
+		int intensity = img.at<unsigned char>(0, i);
+		if (intensity == 255)
+		{
+			white_existance_both = true;
+			break;
+		}
+	}
+
+	return white_existance_both;
 }
