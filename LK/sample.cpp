@@ -174,13 +174,15 @@ int main() {
 		bool white_existance_left = WhiteLaneDetectionLeft(processed);
 		if (white_existance_left == false)
 		{
-			steering_angle = steering_angle + 3;
+			// steering_angle = steering_angle + 3; worked with test 1
+			steering_angle = steering_angle + 2;
 		}
 
 		bool white_existance_right = WhiteLaneDetectionRight(processed);
 		if (white_existance_right == true)
 		{
-			steering_angle = steering_angle - 6;
+			// steering_angle = steering_angle - 6; worked with test 1
+			steering_angle = steering_angle - 3;
 		}
 
 		steering_angle = steering_angle;
