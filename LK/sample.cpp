@@ -473,6 +473,14 @@ cv::Mat ImageProcessing(cv::Mat img)
 	
 	// just thresholding
 	cv::Mat processed;
+
+	const cv::Size kernelSize = cv::Size(9, 9);
+	cv::GaussianBlur(img, processed, kernelSize, 0);
+
+	cv::Mat kernel = cv::Mat::ones(15, 15, CV_8U);
+	cv::dilate(processed, processed, kernel);
+	cv::erode(processed, processed, kernel);
+	
 	const int THRESHOLD_VAL = 190;
 	cv::threshold(img, processed, THRESHOLD_VAL, 255, cv::THRESH_BINARY);
 
