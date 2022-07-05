@@ -146,20 +146,7 @@ int main() {
 
 		// lane centering (needs to do test to set proper amount of the number)
 		// the center would be 53?
-		
-		if (pts[0].x >= 116)
-		{
-			steering_angle = steering_angle + 2;
-		}
-		else if (pts[0].x <= 96)
-		{
-			steering_angle = steering_angle - 2;
-		}
-		else if (pts[0].x <= 60)
-		{
-			steering_angle = steering_angle + 5;
-		}
-		
+
 
 		if (steering_angle >= 30)
 		{
@@ -174,13 +161,13 @@ int main() {
 		bool white_existance_left = WhiteLaneDetectionLeft(processed);
 		if (white_existance_left == false)
 		{
-			steering_angle = steering_angle + 3;
+			steering_angle = steering_angle + 2;
 		}
 
 		bool white_existance_right = WhiteLaneDetectionRight(processed);
 		if (white_existance_right == true)
 		{
-			steering_angle = steering_angle - 6;
+			steering_angle = steering_angle - 4;
 		}
 
 		steering_angle = steering_angle;
@@ -530,7 +517,7 @@ bool WhiteLaneDetectionLeft(cv::Mat img)
 	// if the car is out of the center, the camera would not capture the lane at (x, y) = (50, 230) [px].
 	bool white_existance_left = false;
 
-	for (int i = 150; i < 200; i++)
+	for (int i = 150; i < 180; i++)
 	{
 		int intensity = img.at<unsigned char>(235, i);
 		if (intensity == 255)
@@ -541,18 +528,4 @@ bool WhiteLaneDetectionLeft(cv::Mat img)
 	}
 
 	return white_existance_left;
-}
-
-int lane_centering_test(cv::Mat img)
-{
-	int temp;
-
-	for (int i = 0; i < 320; i++)
-	{
-		int intensity = img.at<unsigned char>(0, i);
-		if (intensity == 255 && temp == 255)
-		{
-			temp = ;
-		}
-	}
 }
