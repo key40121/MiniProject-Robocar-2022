@@ -192,7 +192,7 @@ int main() {
 		{
 			break;
 		}
-		else if(key == 's'/*115*/)/
+		else if(key == 's'/*115*/)
 		{
 			cv::imwrite("img.png", frame);
 		}
