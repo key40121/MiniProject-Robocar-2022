@@ -532,8 +532,8 @@ bool WhiteLaneDetectionLeft(cv::Mat img)
 	// if the car is out of the center, the camera would not capture the lane at (x, y) = (50, 230) [px].
 	bool white_existance_left = false;
 
-	for (int i = 150; i < 200; i++) it almost worked!
 	//for (int i = 150; i < 180; i++) // second test
+	for (int i = 150; i < 200; i++) it almost worked!
 	{
 		int intensity = img.at<unsigned char>(235, i);
 		if (intensity == 255)
