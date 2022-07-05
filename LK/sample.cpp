@@ -66,7 +66,7 @@ int main() {
     _RcControl.SetDriveSpeed(0);
     _RcControl.SetSteerAngle(0);
 	
-	_RcControl.SetDriveSpeed(100);
+	_RcControl.SetDriveSpeed(300);
 
 	
 
@@ -182,7 +182,7 @@ int main() {
 		if (white_existance_right == true)
 		{
 			// steering_angle = steering_angle - 6; worked with test 1
-			steering_angle = steering_angle - 3;
+			steering_angle = steering_angle - 4;
 		}
 
 		steering_angle = steering_angle;
