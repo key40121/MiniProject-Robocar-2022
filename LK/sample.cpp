@@ -533,7 +533,7 @@ bool WhiteLaneDetectionLeft(cv::Mat img)
 	bool white_existance_left = false;
 
 	//for (int i = 150; i < 180; i++) // second test
-	for (int i = 150; i < 200; i++) it almost worked!
+	for (int i = 150; i < 200; i++) // it almost worked!
 	{
 		int intensity = img.at<unsigned char>(235, i);
 		if (intensity == 255)
