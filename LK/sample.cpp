@@ -34,6 +34,7 @@ std::tuple<double, double> Polynomial(std::vector<cv::Point2f>);
 double SteerAngle(double);
 bool WhiteLaneDetectionLeft(cv::Mat);
 bool WhiteLaneDetectionRight(cv::Mat);
+bool WhiteLaneDetectionBoth(cv::Mat);
 int white_lane_detection_pix(cv::Mat);
 
 // functions for image processing
@@ -183,6 +184,12 @@ int main() {
 		{
 			// steering_angle = steering_angle - 6; worked with test 1
 			steering_angle = steering_angle - 6;
+		}
+
+		bool white_existance_both = WhiteLaneDetectionBoth(processed);
+		if (white_existance_both == false)
+		{
+			steering_angle = steering_angle + 15;
 		}
 
 		steering_angle = steering_angle;
@@ -544,4 +551,21 @@ bool WhiteLaneDetectionLeft(cv::Mat img)
 	}
 
 	return white_existance_left;
+}
+
+bool WhiteLaneDetectionBoth(cv::Mat img)
+{
+	bool white_existance_both = false;
+
+	for (int i = 0; i < 320; i++)
+	{
+		int intensity = img.at<unsigned char>(235, i);
+		if (intensity == 255)
+		{
+			white_existance_both = true;
+			break;
+		}
+	}
+
+	return white_existance_both;
 }
