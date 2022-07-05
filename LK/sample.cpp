@@ -161,16 +161,6 @@ int main() {
 			steering_angle = steering_angle + 5;
 		}
 		
-
-		if (steering_angle >= 30)
-		{
-			steering_angle = 30;
-		} 
-		else if (steering_angle <= -30)
-		{
-			steering_angle = -30;
-		}
-
 		// lane centering for straight line.
 		bool white_existance_left = WhiteLaneDetectionLeft(processed);
 		if (white_existance_left == false)
@@ -192,7 +182,14 @@ int main() {
 			steering_angle = steering_angle + 15;
 		}
 
-		steering_angle = steering_angle;
+		if (steering_angle >= 30)
+		{
+			steering_angle = 30;
+		} 
+		else if (steering_angle <= -30)
+		{
+			steering_angle = -30;
+		}
 	
 		std::cout << "Steering angle is " << steering_angle << std::endl;
 		std::cout << "-------------------------------" << std::endl;
@@ -557,9 +554,9 @@ bool WhiteLaneDetectionBoth(cv::Mat img)
 {
 	bool white_existance_both = false;
 
-	for (int i = 0; i < 320; i++)
+	for (int i = 0; i < 160; i++)
 	{
-		int intensity = img.at<unsigned char>(235, i);
+		int intensity = img.at<unsigned char>(0, i);
 		if (intensity == 255)
 		{
 			white_existance_both = true;
