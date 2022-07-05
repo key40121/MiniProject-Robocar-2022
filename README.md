@@ -1,5 +1,5 @@
 # Robocar
-Repository for J.DRIVE Robocar training
+Repository for J.DRIVE 2022 Robocar training
 
 ## Including files
 
