@@ -66,7 +66,7 @@ int main() {
     _RcControl.SetDriveSpeed(0);
     _RcControl.SetSteerAngle(0);
 	
-	_RcControl.SetDriveSpeed(300);
+	_RcControl.SetDriveSpeed(100);
 
 	
 
