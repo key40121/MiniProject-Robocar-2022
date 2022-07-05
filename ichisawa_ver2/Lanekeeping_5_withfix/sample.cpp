@@ -171,10 +171,10 @@ int main() {
 		bool white_existance = WhiteLaneDetection(processed);
 		if (white_existance == false)
 		{
-			steering_angle = steering_angle + 8;
+			steering_angle = steering_angle + 3;
 		}
 
-		steering_angle = steering_angle * 0.9;
+		steering_angle = steering_angle;
 	
 		std::cout << "Steering angle is " << steering_angle << std::endl;
 		std::cout << "-------------------------------" << std::endl;
@@ -502,9 +502,9 @@ bool WhiteLaneDetection(cv::Mat img)
 	// if the car is out of the center, the camera would not capture the lane at (x, y) = (50, 230) [px].
 	bool white_existance = false;
 
-	for (int i = 20; i < 140; i++)
+	for (int i = 20; i < 120; i++)
 	{
-		int intensity = img.at<unsigned char>(230, i);
+		int intensity = img.at<unsigned char>(235, i);
 		if (intensity == 255)
 		{
 			white_existance = true;
