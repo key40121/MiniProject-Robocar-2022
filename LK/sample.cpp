@@ -32,7 +32,8 @@ double xmm_per_pix = 580 / 160;
 std::vector<cv::Point2f> SlidingWindow(cv::Mat, cv::Rect);
 std::tuple<double, double> Polynomial(std::vector<cv::Point2f>);
 double SteerAngle(double);
-bool WhiteLaneDetection(cv::Mat);
+bool WhiteLaneDetectionLeft(cv::Mat);
+bool WhiteLaneDetectionRight(cv::Mat);
 int white_lane_detection_pix(cv::Mat);
 
 // functions for image processing
@@ -170,10 +171,16 @@ int main() {
 		}
 
 		// lane centering for straight line.
-		bool white_existance = WhiteLaneDetection(processed);
-		if (white_existance == false)
+		bool white_existance_left = WhiteLaneDetectionLeft(processed);
+		if (white_existance_left == false)
 		{
 			steering_angle = steering_angle + 3;
+		}
+
+		bool white_existance_right = WhiteLaneDetectionRight(processed);
+		if (white_existance_right == true)
+		{
+			steering_angle = steering_angle - 6;
 		}
 
 		steering_angle = steering_angle;
@@ -498,32 +505,40 @@ double SteerAngle(double radius_of_curvature)
 	return steer_angle;
 }
 
-bool WhiteLaneDetection(cv::Mat img)
+bool WhiteLaneDetectionRight(cv::Mat img)
 {
 	// to see if the car is out of the center or not.
 	// if the car is out of the center, the camera would not capture the lane at (x, y) = (50, 230) [px].
-	bool white_existance = false;
+	bool white_existance_right = false;
 
 	for (int i = 20; i < 120; i++)
 	{
 		int intensity = img.at<unsigned char>(235, i);
 		if (intensity == 255)
 		{
-			white_existance = true;
+			white_existance_right = true;
 			break;
 		}
 	}
 
-	// for (int i = 120; i < 140; i++)
-	// {
-	// 	int intensity = img.at<unsigned char>(235, i);
-	// 	if (intensity == 255)
-	// 	{
-	// 		white_existance = true;
-	// 		break;
-	// 	}
-	// }
-
-	return white_existance;
+	return white_existance_right;
 }
 
+bool WhiteLaneDetectionLeft(cv::Mat img)
+{
+	// to see if the car is out of the center or not.
+	// if the car is out of the center, the camera would not capture the lane at (x, y) = (50, 230) [px].
+	bool white_existance_left = false;
+
+	for (int i = 150; i < 200; i++)
+	{
+		int intensity = img.at<unsigned char>(235, i);
+		if (intensity == 255)
+		{
+			white_existance_left = true;
+			break;
+		}
+	}
+
+	return white_existance_left;
+}
