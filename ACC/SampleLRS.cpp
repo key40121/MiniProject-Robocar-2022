@@ -55,11 +55,11 @@ public:
 		
 		if(rrc.init())
 		{
-		    return true;
+			return true;
 		}
 		else
 		{
-		    return false;
+			return false;
 		}
 	}
 
@@ -154,20 +154,19 @@ private:
 
 	//_/_/_/_/_/ Callback function_/_/_/_/_/_/_//
 	void OnReceive(int dev){
-	    LrsResult lrs;
+		LrsResult lrs;
 
-	    if(dev == 1){
-	    	if(_lrs[0].GetData(&lrs)){
+		if(dev == 1){
+			if(_lrs[0].GetData(&lrs)){
 			storeLRF(lrs, dev);
-
-			//printf("recieve front data\n");
+			}
 		}
-	    } else {
-		if(_lrs[1].GetData(&lrs)){
-			storeLRF(lrs, dev);
-			//printf("recieve rear data\n");
+		else
+		{
+			if(_lrs[1].GetData(&lrs)){
+				storeLRF(lrs, dev);
+			}
 		}
-	    }
 	}
 
 	//_/_/_/_/_/ Variable declaration_/_ /_/_/_/_/_//
@@ -181,9 +180,6 @@ private:
 	int num;
 	float angle;
 	int set_speed;
-	
-	////////
-
 };
 
 void funcx(int sig);
@@ -193,7 +189,7 @@ int main() {
 
     _RcControl.init();
     _RcControl.Start();
- 
+
     _RcControl.SetReportFlagReq(0x0f);
     _RcControl.SetServoEnable(1);
     _RcControl.SetMotorEnableReq(1);
@@ -203,14 +199,19 @@ int main() {
 	bool flg = 1;
 	bool ires = slrs.Init();
 	if(ires != true)
-	    flg = 0;
-
+	{
+		flg = 0;
+	}
+	
 	bool sres = slrs.Start();
 	if(sres != true)
-	    flg = 0;
+	{
+		flg = 0;
+	}
 
-	while (flg) {
-	    usleep(30000);
+	while (flg)
+	{
+		usleep(30000);
 	}
 	slrs.Stop(); // Stop the device and receive thread.
 	return 0;
