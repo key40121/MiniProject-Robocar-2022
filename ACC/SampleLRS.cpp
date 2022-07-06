@@ -1,11 +1,3 @@
-//============================================================================
-// Name        : SampleLRS.cpp
-// Author      : Tetsuya Azuma
-// Version     : 1.0.0
-// Copyright   :
-// Description : Acquiring data from Laser Range sensor
-//============================================================================
-
 #include "LaserRangeSensor.h"
 #include "RcControl.h"
 #include <iostream>
@@ -14,14 +6,12 @@
 #include <signal.h>
 #include <stdio.h>
 #include <math.h>
-//////////
 #include <sched.h>
 #include <sys/types.h>
 #include <stdlib.h>
 #include <memory.h>
 #define MAX_LENGTH 4000    //Laser Range Sensor can measure 4000 [mm] at most
 #define MIN_LENGTH 40      //Laser Range Sensor can't measure under 40 [mm]
-
 using namespace zmp::zrc;
 using namespace qrk;
 using namespace std;
@@ -105,39 +95,30 @@ private:
 
 	//_/_/_/_/_/ / Read Point cloud data_/_ /_/_/_/_/_//
 	void storeLRF(LrsResult res, int dev){
-
 		set_speed = 200;
-
 		if(dev == 1){
-			num = 0;
 			
-			min_dist[0] = 4000;
+			min_dist = 4000;
 			for( int j= 255; j< 428; j ++)
 			{
-				printf("%d,%f\n",res.data[j],-120+240.0/res.data_length*j);
+				//std::cout << res.data[j] << " " << -120+240.0/res.data_length*j << "\n";
 
-				if( MIN_LENGTH < res.data[j] && res.data[j] < MAX_LENGTH )
+				if(min_dist > res.data[j])
 				{
-					dist[0][num] = res.data[j];
-					num ++;
-				
-					if(min_dist[0] > res.data[j])
-					{
-						min_dist[0] = res.data[j];
-						angle = -120+240.0/res.data_length*j;
-					}
+					min_dist = res.data[j];
+					angle = -120+240.0/res.data_length*j;
 				}
 			}
-			printf("min = %d, angle = %f\n",min_dist[0], angle);
-
+			std::cout << min_dist << " " << angle << "\n";
+			_RcControl.SetDriveSpeed(set_speed);
 			_RcControl.SetSteerAngle(angle);
 
-			if((min_dist[0] >= 200) && (min_dist[0] < set_speed*8/5+200))
+			if((min_dist >= 200) && (min_dist < set_speed*8/5+200))
 			{
-				_RcControl.SetDriveSpeed((min_dist[0]-200)*5/8);
+				_RcControl.SetDriveSpeed((min_dist-200)*5/8);
 			}
 
-			else if(min_dist[0] >= set_speed*8/5+200)
+			else if(min_dist >= set_speed*8/5+200)
 			{
 				_RcControl.SetDriveSpeed(set_speed);
 				_RcControl.SetSteerAngle(0);
@@ -148,7 +129,6 @@ private:
 				_RcControl.SetDriveSpeed(0);
 				_RcControl.SetSteerAngle(0);
 			}
-			
 		} 
 	}
 
@@ -168,16 +148,13 @@ private:
 			}
 		}
 	}
-
+	
 	//_/_/_/_/_/ Variable declaration_/_ /_/_/_/_/_//
 
 	RcControl	rrc;
 	LaserRangeSensor _lrs[2];
 	bool _lrsFlg[2];
-	int dist[2][1400];
-	int max_dist[2];
-	int min_dist[2];
-	int num;
+	int min_dist;
 	float angle;
 	int set_speed;
 };
@@ -195,7 +172,7 @@ int main() {
     _RcControl.SetMotorEnableReq(1);
     _RcControl.SetDriveSpeed(0);
     _RcControl.SetSteerAngle(0);	
-	
+
 	bool flg = 1;
 	bool ires = slrs.Init();
 	if(ires != true)
