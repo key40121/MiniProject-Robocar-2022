@@ -24,7 +24,6 @@
 
 using namespace zmp::zrc;
 
-
 // ver5
 double ymm_per_pix = 310 / 240;
 double xmm_per_pix = 580 / 160;
@@ -37,6 +36,7 @@ bool WhiteLaneDetectionLeft(cv::Mat);
 bool WhiteLaneDetectionRight(cv::Mat);
 bool WhiteLaneDetectionBoth(cv::Mat);
 int white_lane_detection_pix(cv::Mat);
+double LaneCentering(double, double);
 
 // functions for image processing
 cv::Mat ImageCalibration(cv::Mat);
@@ -133,7 +133,7 @@ int main() {
 		// radius_of_curvature = radius_of_curvature - 182.5;
 		radius_of_curvature = radius_of_curvature - 277.5;
 	
-		// steering angle
+		// steering angle (the row number)
 		double steering_angle;
 
 		if (radius_of_curvature <= 429 && radius_of_curvature >= -429)
@@ -147,50 +147,11 @@ int main() {
 		}
 
 		// lane centering (needs to do test to set proper amount of the number)
-		// the center would be 53?
+		// the center would be 106?
+
+		double point = pts[0].x;
 		
-		if (pts[0].x >= 116)
-		{
-			steering_angle = steering_angle + 2;
-		}
-		else if (pts[0].x <= 96)
-		{
-			steering_angle = steering_angle - 2;
-		}
-		else if (pts[0].x <= 60)
-		{
-			steering_angle = steering_angle + 5;
-		}
-		
-		// lane centering for straight line.
-		bool white_existance_left = WhiteLaneDetectionLeft(processed);
-		if (white_existance_left == false)
-		{
-			// steering_angle = steering_angle + 3; worked with test 1
-			steering_angle = steering_angle + 3;
-		}
-
-		bool white_existance_right = WhiteLaneDetectionRight(processed);
-		if (white_existance_right == true)
-		{
-			// steering_angle = steering_angle - 6; worked with test 1
-			steering_angle = steering_angle - 6;
-		}
-
-		bool white_existance_both = WhiteLaneDetectionBoth(processed);
-		if (white_existance_both == false)
-		{
-			steering_angle = steering_angle + 15;
-		}
-
-		if (steering_angle >= 30)
-		{
-			steering_angle = 30;
-		} 
-		else if (steering_angle <= -30)
-		{
-			steering_angle = -30;
-		}
+		steering_angle = LaneCentering(steering_angle, point);
 	
 		std::cout << "Steering angle is " << steering_angle << std::endl;
 		std::cout << "-------------------------------" << std::endl;
@@ -574,4 +535,55 @@ bool WhiteLaneDetectionBoth(cv::Mat img)
 	}
 
 	return white_existance_both;
+}
+
+double LaneCentering(double steering_angle, double point)
+{
+	double steering_angle;
+
+	// lane centering
+	if (point >= 116)
+	{
+		steering_angle = steering_angle + 2;
+	}
+	else if (point <= 96)
+	{
+		steering_angle = steering_angle - 2;
+	}
+	else if (point <= 60)
+	{
+		steering_angle = steering_angle + 5;
+	}
+	
+	// the very moment when the car leaves curves.
+	bool white_existance_left = WhiteLaneDetectionLeft(processed);
+	if (white_existance_left == false)
+	{
+		// steering_angle = steering_angle + 3; worked with test 1
+		steering_angle = steering_angle + 3;
+	}
+
+	bool white_existance_right = WhiteLaneDetectionRight(processed);
+	if (white_existance_right == true)
+	{
+		// steering_angle = steering_angle - 6; worked with test 1
+		steering_angle = steering_angle - 6;
+	}
+
+	bool white_existance_both = WhiteLaneDetectionBoth(processed);
+	if (white_existance_both == false)
+	{
+		steering_angle = steering_angle + 15;
+	}
+
+	if (steering_angle >= 30)
+	{
+		steering_angle = 30;
+	} 
+	else if (steering_angle <= -30)
+	{
+		steering_angle = -30;
+	}
+
+	return steering_angle
 }
