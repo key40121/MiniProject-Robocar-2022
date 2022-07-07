@@ -17,7 +17,7 @@ using namespace qrk;
 using namespace std;
 
 RcControl  _RcControl;
-void funx(int sing);
+void funcx(int sing);
 
 int main()
 {
