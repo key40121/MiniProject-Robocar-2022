@@ -141,14 +141,14 @@ int main() {
 		}
 		else
 		{
-			steering_angle = std::round(SteerAngle(radius_of_curvature));
+			steering_angle = (-1) * std::round(SteerAngle(radius_of_curvature));
 			steering_angle_restore = steering_angle;
 		}
 
 		// lane centering (needs to do test to set proper amount of the number)
 		// the center would be 214?
 		
-		if (pts[0].x <= 204)
+		if (pts[0].x <= 204)s
 		{
 			steering_angle = steering_angle -2;
 		}
