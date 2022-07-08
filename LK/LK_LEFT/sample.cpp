@@ -148,32 +148,32 @@ int main() {
 		// lane centering (needs to do test to set proper amount of the number)
 		// the center would be 214?
 		
-		if (pts[0].x >= 224)
+		if (pts[0].x <= 204)
 		{
-			steering_angle = steering_angle - 2;
+			steering_angle = steering_angle -2;
 		}
-		else if (pts[0].x <= 204)
+		else if (pts[0].x >= 224)
 		{
 			steering_angle = steering_angle + 2;
 		}
-		else if (pts[0].x <= 260)
+		else if (pts[0].x >= 260)
 		{
 			steering_angle = steering_angle - 5;
 		}
 		
 		// lane centering for straight line.
 
-		bool white_existance_right = WhiteLaneDetectionRight(processed);
-		if (white_existance_right == false)
-		{
-			// steering_angle = steering_angle - 6; worked with test 1
-			steering_angle = steering_angle - 3;
-		}
-
 		bool white_existance_left = WhiteLaneDetectionLeft(processed);
-		if (white_existance_left == true)
+		if (white_existance_left == false)
 		{
 			// steering_angle = steering_angle + 3; worked with test 1
+			steering_angle = steering_angle -3;
+		}
+
+		bool white_existance_right = WhiteLaneDetectionRight(processed);
+		if (white_existance_right == true)
+		{
+			// steering_angle = steering_angle - 6; worked with test 1
 			steering_angle = steering_angle + 6;
 		}
 
@@ -332,13 +332,6 @@ std::tuple<double, double> Polynomial(std::vector<cv::Point2f> pts)
 		y[i] = pts[i].y * ymm_per_pix;
 	}
 
-
-	//std::cout << "\nEnter the x-axis values:\n";                //Input x-values
-	//for (i = 0; i < N; i++)
-	//	std::cin >> x[i];
-	//std::cout << "\nEnter the y-axis values:\n";                //Input y-values
-	//for (i = 0; i < N; i++)
-	//	std::cin >> y[i];
 
 	// n is the degree of Polynomial 
 	n = 2;
@@ -546,7 +539,7 @@ bool WhiteLaneDetectionLeft(cv::Mat img)
 	bool white_existance_left = false;
 
 	//for (int i = 150; i < 180; i++) // second test
-	for (int i = 120; i < 270; i++) // it almost worked!
+	for (int i = 120; i < 170; i++) // it almost worked!
 	{
 		int intensity = img.at<unsigned char>(235, i);
 		if (intensity == 255)
@@ -563,7 +556,7 @@ bool WhiteLaneDetectionBoth(cv::Mat img)
 {
 	bool white_existance_both = false;
 
-	for (int i = 0; i < 160; i++)
+	for (int i = 160; i < 320; i++)
 	{
 		int intensity = img.at<unsigned char>(0, i);
 		if (intensity == 255)
