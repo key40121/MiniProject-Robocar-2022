@@ -148,7 +148,7 @@ int main() {
 		// lane centering (needs to do test to set proper amount of the number)
 		// the center would be 214?
 		
-		if (pts[0].x <= 204)s
+		if (pts[0].x <= 204)
 		{
 			steering_angle = steering_angle -2;
 		}
