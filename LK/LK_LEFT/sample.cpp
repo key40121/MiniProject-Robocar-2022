@@ -195,6 +195,7 @@ int main() {
 		std::cout << "Steering angle is " << steering_angle << std::endl;
 		std::cout << "-------------------------------" << std::endl;
 	
+		steering_angle = steering_angle * 0.8;
 		/*--------------------------------------------------------------------*/	
 		// vechile dynamics
 		_RcControl.SetSteerAngle(steering_angle);
