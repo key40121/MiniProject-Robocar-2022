@@ -17,6 +17,7 @@ using namespace qrk;
 using namespace std;
 
 RcControl  _RcControl;
+int set_speed;
 
 class SampleLRS :public LaserRangeSensorReceiveHandler {
 public:
@@ -95,7 +96,7 @@ private:
 
 	//_/_/_/_/_/ / Read Point cloud data_/_ /_/_/_/_/_//
 	void storeLRF(LrsResult res, int dev){
-		set_speed = 200;
+
 		if(dev == 1){
 			
 			min_dist = 4000;
@@ -156,7 +157,6 @@ private:
 	bool _lrsFlg[2];
 	int min_dist;
 	float angle;
-	int set_speed;
 };
 
 void funcx(int sig);
@@ -172,7 +172,8 @@ int main() {
     _RcControl.SetMotorEnableReq(1);
     _RcControl.SetDriveSpeed(0);
     _RcControl.SetSteerAngle(0);	
-
+	std::cout << "set_speed >>";
+	std::cin >> set_speed;
 	bool flg = 1;
 	bool ires = slrs.Init();
 	if(ires != true)

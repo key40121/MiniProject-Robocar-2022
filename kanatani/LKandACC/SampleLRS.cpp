@@ -17,7 +17,86 @@ using namespace qrk;
 using namespace std;
 
 RcControl  _RcControl;
+void funcx(int sing);
 
+int main()
+{
+	signal(SIGINT, funcx);
+
+    _RcControl.init();
+    _RcControl.Start();
+    _RcControl.SetReportFlagReq(0x0f);
+    _RcControl.SetServoEnable(1);
+    _RcControl.SetMotorEnableReq(1);
+    _RcControl.SetDriveSpeed(0);
+    _RcControl.SetSteerAngle(0);
+	RcControl	rrc;
+	LaserRangeSensor _lrs[2];
+	LrsResult res;
+
+	int ste_speed;
+	bool _lrsFlg[2];
+	int min_dist;
+	float angle;
+	bool res = _lrs[0].InitSerial();
+
+	std::cout << "set_speed >>";
+	std::cin >> set_speed;
+
+	while(loop)
+	{
+		if(dev == 1)
+		{
+			min_dist = 4000;
+			for( int j= 255; j< 428; j ++)
+			{
+				//std::cout << res.data[j] << " " << -120+240.0/res.data_length*j << "\n";
+
+				if(min_dist > res.data[j])
+				{
+					min_dist = res.data[j];
+					angle = -120+240.0/res.data_length*j;
+				}
+			}
+			std::cout << min_dist << " " << angle << "\n";
+			_RcControl.SetDriveSpeed(set_speed);
+			_RcControl.SetSteerAngle(angle);
+
+			if((min_dist >= 200) && (min_dist < set_speed*8/5+200))
+			{
+				_RcControl.SetDriveSpeed((min_dist-200)*5/8);
+			}
+
+			else if(min_dist >= set_speed*8/5+200)
+			{
+				_RcControl.SetDriveSpeed(set_speed);
+				_RcControl.SetSteerAngle(0);
+			}
+
+			else
+			{
+				_RcControl.SetDriveSpeed(0);
+				_RcControl.SetSteerAngle(0);
+			}
+		}
+	}
+}
+
+void funcx(int sig) {
+
+    slrs.Stop();
+	_RcControl.SetDriveSpeed(0);
+    _RcControl.SetSteerAngle(0);
+	_RcControl.SetServoEnable(0);
+    _RcControl.SetMotorEnableReq(0);
+    signal(SIGINT, SIG_DFL);
+    raise(SIGINT);
+}
+
+
+
+
+/*
 class SampleLRS :public LaserRangeSensorReceiveHandler {
 public:
 	SampleLRS(){};
@@ -95,7 +174,7 @@ private:
 
 	//_/_/_/_/_/ / Read Point cloud data_/_ /_/_/_/_/_//
 	void storeLRF(LrsResult res, int dev){
-		set_speed = 200;
+
 		if(dev == 1){
 			
 			min_dist = 4000;
@@ -138,7 +217,7 @@ private:
 
 		if(dev == 1){
 			if(_lrs[0].GetData(&lrs)){
-			storeLRF(lrs, dev);
+				storeLRF(lrs, dev);
 			}
 		}
 		else
@@ -156,7 +235,6 @@ private:
 	bool _lrsFlg[2];
 	int min_dist;
 	float angle;
-	int set_speed;
 };
 
 void funcx(int sig);
@@ -172,7 +250,8 @@ int main() {
     _RcControl.SetMotorEnableReq(1);
     _RcControl.SetDriveSpeed(0);
     _RcControl.SetSteerAngle(0);	
-
+	std::cout << "set_speed >>";
+	std::cin >> set_speed;
 	bool flg = 1;
 	bool ires = slrs.Init();
 	if(ires != true)
@@ -204,3 +283,4 @@ void funcx(int sig) {
     signal(SIGINT, SIG_DFL);
     raise(SIGINT);
 }
+*/
