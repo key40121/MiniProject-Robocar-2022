@@ -210,7 +210,7 @@ int main() {
 
 		if (count == 240)
 		{
-			_RcControl.SetDriveSpeed(350);
+			_RcControl.SetDriveSpeed(400);
 		}
 		
 		if (count == 480)
