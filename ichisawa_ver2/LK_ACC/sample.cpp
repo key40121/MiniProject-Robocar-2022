@@ -208,12 +208,12 @@ int main() {
 		count = count + 1;
 		/*-----------------------------------------------------------------------*/
 
-		if (count == 10000)
+		if (count == 240)
 		{
-			_RcControl.SetDriveSpeed(300);
+			_RcControl.SetDriveSpeed(400);
 		}
 		
-		if (count == 240)
+		if (count == 480)
 		{
 			_RcControl.SetDriveSpeed(0);
 		}
